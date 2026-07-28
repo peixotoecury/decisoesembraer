@@ -169,6 +169,8 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
   <button class="tab-btn" id="tab-btn-calculos" onclick="mudarAba('calculos')">🧮 Solicitação de Cálculos</button>
   <button class="tab-btn" id="tab-btn-reintegracao" onclick="mudarAba('reintegracao')">⚖️ Determinação de Reintegração</button>
   <button class="tab-btn" id="tab-btn-elaw" onclick="mudarAba('elaw')">🗂️ Ajuste de Fase/Prognóstico</button>
+  <button class="tab-btn" id="tab-btn-pericia" onclick="mudarAba('pericia')">🩹 Agendamento de Perícia</button>
+  <button class="tab-btn" id="tab-btn-so" onclick="mudarAba('so')">🎙️ Inscrição S.O.</button>
 </div>
 
 <div class="main">
@@ -633,6 +635,79 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
       </div>
     </div>
   </div>
+  <div class="view" id="view-pericia">
+    <div class="dash-card">
+      <div class="dash-card-head">🩹 Novo Agendamento de Perícia</div>
+      <div class="dash-card-body">
+        <div class="info-box">ℹ️ Vai sempre para <b>embraer@bernhoeft.com.br</b>, com cópia para o grupo interno.</div>
+        <div class="mc-form-grid">
+          <div class="mc-form-group"><label>Número do Processo <span class="req">*</span></label><input type="text" id="pe-processo" required placeholder="0000000-00.0000.0.00.0000"></div>
+          <div class="mc-form-group"><label>Nome do Reclamante <span class="req">*</span></label><input type="text" id="pe-reclamante" required></div>
+        </div>
+        <div class="mc-form-grid cols-3">
+          <div class="mc-form-group"><label>Tipo de Perícia</label>
+            <select id="pe-tipo"><option value="">—</option><option>Médica</option><option>Ergonômica</option><option>Técnica</option><option>Médica e Ergonômica</option><option>Outra</option></select>
+          </div>
+          <div class="mc-form-group"><label>Data da Perícia <span class="req">*</span></label><input type="date" id="pe-data" required></div>
+          <div class="mc-form-group"><label>Horário</label><input type="text" id="pe-horario" placeholder="Ex: 08:00"></div>
+        </div>
+        <div class="mc-form-group"><label>Local da Perícia</label><input type="text" id="pe-local" placeholder="Opcional"></div>
+        <div class="mc-form-group"><label>Responsável pela solicitação (sigla) <span class="req">*</span></label><input type="text" id="pe-responsavel" required placeholder="Ex: BCF"></div>
+        <button type="button" class="btn-cyan" onclick="enviarAgendamentoPericia(event)">✉️ Gerar e-mail e registrar</button>
+      </div>
+    </div>
+    <div class="dash-card">
+      <div class="dash-card-head">📜 Histórico de Agendamentos <button class="export-btn" onclick="exportarExcelGenerico(HIST_PERICIA_FILTRADO, 'Agendamento_Pericia_Embraer', PERICIA_COLUNAS_EXCEL)">⬇ Exportar Excel</button></div>
+      <div class="filters">
+        <input class="filter-input" id="pe-busca" placeholder="Buscar por processo ou reclamante…" oninput="renderHistoricoPericia()">
+        <select class="filter-select" id="pe-flt-status" onchange="renderHistoricoPericia()">
+          <option value="">Status: todos</option>
+          <option value="Pendente">Pendente</option>
+          <option value="Concluído">Concluído</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table class="sol-table">
+          <thead><tr><th>Processo</th><th>Reclamante</th><th>Tipo</th><th>Data</th><th>Status</th><th>Enviado em</th><th>Ações</th></tr></thead>
+          <tbody id="pe-tbody"><tr><td colspan="7" class="empty-state">Carregando…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="view" id="view-so">
+    <div class="dash-card">
+      <div class="dash-card-head">🎙️ Nova Inscrição de Sustentação Oral</div>
+      <div class="dash-card-body">
+        <div class="info-box">ℹ️ Vai direto pro e-mail do(a) Assistente Responsável selecionado(a) abaixo, com cópia pro grupo interno, pedindo pra inscrever o advogado na pauta.</div>
+        <div class="mc-form-grid">
+          <div class="mc-form-group"><label>Advogado a Inscrever <span class="req">*</span></label><select id="so-advogado" required><option value="">Selecione…</option></select></div>
+          <div class="mc-form-group"><label>Assistente Responsável <span class="req">*</span></label><select id="so-assistente" required><option value="">Selecione…</option></select></div>
+        </div>
+        <div class="mc-form-group"><label>Processo (opcional, pra referência/busca)</label><input type="text" id="so-processo" placeholder="0000000-00.0000.0.00.0000"></div>
+        <div class="mc-form-group"><label>Texto da Pauta/Sessão <span class="req">*</span></label><textarea id="so-pauta" rows="8" required placeholder="Cole aqui o texto completo da pauta de julgamento (turma, data da sessão, processo, partes, advogados etc.)"></textarea></div>
+        <button type="button" class="btn-cyan" onclick="enviarInscricaoSO(event)">✉️ Gerar e-mail e registrar</button>
+      </div>
+    </div>
+    <div class="dash-card">
+      <div class="dash-card-head">📜 Histórico de Inscrições S.O. <button class="export-btn" onclick="exportarExcelGenerico(HIST_SO_FILTRADO, 'Inscricao_SO_Embraer', SO_COLUNAS_EXCEL)">⬇ Exportar Excel</button></div>
+      <div class="filters">
+        <input class="filter-input" id="so-busca" placeholder="Buscar por processo ou advogado…" oninput="renderHistoricoSO()">
+        <select class="filter-select" id="so-flt-status" onchange="renderHistoricoSO()">
+          <option value="">Status: todos</option>
+          <option value="Pendente">Pendente</option>
+          <option value="Concluído">Concluído</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table class="sol-table">
+          <thead><tr><th>Processo</th><th>Advogado a Inscrever</th><th>Assistente</th><th>Status</th><th>Enviado em</th><th>Ações</th></tr></thead>
+          <tbody id="so-tbody"><tr><td colspan="6" class="empty-state">Carregando…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
   <div class="view" id="view-elaw">
     <div class="dash-card">
       <div class="dash-card-head">🗂️ Novo Comunicado de Ajuste de Fase e Prognóstico</div>
@@ -1084,7 +1159,7 @@ function crudExportar(cfg){
   XLSX.writeFile(wb, `${cfg.titulo.replace(/\s+/g,'_')}_Embraer_${hojeISOlocal()}.xlsx`);
 }
 
-const ABAS = ['decisao','reintegrados','estrategicos','insalubridade','doencas','calculos','reintegracao','elaw'];
+const ABAS = ['decisao','reintegrados','estrategicos','insalubridade','doencas','calculos','reintegracao','elaw','pericia','so'];
 const ABA_CARREGADORES = {};
 function mudarAba(aba){
   ABAS.forEach(a => {
@@ -1685,6 +1760,184 @@ function verDetalhesElaw(id){
   abrirVerDetalhes(`Ajuste de Fase/Prognóstico — ${r.processo}`, textoParaHtmlDetalhes(texto));
 }
 ABA_CARREGADORES['elaw'] = { carregado: false, fn: carregarHistoricoElaw };
+
+/* ===================== ABA: AGENDAMENTO DE PERÍCIA =====================
+   Notificação pro cliente Embraer (mesmo destinatário da Solicitação de
+   Cálculos) avisando a data/horário da perícia designada. */
+const PERICIA_COLUNAS_EXCEL = [
+  {label:'Processo', col:'processo'}, {label:'Reclamante', col:'reclamante'}, {label:'Tipo de Perícia', col:'tipo_pericia'},
+  {label:'Data', col:'data_pericia'}, {label:'Horário', col:'horario'}, {label:'Local', col:'local_pericia'},
+  {label:'Responsável', col:'responsavel_sigla'}, {label:'Status', col:'status'}, {label:'Criado em', col:'criado_em'},
+];
+async function enviarAgendamentoPericia(ev){
+  ev.preventDefault();
+  const g = id => document.getElementById(id).value.trim() || null;
+  const obrigatorios = [['pe-processo','Número do Processo'],['pe-reclamante','Nome do Reclamante'],['pe-data','Data da Perícia'],['pe-responsavel','Responsável']];
+  for(const [id, label] of obrigatorios){ if(!document.getElementById(id).value.trim()){ toast(`Preencha o campo "${label}".`, true); return; } }
+  const registro = {
+    processo: g('pe-processo'), reclamante: g('pe-reclamante'), tipo_pericia: g('pe-tipo'),
+    data_pericia: g('pe-data'), horario: g('pe-horario'), local_pericia: g('pe-local'),
+    responsavel_sigla: g('pe-responsavel'), status: 'Pendente', criado_em: new Date().toISOString(),
+  };
+  const dataFmt = dataBR(registro.data_pericia);
+  const assunto = `Agendamento de Perícia — Processo ${registro.processo} — ${registro.reclamante}`;
+  const corpo = `Informamos a designação da perícia${registro.tipo_pericia ? ' ' + registro.tipo_pericia.toLowerCase() : ''} do processo em referência para o dia ${dataFmt}${registro.horario ? ' às ' + registro.horario : ''}.\n\n`
+    + `Processo: ${registro.processo}\nReclamante: ${registro.reclamante}\n`
+    + (registro.local_pericia ? `Local: ${registro.local_pericia}\n` : '')
+    + `\nPor gentileza, poderiam acusar recebimento do envio?\n\nObrigada!\n\nAtenciosamente,`;
+  try{
+    const { error } = await sb.from('embraer_agendamento_pericia').insert(registro);
+    if(error) throw error;
+    toast('Agendamento registrado. Abrindo e-mail…');
+    carregarHistoricoPericia();
+  }catch(err){
+    console.error(err);
+    toast('E-mail aberto, mas NÃO foi possível salvar no histórico: ' + (err.message||err), true);
+  }
+  abrirEmail(CALCULOS_TO, CALCULOS_CC, assunto, corpo);
+  document.querySelectorAll('#view-pericia input, #view-pericia select').forEach(el => el.value = '');
+}
+
+let HIST_PERICIA = [];
+let HIST_PERICIA_FILTRADO = [];
+async function carregarHistoricoPericia(){
+  try{
+    const { data, error } = await sb.from('embraer_agendamento_pericia').select('*').order('criado_em', {ascending:false}).limit(200);
+    if(error) throw error;
+    HIST_PERICIA = data || [];
+    document.getElementById('erro-conexao').innerHTML = '';
+    renderHistoricoPericia();
+  }catch(err){
+    console.error(err);
+    document.getElementById('pe-tbody').innerHTML = `<tr><td colspan="7" class="empty-state">Erro ao carregar histórico — a tabela embraer_agendamento_pericia provavelmente ainda não existe.</td></tr>`;
+  }
+}
+function renderHistoricoPericia(){
+  const termo = document.getElementById('pe-busca').value.toLowerCase();
+  const status = document.getElementById('pe-flt-status').value;
+  const rows = HIST_PERICIA.filter(r =>
+    (!termo || (r.processo||'').toLowerCase().includes(termo) || (r.reclamante||'').toLowerCase().includes(termo)) &&
+    (!status || (r.status||'Pendente') === status)
+  );
+  HIST_PERICIA_FILTRADO = rows;
+  const tbody = document.getElementById('pe-tbody');
+  if(!rows.length){ tbody.innerHTML = `<tr><td colspan="7" class="empty-state">Nenhum agendamento encontrado.</td></tr>`; return; }
+  tbody.innerHTML = rows.map(r => `<tr>
+    <td class="mono">${esc(r.processo)}</td>
+    <td>${esc(r.reclamante)}</td>
+    <td>${esc(r.tipo_pericia)}</td>
+    <td class="mono">${dataBR(r.data_pericia)||''}</td>
+    <td><span class="badge ${r.status==='Concluído'?'badge-green':'badge-orange'}">${esc(r.status||'Pendente')}</span></td>
+    <td class="mono">${fmtDataHora(r.criado_em)}</td>
+    <td>
+      ${r.status !== 'Concluído' ? `<button class="row-btn" onclick="concluirPericia(${r.id})">✅ Concluir</button>` : ''}
+      <button class="row-btn" onclick="verDetalhesPericia(${r.id})">👁️ Ver</button>
+      <button class="row-btn" onclick="excluirRegistroGenerico('embraer_agendamento_pericia', ${r.id}, carregarHistoricoPericia)">🗑️ Excluir</button>
+    </td>
+  </tr>`).join('');
+}
+async function concluirPericia(id){
+  const { error } = await sb.from('embraer_agendamento_pericia').update({ status: 'Concluído', concluido_em: new Date().toISOString() }).eq('id', id);
+  if(error){ toast('Erro ao concluir: ' + error.message, true); return; }
+  toast('Agendamento marcado como concluído.');
+  carregarHistoricoPericia();
+}
+function verDetalhesPericia(id){
+  const r = HIST_PERICIA.find(x => x.id === id);
+  if(!r) return;
+  const texto = `Processo: ${r.processo}\nReclamante: ${r.reclamante}\nTipo de Perícia: ${r.tipo_pericia||''}\nData: ${dataBR(r.data_pericia)||''}\nHorário: ${r.horario||''}\nLocal: ${r.local_pericia||''}\nResponsável: ${r.responsavel_sigla}\nStatus: ${r.status||'Pendente'}`;
+  abrirVerDetalhes(`Agendamento de Perícia — ${r.processo}`, textoParaHtmlDetalhes(texto));
+}
+ABA_CARREGADORES['pericia'] = { carregado: false, fn: carregarHistoricoPericia };
+
+/* ===================== ABA: INSCRIÇÃO S.O. (SUSTENTAÇÃO ORAL) =====================
+   Pedido interno pro(a) assistente responsável inscrever um advogado numa
+   pauta de julgamento — cc pro grupo interno. */
+popularSelectProfissionais(document.getElementById('so-advogado'), 'Advogado');
+popularSelectProfissionais(document.getElementById('so-assistente'), 'Assistente');
+const SO_COLUNAS_EXCEL = [
+  {label:'Processo', col:'processo'}, {label:'Advogado a Inscrever', col:'advogado_inscrever'},
+  {label:'Assistente Responsável', col:'assistente_responsavel'}, {label:'Texto da Pauta', col:'texto_pauta'},
+  {label:'Status', col:'status'}, {label:'Criado em', col:'criado_em'},
+];
+async function enviarInscricaoSO(ev){
+  ev.preventDefault();
+  const g = id => document.getElementById(id).value.trim() || null;
+  const obrigatorios = [['so-advogado','Advogado a Inscrever'],['so-assistente','Assistente Responsável'],['so-pauta','Texto da Pauta/Sessão']];
+  for(const [id, label] of obrigatorios){ if(!document.getElementById(id).value.trim()){ toast(`Preencha o campo "${label}".`, true); return; } }
+  const registro = {
+    processo: g('so-processo'), advogado_inscrever: g('so-advogado'), assistente_responsavel: g('so-assistente'),
+    texto_pauta: g('so-pauta'), status: 'Pendente', criado_em: new Date().toISOString(),
+  };
+  const emailAssistente = emailPorNome(registro.assistente_responsavel);
+  const assunto = `Inscrição S.O.${registro.processo ? ' — Processo ' + registro.processo : ''}`;
+  const corpo = `Olá, ${registro.assistente_responsavel}.\n\n`
+    + `Por gentileza, poderia inscrever ${registro.advogado_inscrever} na s.o. abaixo?\n\n`
+    + `${registro.texto_pauta}\n\nObrigada!`;
+  try{
+    const { error } = await sb.from('embraer_inscricao_so').insert(registro);
+    if(error) throw error;
+    toast('Inscrição registrada. Abrindo e-mail…');
+    carregarHistoricoSO();
+  }catch(err){
+    console.error(err);
+    toast('E-mail aberto, mas NÃO foi possível salvar no histórico: ' + (err.message||err), true);
+  }
+  if(emailAssistente) abrirEmail(emailAssistente, DECISAO_CC, assunto, corpo);
+  else toast('Assistente sem e-mail cadastrado — abra o e-mail manualmente.', true);
+  document.querySelectorAll('#view-so input, #view-so select, #view-so textarea').forEach(el => el.value = '');
+}
+
+let HIST_SO = [];
+let HIST_SO_FILTRADO = [];
+async function carregarHistoricoSO(){
+  try{
+    const { data, error } = await sb.from('embraer_inscricao_so').select('*').order('criado_em', {ascending:false}).limit(200);
+    if(error) throw error;
+    HIST_SO = data || [];
+    document.getElementById('erro-conexao').innerHTML = '';
+    renderHistoricoSO();
+  }catch(err){
+    console.error(err);
+    document.getElementById('so-tbody').innerHTML = `<tr><td colspan="6" class="empty-state">Erro ao carregar histórico — a tabela embraer_inscricao_so provavelmente ainda não existe.</td></tr>`;
+  }
+}
+function renderHistoricoSO(){
+  const termo = document.getElementById('so-busca').value.toLowerCase();
+  const status = document.getElementById('so-flt-status').value;
+  const rows = HIST_SO.filter(r =>
+    (!termo || (r.processo||'').toLowerCase().includes(termo) || (r.advogado_inscrever||'').toLowerCase().includes(termo)) &&
+    (!status || (r.status||'Pendente') === status)
+  );
+  HIST_SO_FILTRADO = rows;
+  const tbody = document.getElementById('so-tbody');
+  if(!rows.length){ tbody.innerHTML = `<tr><td colspan="6" class="empty-state">Nenhuma inscrição encontrada.</td></tr>`; return; }
+  tbody.innerHTML = rows.map(r => `<tr>
+    <td class="mono">${esc(r.processo)}</td>
+    <td>${esc(r.advogado_inscrever)}</td>
+    <td>${esc(r.assistente_responsavel)}</td>
+    <td><span class="badge ${r.status==='Concluído'?'badge-green':'badge-orange'}">${esc(r.status||'Pendente')}</span></td>
+    <td class="mono">${fmtDataHora(r.criado_em)}</td>
+    <td>
+      ${r.status !== 'Concluído' ? `<button class="row-btn" onclick="concluirSO(${r.id})">✅ Concluir</button>` : ''}
+      <button class="row-btn" onclick="verDetalhesSO(${r.id})">👁️ Ver</button>
+      <button class="row-btn" onclick="excluirRegistroGenerico('embraer_inscricao_so', ${r.id}, carregarHistoricoSO)">🗑️ Excluir</button>
+    </td>
+  </tr>`).join('');
+}
+async function concluirSO(id){
+  const { error } = await sb.from('embraer_inscricao_so').update({ status: 'Concluído', concluido_em: new Date().toISOString() }).eq('id', id);
+  if(error){ toast('Erro ao concluir: ' + error.message, true); return; }
+  toast('Inscrição marcada como concluída.');
+  carregarHistoricoSO();
+}
+function verDetalhesSO(id){
+  const r = HIST_SO.find(x => x.id === id);
+  if(!r) return;
+  const texto = `Processo: ${r.processo||''}\nAdvogado a Inscrever: ${r.advogado_inscrever}\nAssistente Responsável: ${r.assistente_responsavel}\nStatus: ${r.status||'Pendente'}\n\nTexto da Pauta:\n${r.texto_pauta}`;
+  abrirVerDetalhes(`Inscrição S.O. — ${r.processo||''}`, textoParaHtmlDetalhes(texto));
+}
+ABA_CARREGADORES['so'] = { carregado: false, fn: carregarHistoricoSO };
 
 /* ===================== REPORTE DE DECISÃO ===================== */
 const DECISAO_SECOES = ['laudo', 'sentenca', 'acordao', 'execucao'];
