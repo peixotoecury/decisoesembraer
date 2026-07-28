@@ -52,7 +52,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13
 .topbar-right{display:flex;align-items:center;gap:10px;}
 .hub-link{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:600;text-decoration:none;font-family:'Sora',sans-serif;white-space:nowrap;}
 
+.tab-bar{background:var(--surface);border-bottom:1px solid var(--border2);padding:0 24px;display:flex;gap:4px;box-shadow:0 2px 10px rgba(0,59,92,.05);overflow-x:auto;}
+.tab-btn{background:none;border:none;padding:14px 18px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;font-family:var(--font);border-bottom:3px solid transparent;transition:all .15s;white-space:nowrap;}
+.tab-btn:hover{color:var(--escuro-pc);}
+.tab-btn.active{color:var(--escuro-pc);border-bottom-color:var(--azul-pc);}
+
 .main{max-width:1100px;margin:0 auto;padding:22px 24px 60px;}
+.view{display:none;}
+.view.active{display:block;}
 
 .dash-card{background:var(--surface);border:1px solid var(--border2);box-shadow:var(--shadow-pc);border-radius:var(--radius-lg);margin-bottom:20px;overflow:hidden;}
 .dash-card-head{padding:16px 20px;border-bottom:1px solid var(--border2);background:var(--surface2);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--escuro-pc);display:flex;align-items:center;justify-content:space-between;gap:8px;}
@@ -153,10 +160,22 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
   </div>
 </div>
 
+<div class="tab-bar">
+  <button class="tab-btn active" id="tab-btn-decisao" onclick="mudarAba('decisao')">📑 Reporte de Decisão</button>
+  <button class="tab-btn" id="tab-btn-reintegrados" onclick="mudarAba('reintegrados')">🔁 Reintegrados</button>
+  <button class="tab-btn" id="tab-btn-estrategicos" onclick="mudarAba('estrategicos')">♟️ Estratégicos</button>
+  <button class="tab-btn" id="tab-btn-insalubridade" onclick="mudarAba('insalubridade')">🧪 Insalubridade e Periculosidade</button>
+  <button class="tab-btn" id="tab-btn-doencas" onclick="mudarAba('doencas')">🩺 Doenças</button>
+  <button class="tab-btn" id="tab-btn-calculos" onclick="mudarAba('calculos')">🧮 Solicitação de Cálculos</button>
+  <button class="tab-btn" id="tab-btn-reintegracao" onclick="mudarAba('reintegracao')">⚖️ Determinação de Reintegração</button>
+  <button class="tab-btn" id="tab-btn-elaw" onclick="mudarAba('elaw')">🗂️ Ajuste de Fase/Prognóstico</button>
+</div>
+
 <div class="main">
 
   <div id="erro-conexao"></div>
 
+  <div class="view active" id="view-decisao">
   <div class="dash-card">
     <div class="dash-card-head">📑 Novo Reporte de Decisão</div>
     <div class="dash-card-body">
@@ -496,6 +515,175 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
     </div>
   </div>
 
+  </div>
+  <!-- /view-decisao -->
+
+  <div class="view" id="view-reintegrados"></div>
+  <div class="view" id="view-estrategicos"></div>
+  <div class="view" id="view-insalubridade"></div>
+  <div class="view" id="view-doencas"></div>
+  <div class="view" id="view-calculos">
+    <div class="dash-card">
+      <div class="dash-card-head">🧮 Nova Solicitação de Cálculos</div>
+      <div class="dash-card-body">
+        <div class="info-box">ℹ️ Vai sempre para <b>embraer@bernhoeft.com.br</b>, com cópia para o grupo interno.</div>
+        <form id="form-calculos">
+          <div class="mc-form-grid">
+            <div class="mc-form-group"><label>Número do Processo <span class="req">*</span></label><input type="text" id="cc-processo" required placeholder="0000000-00.0000.0.00.0000"></div>
+            <div class="mc-form-group"><label>Nome do Reclamante <span class="req">*</span></label><input type="text" id="cc-reclamante" required placeholder="Nome completo"></div>
+          </div>
+          <div class="mc-form-group">
+            <label>Qual tipo de subsídio será necessário? <span class="req">*</span></label>
+            <select id="cc-tipo-subsidio" required>
+              <option value="" disabled selected>Selecione…</option>
+              <option>Cálculo Inicial</option>
+              <option>Liquidação de Sentença</option>
+              <option>Cálculo para Fins de Acordo</option>
+              <option>Levantamento de Garantia</option>
+              <option>Cálculo de Provisão Sentença</option>
+              <option>Cálculo de Provisão Acórdão</option>
+              <option>Cálculo de Provisão TST</option>
+              <option>Subsídios para Laudo e Esclarecimentos</option>
+              <option>Cálculos para Lançamento no eSocial</option>
+              <option>Apresentação de Cálculos</option>
+              <option>Impugnação aos Cálculos do Reclamante</option>
+              <option>Impugnação aos Cálculos do Perito Contábil</option>
+              <option>Embargos à Execução</option>
+              <option>Agravo de Petição</option>
+              <option>Outro</option>
+            </select>
+          </div>
+          <div class="mc-form-grid">
+            <div class="mc-form-group"><label>Link para acesso/download da íntegra e documentos <span class="req">*</span></label><input type="text" id="cc-link" required placeholder="https://…"></div>
+            <div class="mc-form-group"><label>Prazo para envio <span class="req">*</span></label><input type="date" id="cc-prazo" required></div>
+          </div>
+          <div class="mc-form-group"><label>Outros (maiores detalhamentos)</label><textarea id="cc-outros" rows="3" placeholder="Opcional"></textarea></div>
+          <div class="mc-form-group"><label>Responsável pela solicitação (sigla) <span class="req">*</span></label><input type="text" id="cc-responsavel" required placeholder="Ex: VCR"></div>
+          <button type="submit" class="btn-cyan">✉️ Gerar e-mail e registrar solicitação</button>
+        </form>
+      </div>
+    </div>
+    <div class="dash-card">
+      <div class="dash-card-head">📜 Histórico de Solicitações de Cálculos <button class="export-btn" onclick="exportarExcelGenerico(HIST_CALCULOS_FILTRADO, 'Solicitacoes_Calculos_Embraer', CALCULOS_COLUNAS_EXCEL)">⬇ Exportar Excel</button></div>
+      <div class="filters">
+        <input class="filter-input" id="cc-busca" placeholder="Buscar por processo ou reclamante…" oninput="renderHistoricoCalculos()">
+        <select class="filter-select" id="cc-flt-status" onchange="renderHistoricoCalculos()">
+          <option value="">Status: todos</option>
+          <option value="Pendente">Pendente</option>
+          <option value="Concluído">Concluído</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table class="sol-table">
+          <thead><tr><th>Processo</th><th>Reclamante</th><th>Tipo</th><th>Prazo</th><th>Responsável</th><th>Status</th><th>Enviado em</th><th>Ações</th></tr></thead>
+          <tbody id="cc-tbody"><tr><td colspan="8" class="empty-state">Carregando…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="view" id="view-reintegracao">
+    <div class="dash-card">
+      <div class="dash-card-head">⚖️ Nova Determinação para Reintegração</div>
+      <div class="dash-card-body">
+        <div class="info-box">ℹ️ Vai sempre para os contatos do cliente Embraer, com cópia para o grupo interno. Sai em texto puro (o mailto: não reproduz a tabela colorida usada no Outlook).</div>
+        <div class="mc-form-grid cols-3">
+          <div class="mc-form-group"><label>Nº do Processo <span class="req">*</span></label><input type="text" id="ri-processo" required placeholder="0000000-00.0000.0.00.0000"></div>
+          <div class="mc-form-group"><label>Reclamante <span class="req">*</span></label><input type="text" id="ri-reclamante" required></div>
+          <div class="mc-form-group"><label>Setor</label><input type="text" id="ri-setor"></div>
+        </div>
+        <div class="mc-form-grid cols-3">
+          <div class="mc-form-group"><label>Telefone do Reclamante</label><input type="text" id="ri-telefone" placeholder="N/A"></div>
+          <div class="mc-form-group"><label>Valor do Risco (R$)</label><input type="text" inputmode="decimal" placeholder="0,00" id="ri-valor-risco"></div>
+          <div class="mc-form-group"><label>Prognóstico</label>
+            <select id="ri-prognostico"><option value="">—</option><option>Possível</option><option>Provável</option><option>Remoto</option><option>N/A</option></select>
+          </div>
+        </div>
+        <div class="mc-form-grid cols-3">
+          <div class="mc-form-group"><label>Prazo para Reintegração <span class="req">*</span></label><input type="date" id="ri-prazo" required></div>
+          <div class="mc-form-group"><label>Tem Interesse em Acordo?</label>
+            <select id="ri-interesse-acordo"><option value="">—</option><option>Sim</option><option>Não</option><option>N/A</option></select>
+          </div>
+          <div class="mc-form-group"><label>Resultado Laudo</label>
+            <select id="ri-resultado-laudo"><option value="">—</option><option>Favorável</option><option>Desfavorável</option><option>N/A</option></select>
+          </div>
+        </div>
+        <div class="mc-form-group"><label>Valor da Multa</label><input type="text" id="ri-valor-multa" placeholder='Ex: R$ 100,00 por dia'></div>
+        <div class="mc-form-group"><label>Fundamentos da Decisão</label><textarea id="ri-fundamentos" rows="3"></textarea></div>
+        <div class="mc-form-group"><label>Outras Obs</label><textarea id="ri-outras-obs" rows="2"></textarea></div>
+        <div class="mc-form-group"><label>Link do PDF (Acórdão/Decisão)</label><input type="text" id="ri-link-pdf" placeholder="https://…"></div>
+        <div class="mc-form-group"><label>Responsável pela solicitação (sigla) <span class="req">*</span></label><input type="text" id="ri-responsavel" required placeholder="Ex: VCR"></div>
+        <button type="submit" class="btn-cyan" id="ri-btn-enviar" onclick="enviarDeterminacaoReintegracao(event)">✉️ Gerar e-mail e registrar</button>
+      </div>
+    </div>
+    <div class="dash-card">
+      <div class="dash-card-head">📜 Histórico de Determinações de Reintegração <button class="export-btn" onclick="exportarExcelGenerico(HIST_REINTEGRACAO_FILTRADO, 'Determinacoes_Reintegracao_Embraer', REINTEGRACAO_COLUNAS_EXCEL)">⬇ Exportar Excel</button></div>
+      <div class="filters">
+        <input class="filter-input" id="ri-busca" placeholder="Buscar por processo ou reclamante…" oninput="renderHistoricoReintegracao()">
+        <select class="filter-select" id="ri-flt-status" onchange="renderHistoricoReintegracao()">
+          <option value="">Status: todos</option>
+          <option value="Pendente">Pendente</option>
+          <option value="Concluído">Concluído</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table class="sol-table">
+          <thead><tr><th>Processo</th><th>Reclamante</th><th>Prazo</th><th>Status</th><th>Enviado em</th><th>Ações</th></tr></thead>
+          <tbody id="ri-tbody"><tr><td colspan="6" class="empty-state">Carregando…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="view" id="view-elaw">
+    <div class="dash-card">
+      <div class="dash-card-head">🗂️ Novo Comunicado de Ajuste de Fase e Prognóstico</div>
+      <div class="dash-card-body">
+        <div class="info-box">ℹ️ Vai direto pro e-mail do(a) Assistente Responsável selecionado(a) abaixo, pedindo pra ajustar fase/prognóstico e inserir a decisão no Elaw.</div>
+        <form id="form-elaw">
+          <div class="mc-form-grid">
+            <div class="mc-form-group"><label>Advogado Solicitante <span class="req">*</span></label><select id="el-advogado" required><option value="">Selecione…</option></select></div>
+            <div class="mc-form-group"><label>Assistente Responsável <span class="req">*</span></label><select id="el-assistente" required><option value="">Selecione…</option></select></div>
+          </div>
+          <div class="mc-form-grid">
+            <div class="mc-form-group"><label>Processo <span class="req">*</span></label><input type="text" id="el-processo" required placeholder="0000000-00.0000.0.00.0000"></div>
+            <div class="mc-form-group"><label>Reclamante <span class="req">*</span></label><input type="text" id="el-reclamante" required></div>
+          </div>
+          <div class="mc-form-grid">
+            <div class="mc-form-group"><label>Novo Prognóstico</label>
+              <select id="el-novo-prognostico"><option value="">—</option><option>Possível</option><option>Provável</option><option>Remoto</option></select>
+            </div>
+            <div class="mc-form-group"><label>Nova Fase</label>
+              <select id="el-nova-fase">
+                <option value="">—</option>
+                <option>Inicial</option><option>Instrução</option><option>Recursal</option>
+                <option>Recursal TRT</option><option>Recursal TST</option>
+                <option>Recursal com Execução Provisória</option><option>Execução</option>
+              </select>
+            </div>
+          </div>
+          <div class="mc-form-group"><label>Observações</label><textarea id="el-obs" rows="3" placeholder="Opcional"></textarea></div>
+          <button type="submit" class="btn-cyan">✉️ Gerar e-mail e registrar comunicado</button>
+        </form>
+      </div>
+    </div>
+    <div class="dash-card">
+      <div class="dash-card-head">📜 Histórico de Comunicados <button class="export-btn" onclick="exportarExcelGenerico(HIST_ELAW_FILTRADO, 'Ajuste_Fase_Prognostico_Embraer', ELAW_COLUNAS_EXCEL)">⬇ Exportar Excel</button></div>
+      <div class="filters">
+        <input class="filter-input" id="el-busca" placeholder="Buscar por processo ou reclamante…" oninput="renderHistoricoElaw()">
+        <select class="filter-select" id="el-flt-status" onchange="renderHistoricoElaw()">
+          <option value="">Status: todos</option>
+          <option value="Pendente">Pendente</option>
+          <option value="Concluído">Concluído</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table class="sol-table">
+          <thead><tr><th>Processo</th><th>Reclamante</th><th>Assistente</th><th>Novo Prognóstico</th><th>Nova Fase</th><th>Status</th><th>Enviado em</th><th>Ações</th></tr></thead>
+          <tbody id="el-tbody"><tr><td colspan="8" class="empty-state">Carregando…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <div class="toast" id="toast"></div>
@@ -711,6 +899,792 @@ function popularSelectProfissionais(select, cargo){
   });
 }
 popularSelectProfissionais(document.getElementById('d-advogado-responsavel'), 'Advogado');
+
+function hojeISOlocal(){ return new Date().toISOString().slice(0,10); }
+
+/* ===================== MOTOR GENÉRICO DE REGISTROS (CRUD) =====================
+   Reintegrados / Estratégicos / Insalubridade e Periculosidade / Doenças são,
+   estruturalmente, o mesmo padrão: 1 linha por processo, editável ao longo do
+   tempo, com export Excel batendo as colunas com a planilha mensal original.
+   Em vez de repetir HTML/JS ~4x (170+ campos no total), a view inteira é
+   montada a partir de um "cfg" (fields + resumo da tabela). */
+const CRUD_REGISTRY = {};
+
+function crudCampoHtml(key, f){
+  const id = `${key}-${f.col}`;
+  const reqMark = f.required ? ' <span class="req">*</span>' : '';
+  let inputHtml;
+  if(f.type === 'select'){
+    inputHtml = `<select id="${id}">${f.required ? '' : '<option value="">—</option>'}${f.options.map(o=>`<option>${esc(o)}</option>`).join('')}</select>`;
+  } else if(f.type === 'textarea'){
+    inputHtml = `<textarea id="${id}" rows="2"></textarea>`;
+  } else if(f.type === 'date'){
+    inputHtml = `<input type="date" id="${id}">`;
+  } else if(f.type === 'money'){
+    inputHtml = `<input type="text" inputmode="decimal" placeholder="0,00" id="${id}">`;
+  } else {
+    inputHtml = `<input type="text" id="${id}"${f.placeholder ? ` placeholder="${esc(f.placeholder)}"` : ''}>`;
+  }
+  return `<div class="mc-form-group"><label>${esc(f.label)}${reqMark}</label>${inputHtml}</div>`;
+}
+
+function crudMontarView(cfg){
+  CRUD_REGISTRY[cfg.key] = cfg;
+  cfg.dados = [];
+  cfg.filtrado = [];
+  const view = document.getElementById('view-' + cfg.key);
+  const camposHtml = cfg.fields.map(f => crudCampoHtml(cfg.key, f)).join('');
+  const theadHtml = '<tr>' + cfg.resumo.map(r => `<th>${esc(r.label)}</th>`).join('') + '<th></th></tr>';
+  view.innerHTML = `
+    <div class="dash-card">
+      <div class="dash-card-head" id="${cfg.key}-form-titulo">${cfg.icone} Novo Caso — ${esc(cfg.titulo)}</div>
+      <div class="dash-card-body">
+        <form id="form-${cfg.key}">
+          <div class="mc-form-grid cols-3">${camposHtml}</div>
+          <input type="hidden" id="${cfg.key}-editing-id">
+          <div style="display:flex;gap:10px;margin-top:8px;">
+            <button type="submit" class="btn-cyan" id="${cfg.key}-btn-salvar">💾 Adicionar Caso</button>
+            <button type="button" class="row-btn" id="${cfg.key}-btn-cancelar" style="display:none;white-space:nowrap;" onclick="crudCancelarEdicao(CRUD_REGISTRY['${cfg.key}'])">Cancelar edição</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="dash-card">
+      <div class="dash-card-head">📊 Casos — ${esc(cfg.titulo)} <button class="export-btn" onclick="crudExportar(CRUD_REGISTRY['${cfg.key}'])">⬇ Exportar Excel</button></div>
+      <div class="filters">
+        <input class="filter-input" id="${cfg.key}-busca" placeholder="Buscar por processo ou reclamante…" oninput="crudRender(CRUD_REGISTRY['${cfg.key}'])">
+      </div>
+      <div class="table-wrap">
+        <table class="sol-table">
+          <thead>${theadHtml}</thead>
+          <tbody id="${cfg.key}-tbody"><tr><td colspan="${cfg.resumo.length+1}" class="empty-state">Carregando…</td></tr></tbody>
+        </table>
+      </div>
+    </div>`;
+  document.getElementById('form-' + cfg.key).addEventListener('submit', ev => crudSalvar(ev, cfg));
+  ABA_CARREGADORES[cfg.key] = { carregado: false, fn: () => crudCarregar(cfg) };
+}
+
+function crudColetar(cfg){
+  const registro = {};
+  cfg.fields.forEach(f => {
+    const el = document.getElementById(`${cfg.key}-${f.col}`);
+    registro[f.col] = f.type === 'money' ? parseMoedaBR(el.value) : (el.value.trim() || null);
+  });
+  return registro;
+}
+
+async function crudSalvar(ev, cfg){
+  ev.preventDefault();
+  for(const f of cfg.fields.filter(f => f.required)){
+    const el = document.getElementById(`${cfg.key}-${f.col}`);
+    if(!el.value.trim()){ toast(`Preencha o campo "${f.label}".`, true); return; }
+  }
+  const registro = crudColetar(cfg);
+  registro.atualizado_em = new Date().toISOString();
+  const editId = document.getElementById(`${cfg.key}-editing-id`).value;
+  try{
+    if(editId){
+      const { error } = await sb.from(cfg.table).update(registro).eq('id', editId);
+      if(error) throw error;
+      toast('Caso atualizado com sucesso.');
+    } else {
+      registro.criado_em = registro.atualizado_em;
+      const { error } = await sb.from(cfg.table).insert(registro);
+      if(error) throw error;
+      toast('Caso adicionado com sucesso.');
+    }
+    crudCancelarEdicao(cfg);
+    crudCarregar(cfg);
+  }catch(err){
+    console.error(err);
+    toast('Erro ao salvar: ' + (err.message||err), true);
+  }
+}
+
+function crudCancelarEdicao(cfg){
+  document.getElementById(`form-${cfg.key}`).reset();
+  document.getElementById(`${cfg.key}-editing-id`).value = '';
+  document.getElementById(`${cfg.key}-btn-salvar`).textContent = '💾 Adicionar Caso';
+  document.getElementById(`${cfg.key}-btn-cancelar`).style.display = 'none';
+  document.getElementById(`${cfg.key}-form-titulo`).textContent = `${cfg.icone} Novo Caso — ${cfg.titulo}`;
+}
+
+async function crudCarregar(cfg){
+  try{
+    const { data, error } = await sb.from(cfg.table).select('*').order('atualizado_em', {ascending:false}).limit(500);
+    if(error) throw error;
+    cfg.dados = data || [];
+    document.getElementById('erro-conexao').innerHTML = '';
+    crudRender(cfg);
+  }catch(err){
+    console.error(err);
+    document.getElementById('erro-conexao').innerHTML = `
+      <div class="error-banner">
+        <strong>Não foi possível carregar os casos de ${esc(cfg.titulo)}.</strong><br>
+        A tabela <code>${cfg.table}</code> provavelmente ainda não existe no Supabase. Rode o script SQL de criação (fornecido junto com este módulo) e recarregue a página.<br>
+        <span style="opacity:.75;">Detalhe técnico: ${esc(err.message || err)}</span>
+      </div>`;
+    document.getElementById(`${cfg.key}-tbody`).innerHTML = `<tr><td colspan="${cfg.resumo.length+1}" class="empty-state">Erro ao carregar.</td></tr>`;
+  }
+}
+
+function crudRender(cfg){
+  const termo = (document.getElementById(`${cfg.key}-busca`).value || '').toLowerCase();
+  const c0 = cfg.fields[0].col, c1 = cfg.fields[1] ? cfg.fields[1].col : null;
+  const rows = cfg.dados.filter(r => !termo || String(r[c0]||'').toLowerCase().includes(termo) || (c1 && String(r[c1]||'').toLowerCase().includes(termo)));
+  cfg.filtrado = rows;
+  const tbody = document.getElementById(`${cfg.key}-tbody`);
+  if(!rows.length){ tbody.innerHTML = `<tr><td colspan="${cfg.resumo.length+1}" class="empty-state">Nenhum caso encontrado.</td></tr>`; return; }
+  tbody.innerHTML = rows.map(r => `<tr>` +
+    cfg.resumo.map(c => `<td class="${c.mono?'mono':''}">${c.money ? (r[c.col]!=null?fmtMoeda(r[c.col]):'') : esc(r[c.col])}</td>`).join('') +
+    `<td>
+      <button class="row-btn" onclick="crudEditar(CRUD_REGISTRY['${cfg.key}'], ${r.id})">✏️ Editar</button>
+      <button class="row-btn" onclick="crudExcluir(CRUD_REGISTRY['${cfg.key}'], ${r.id})">🗑️ Excluir</button>
+    </td></tr>`
+  ).join('');
+}
+
+function crudEditar(cfg, id){
+  const r = cfg.dados.find(x => x.id === id);
+  if(!r) return;
+  cfg.fields.forEach(f => {
+    const el = document.getElementById(`${cfg.key}-${f.col}`);
+    let v = r[f.col];
+    if(f.type === 'money') v = (v != null ? String(v).replace('.', ',') : '');
+    el.value = (v != null ? v : '');
+  });
+  document.getElementById(`${cfg.key}-editing-id`).value = id;
+  document.getElementById(`${cfg.key}-btn-salvar`).textContent = '💾 Salvar Alterações';
+  document.getElementById(`${cfg.key}-btn-cancelar`).style.display = '';
+  document.getElementById(`${cfg.key}-form-titulo`).textContent = `✏️ Editando Caso — ${cfg.titulo}`;
+  window.scrollTo(0,0);
+}
+
+async function crudExcluir(cfg, id){
+  if(!confirm('Excluir este caso? Essa ação não pode ser desfeita.')) return;
+  const { error } = await sb.from(cfg.table).delete().eq('id', id);
+  if(error){ toast('Erro ao excluir: ' + error.message, true); return; }
+  toast('Caso excluído.');
+  crudCarregar(cfg);
+}
+
+function crudExportar(cfg){
+  if(!cfg.filtrado.length){ alert('Não há casos para exportar.'); return; }
+  const dados = cfg.filtrado.map(r => {
+    const obj = {};
+    cfg.fields.forEach(f => {
+      obj[f.label] = f.type === 'money' ? (r[f.col]!=null?fmtMoeda(r[f.col]):'N/A') : (f.type==='date' ? (dataBR(r[f.col])||'N/A') : (r[f.col] || 'N/A'));
+    });
+    return obj;
+  });
+  const ws = XLSX.utils.json_to_sheet(dados);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, cfg.titulo.slice(0,31));
+  XLSX.writeFile(wb, `${cfg.titulo.replace(/\s+/g,'_')}_Embraer_${hojeISOlocal()}.xlsx`);
+}
+
+const ABAS = ['decisao','reintegrados','estrategicos','insalubridade','doencas','calculos','reintegracao','elaw'];
+const ABA_CARREGADORES = {};
+function mudarAba(aba){
+  ABAS.forEach(a => {
+    document.getElementById('view-' + a).classList.toggle('active', a === aba);
+    document.getElementById('tab-btn-' + a).classList.toggle('active', a === aba);
+  });
+  document.getElementById('erro-conexao').innerHTML = '';
+  if(ABA_CARREGADORES[aba] && !ABA_CARREGADORES[aba].carregado){
+    ABA_CARREGADORES[aba].carregado = true;
+    ABA_CARREGADORES[aba].fn();
+  }
+}
+
+/* ===================== ABA: REINTEGRADOS =====================
+   Espelha a planilha mensal "Reintegrados" — 1 linha por processo. */
+crudMontarView({
+  key: 'reintegrados',
+  table: 'embraer_reintegrados',
+  titulo: 'Reintegrados',
+  icone: '🔁',
+  fields: [
+    {col:'processso_no', label:'Processo nº', type:'text', required:true, placeholder:'0000000-00.0000.0.00.0000'},
+    {col:'nome_do_reclamante', label:'Nome do Reclamante', type:'text', required:true},
+    {col:'tipo_de_processo_rt_ou_ms', label:'Tipo de Processo (RT ou MS)', type:'select', options:['RT','MS']},
+    {col:'chapa', label:'Chapa', type:'text'},
+    {col:'vt', label:'VT', type:'text'},
+    {col:'juiz', label:'Juiz', type:'text'},
+    {col:'comarca', label:'Comarca', type:'text'},
+    {col:'advogado_reclamante', label:'Advogado Reclamante', type:'text'},
+    {col:'informar_outros_processos_do_mesmo_reclamante', label:'Outros Processos do Mesmo Reclamante', type:'textarea'},
+    {col:'unidade_embraer', label:'Unidade Embraer', type:'select', options:['SP','SJK','EGM','ELEB','SOD','TTE','VCP','GPX','BOT','Outro']},
+    {col:'diretoria', label:'Diretoria', type:'text'},
+    {col:'gerencia', label:'Gerência', type:'text'},
+    {col:'admissao', label:'Admissão', type:'date'},
+    {col:'demissao', label:'Demissão', type:'text', placeholder:'dd/mm/aaaa ou "Ativo"'},
+    {col:'distribuicao_da_acao', label:'Distribuição da Ação', type:'date'},
+    {col:'qual_o_fundamento_do_pedido_de_reintegracao', label:'Fundamento do Pedido de Reintegração', type:'textarea', placeholder:'Ex: aposentadoria, CIPA, doença CCT, doença B-91...'},
+    {col:'se_for_doenca_cct_qual_doenca_alegada', label:'Se Doença CCT, Qual Doença Alegada', type:'text'},
+    {col:'familia_cid', label:'Família CID', type:'text'},
+    {col:'familia_cid_reintegracao', label:'Família CID - Reintegração', type:'text'},
+    {col:'quando_alega_ter_adquirido_a_doenca', label:'Quando Alega Ter Adquirido a Doença?', type:'text'},
+    {col:'alega_ter_adquirido_a_doenca_no_periodo_de_vigencia_da_cct', label:'Alega Ter Adquirido no Período de Vigência da CCT?', type:'select', options:['Sim','Não']},
+    {col:'empregado_reintegrado', label:'Empregado Reintegrado?', type:'select', options:['Sim','Não']},
+    {col:'data_reintegracao', label:'Data Reintegração', type:'date'},
+    {col:'a_pericia_medica_ja_ocorreu', label:'A Perícia Médica Já Ocorreu?', type:'select', options:['Sim','Não']},
+    {col:'qual_o_resultado_da_pericia_medica', label:'Resultado da Perícia Médica', type:'select', options:['Favorável','Desfavorável','Aguardando']},
+    {col:'a_pericia_ergonomica_ja_ocorreu', label:'A Perícia Ergonômica Já Ocorreu?', type:'select', options:['Sim','Não']},
+    {col:'qual_o_resultado_da_pericia_ergonomica', label:'Resultado da Perícia Ergonômica', type:'select', options:['Favorável','Desfavorável','Aguardando']},
+    {col:'tem_audiencia_futura_agendada_se_sim_para_quando', label:'Audiência Futura Agendada? Para Quando?', type:'text'},
+    {col:'houve_decisao_liminar', label:'Houve Decisão Liminar?', type:'select', options:['Reintegração deferida','Reintegração indeferida','Aguardando decisão','Não houve pedido liminar']},
+    {col:'houve_pedido_de_reconsideracao_da_decisao_por_parte_da_emb', label:'Pedido de Reconsideração pela Embraer?', type:'select', options:['Sim','Não','N/A']},
+    {col:'houve_mandado_de_seguranca_por_parte_da_embraer', label:'Mandado de Segurança pela Embraer?', type:'select', options:['Sim','Não','N/A']},
+    {col:'sentenca', label:'Sentença', type:'select', options:['Reintegração deferida','Reintegração indeferida','Aguardando decisão']},
+    {col:'houve_recurso_ordinario_por_parte_da_embraer', label:'Recurso Ordinário pela Embraer?', type:'select', options:['Sim','Não']},
+    {col:'acordao_trt', label:'Acórdão TRT', type:'select', options:['Manteve decisão VT','Reformou decisão VT','Aguardando decisão']},
+    {col:'acordao_tst', label:'Acórdão TST', type:'select', options:['Manteve decisão TRT','Reformou decisão TRT','Aguardando decisão']},
+    {col:'ultima_decisao_reintegracao_deferida_ou_indeferida', label:'Última Decisão (Deferida ou Indeferida)', type:'select', options:['Reintegração deferida','Reintegração indeferida']},
+    {col:'onde_foi_a_ultima_decisao', label:'Onde Foi a Última Decisão', type:'text', placeholder:'Ex: VT, TRT, TST'},
+    {col:'status', label:'Status', type:'select', options:['Ativo','Encerrado']},
+    {col:'fase_processual', label:'Fase Processual', type:'text'},
+    {col:'risco_do_elaw', label:'Risco do Elaw', type:'select', options:['Possível','Provável','Remoto']},
+    {col:'valor_do_risco', label:'Valor do Risco [ELAW]', type:'money'},
+    {col:'valor_da_provisao', label:'Valor da Provisão [ELAW]', type:'money'},
+    {col:'escritorio_que_preencheu_a_planilha', label:'Escritório que Preencheu', type:'text', placeholder:'Peixoto e Cury'},
+    {col:'analise_objetiva_dos_documentos_apresentados_pelo_reclaman', label:'Análise Objetiva dos Documentos Apresentados', type:'textarea'},
+    {col:'risco_em_relacao_aos_documentos_apresentados', label:'Risco em Relação aos Documentos', type:'text'},
+    {col:'analise_das_condicoes_juridicas', label:'Análise das Condições Jurídicas', type:'textarea', placeholder:'Laudo médico, decisões, juízes...'},
+    {col:'risco_em_relacao_as_condicoes_juridicas', label:'Risco em Relação às Condições Jurídicas', type:'text'},
+    {col:'risco_em_relacao_a_analise_comparativa_de_i_a', label:'Risco em Relação à Análise Comparativa de I.A.', type:'text'},
+    {col:'tempo_provavel_para_a_reintegracao', label:'Tempo Provável para a Reintegração', type:'text'},
+    {col:'probabilidade_de_reintegracao', label:'Probabilidade de Reintegração', type:'text'},
+    {col:'obs', label:'OBS', type:'textarea'},
+    {col:'obs_marol', label:'OBS MAROL', type:'textarea'},
+    {col:'sigla', label:'Sigla', type:'text'},
+  ],
+  resumo: [
+    {col:'processso_no', label:'Processo', mono:true},
+    {col:'nome_do_reclamante', label:'Reclamante'},
+    {col:'status', label:'Status'},
+    {col:'fase_processual', label:'Fase'},
+    {col:'risco_do_elaw', label:'Risco'},
+    {col:'valor_do_risco', label:'Valor do Risco', money:true},
+    {col:'valor_da_provisao', label:'Valor da Provisão', money:true},
+  ],
+});
+
+/* ===================== ABA: ESTRATÉGICOS =====================
+   Espelha a planilha mensal "Estratégicos" — 1 linha por processo. */
+crudMontarView({
+  key: 'estrategicos',
+  table: 'embraer_estrategicos',
+  titulo: 'Estratégicos',
+  icone: '♟️',
+  fields: [
+    {col:'processso_no', label:'Processo nº', type:'text', required:true, placeholder:'0000000-00.0000.0.00.0000'},
+    {col:'nome_do_reclamante', label:'Nome do Reclamante', type:'text', required:true},
+    {col:'tipo_de_processo_rt_ou_ms', label:'Tipo de Processo (RT ou MS)', type:'select', options:['RT','MS']},
+    {col:'chapa', label:'Chapa', type:'text'},
+    {col:'vt', label:'VT', type:'text'},
+    {col:'comarca', label:'Comarca', type:'text'},
+    {col:'advogado_reclamante', label:'Advogado Reclamante', type:'text'},
+    {col:'informar_outros_processos_do_mesmo_reclamante', label:'Outros Processos do Mesmo Reclamante', type:'textarea'},
+    {col:'unidade_embraer', label:'Unidade Embraer', type:'select', options:['SP','SJK','EGM','ELEB','SOD','TTE','VCP','GPX','BOT','Outro']},
+    {col:'vice_presidencia', label:'Vice-Presidência', type:'text'},
+    {col:'diretoria', label:'Diretoria', type:'text'},
+    {col:'gerencia', label:'Gerência', type:'text'},
+    {col:'admissao', label:'Admissão', type:'date'},
+    {col:'demissao', label:'Demissão', type:'text', placeholder:'dd/mm/aaaa ou "Ativo"'},
+    {col:'distribuicao_da_acao', label:'Distribuição da Ação', type:'date'},
+    {col:'grupo_de_objetos', label:'Grupo de Objetos', type:'text'},
+    {col:'objetos', label:'Objetos', type:'textarea'},
+    {col:'motivo_da_relevancia', label:'Motivo da Relevância', type:'textarea'},
+    {col:'resumo_do_processo_com_enfase_na_relevancia', label:'Resumo do Processo (Ênfase na Relevância)', type:'textarea'},
+    {col:'houve_decisao_liminar', label:'Houve Decisão Liminar?', type:'select', options:['Deferida','Indeferida','Aguardando decisão','Não houve pedido liminar']},
+    {col:'sentenca', label:'Sentença', type:'select', options:['Pedido procedente','Improcedente','Aguardando decisão']},
+    {col:'acordao_trt', label:'Acórdão TRT', type:'select', options:['Manteve decisão VT','Reformou decisão VT','Aguardando decisão']},
+    {col:'acordao_tst', label:'Acórdão TST', type:'select', options:['Manteve decisão TRT','Reformou decisão TRT','Aguardando decisão']},
+    {col:'status', label:'Status', type:'select', options:['Ativo','Encerrado']},
+    {col:'fase_processual', label:'Fase Processual', type:'text'},
+    {col:'risco', label:'Risco', type:'select', options:['Possível','Provável','Remoto']},
+    {col:'valor_do_risco', label:'Valor do Risco [ELAW]', type:'money'},
+    {col:'valor_da_provisao', label:'Valor da Provisão [ELAW]', type:'money'},
+    {col:'escritorio_que_preencheu_a_planilha', label:'Escritório que Preencheu', type:'text', placeholder:'Peixoto e Cury'},
+    {col:'obs', label:'OBS', type:'textarea'},
+    {col:'obs_marol', label:'OBS MAROL', type:'textarea'},
+  ],
+  resumo: [
+    {col:'processso_no', label:'Processo', mono:true},
+    {col:'nome_do_reclamante', label:'Reclamante'},
+    {col:'status', label:'Status'},
+    {col:'fase_processual', label:'Fase'},
+    {col:'risco', label:'Risco'},
+    {col:'valor_do_risco', label:'Valor do Risco', money:true},
+    {col:'valor_da_provisao', label:'Valor da Provisão', money:true},
+  ],
+});
+
+/* Export genérico usado pelas abas de e-mail (Cálculos, Reintegração, Elaw) —
+   colunas: [{label, col}], onde col é a chave do registro no Supabase. */
+function exportarExcelGenerico(lista, nomeArquivo, colunas){
+  if(!lista.length){ alert('Não há registros para exportar.'); return; }
+  const dados = lista.map(r => {
+    const obj = {};
+    colunas.forEach(c => { obj[c.label] = r[c.col] != null && r[c.col] !== '' ? r[c.col] : 'N/A'; });
+    return obj;
+  });
+  const ws = XLSX.utils.json_to_sheet(dados);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Histórico');
+  XLSX.writeFile(wb, `${nomeArquivo}_${hojeISOlocal()}.xlsx`);
+}
+
+const UF_LISTA = ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
+const SIM_NAO_NA = ['Sim','Não','N/A'];
+
+/* ===================== ABA: INSALUBRIDADE E PERICULOSIDADE =====================
+   Espelha a planilha mensal "Insalubridade e Periculosidade" (aba "(2)", mais
+   completa, com Valor da Causa/Risco/Provisão/Diferença). */
+crudMontarView({
+  key: 'insalubridade',
+  table: 'embraer_insalubridade_periculosidade',
+  titulo: 'Insalubridade e Periculosidade',
+  icone: '🧪',
+  fields: [
+    {col:'processo', label:'Processo', type:'text', required:true, placeholder:'0000000-00.0000.0.00.0000'},
+    {col:'resp_verificar', label:'Resp. Verificar', type:'text'},
+    {col:'responsavel_pela_pasta', label:'Responsável pela Pasta', type:'text'},
+    {col:'id_elaw', label:'ID Elaw', type:'text'},
+    {col:'status', label:'Status', type:'select', options:['Ativo','Encerrado']},
+    {col:'pasta_p_c', label:'Pasta P&C', type:'text'},
+    {col:'reclamante', label:'Reclamante', type:'text', required:true},
+    {col:'advogado_reclamante', label:'Advogado Reclamante', type:'text'},
+    {col:'tipo_de_acao', label:'Tipo de Ação', type:'text'},
+    {col:'grupo_de_objetos', label:'Grupo de Objetos', type:'text'},
+    {col:'objetos', label:'Objetos', type:'textarea'},
+    {col:'fase', label:'Fase', type:'text'},
+    {col:'local_dos_autos', label:'Local dos Autos', type:'select', options:['VT','TRT','TST']},
+    {col:'vara', label:'Vara', type:'text'},
+    {col:'comarca', label:'Comarca', type:'text'},
+    {col:'uf', label:'UF', type:'select', options:UF_LISTA},
+    {col:'grupo_empresas', label:'Grupo Empresas', type:'text', placeholder:'Ex: Embraer S.A.'},
+    {col:'esfera', label:'Esfera', type:'text'},
+    {col:'categoria_do_cargo', label:'Categoria do Cargo', type:'text'},
+    {col:'ultimo_cargo', label:'Último Cargo', type:'text'},
+    {col:'risco_prognostico_de_perda', label:'Risco - Prognóstico de Perda', type:'select', options:['Possível','Provável','Remoto']},
+    {col:'valor_da_causa', label:'Valor da Causa', type:'money'},
+    {col:'valor_do_risco', label:'Valor do Risco', type:'money'},
+    {col:'valor_da_provisao', label:'Valor da Provisão', type:'money'},
+    {col:'diferenca', label:'Diferença', type:'money'},
+    {col:'ultima_decisao', label:'Última Decisão', type:'text'},
+    {col:'insal_e_peri', label:'Insal. e Peri.', type:'select', options:['Insalubridade','Periculosidade','Insalubridade e Periculosidade']},
+    {col:'perito_do_juizo', label:'Perito do Juízo', type:'text'},
+    {col:'local_da_pericia_planta_abreviada', label:'Local da Perícia - Planta Abreviada', type:'text'},
+    {col:'data_da_pericia', label:'Data da Perícia', type:'date'},
+    {col:'local_da_pericia', label:'Local da Perícia', type:'text'},
+    {col:'laudo_apresentado', label:'Laudo Apresentado?', type:'select', options:['Sim','Não']},
+    {col:'data_de_apresentacao_do_laudo', label:'Data de Apresentação do Laudo', type:'date'},
+    {col:'resultado_do_laudo_geral', label:'Resultado do Laudo Geral', type:'select', options:['Favorável','Desfavorável','Aguardando']},
+    {col:'periodo_da_condenacao_de_periculosidade', label:'Período da Condenação de Periculosidade', type:'text'},
+    {col:'periodo_da_condenacao_da_insalubridade', label:'Período da Condenação de Insalubridade', type:'text'},
+    {col:'planta', label:'Planta', type:'text'},
+    {col:'setores_periciados_unificada', label:'Setores Periciados - Unificada', type:'text'},
+    {col:'setores_periciados', label:'Setores Periciados', type:'textarea'},
+    {col:'ha_pedido_de_periculosidade', label:'Há Pedido de Periculosidade?', type:'select', options:['Sim','Não']},
+    {col:'agente_da_periculosidade', label:'Agente da Periculosidade', type:'text'},
+    {col:'resultado_do_laudo_periculosidade', label:'Resultado do Laudo Periculosidade', type:'select', options:['Favorável','Desfavorável','Aguardando','N/A']},
+    {col:'inflamaveis', label:'Inflamáveis', type:'select', options:SIM_NAO_NA},
+    {col:'combustivel', label:'Combustível', type:'select', options:SIM_NAO_NA},
+    {col:'explosivos', label:'Explosivos', type:'select', options:SIM_NAO_NA},
+    {col:'energia_eletrica', label:'Energia Elétrica', type:'select', options:SIM_NAO_NA},
+    {col:'obs_periculosidade', label:'Obs Periculosidade', type:'textarea'},
+    {col:'ha_pedido_de_insalubridade', label:'Há Pedido de Insalubridade?', type:'select', options:['Sim','Não']},
+    {col:'agente_da_insalubridade', label:'Agente da Insalubridade', type:'text'},
+    {col:'resultado_do_laudo_insalubridade', label:'Resultado do Laudo Insalubridade', type:'select', options:['Favorável','Desfavorável','Aguardando','N/A']},
+    {col:'grau_de_enquadramento', label:'Grau de Enquadramento', type:'select', options:['Mínimo','Médio','Máximo','N/A']},
+    {col:'agentes_biologicos', label:'Agentes Biológicos', type:'select', options:SIM_NAO_NA},
+    {col:'ruido', label:'Ruído', type:'select', options:SIM_NAO_NA},
+    {col:'qual_area_deu_o_ruido', label:'Qual Área Deu o Ruído', type:'text'},
+    {col:'agentes_quimicos', label:'Agentes Químicos', type:'select', options:SIM_NAO_NA},
+    {col:'solventes', label:'Solventes', type:'select', options:SIM_NAO_NA},
+    {col:'oleos_e_graxas', label:'Óleos e Graxas', type:'select', options:SIM_NAO_NA},
+    {col:'obs_insalubridade', label:'Obs Insalubridade', type:'textarea'},
+    {col:'marol_respostas', label:'Marol - Respostas', type:'text'},
+  ],
+  resumo: [
+    {col:'processo', label:'Processo', mono:true},
+    {col:'reclamante', label:'Reclamante'},
+    {col:'status', label:'Status'},
+    {col:'fase', label:'Fase'},
+    {col:'resultado_do_laudo_geral', label:'Laudo Geral'},
+    {col:'valor_do_risco', label:'Valor do Risco', money:true},
+    {col:'valor_da_provisao', label:'Valor da Provisão', money:true},
+  ],
+});
+
+/* ===================== ABA: DOENÇAS =====================
+   Espelha a planilha mensal "Doenças" (aba "DOENÇAS - 5", mais completa,
+   com Pasta P&C). */
+crudMontarView({
+  key: 'doencas',
+  table: 'embraer_doencas',
+  titulo: 'Doenças',
+  icone: '🩺',
+  fields: [
+    {col:'processo', label:'Processo', type:'text', required:true, placeholder:'0000000-00.0000.0.00.0000'},
+    {col:'cid', label:'CID', type:'text', placeholder:'Ex: H83.3, M554.5'},
+    {col:'familia_cid', label:'Família CID', type:'text'},
+    {col:'setor', label:'Setor', type:'text'},
+    {col:'id_elaw', label:'ID Elaw', type:'text'},
+    {col:'status', label:'Status', type:'select', options:['Ativo','Encerrado']},
+    {col:'pasta_p_c', label:'Pasta P&C', type:'text'},
+    {col:'reclamante', label:'Reclamante', type:'text', required:true},
+    {col:'advogado_reclamante', label:'Advogado Reclamante', type:'text'},
+    {col:'tipo_de_acao', label:'Tipo de Ação', type:'text'},
+    {col:'grupo_de_objetos', label:'Grupo de Objetos', type:'text'},
+    {col:'objetos', label:'Objetos', type:'textarea'},
+    {col:'fase', label:'Fase', type:'text'},
+    {col:'local_dos_autos', label:'Local dos Autos', type:'select', options:['VT','TRT','TST']},
+    {col:'vara', label:'Vara', type:'text'},
+    {col:'comarca', label:'Comarca', type:'text'},
+    {col:'uf', label:'UF', type:'select', options:UF_LISTA},
+    {col:'empresa', label:'Empresa', type:'text'},
+    {col:'grupo_de_empresas', label:'Grupo de Empresas', type:'text'},
+    {col:'esfera', label:'Esfera', type:'text'},
+    {col:'categoria_do_cargo', label:'Categoria do Cargo', type:'text'},
+    {col:'ultimo_cargo', label:'Último Cargo', type:'text'},
+    {col:'risco_prognostico_de_perda', label:'Risco - Prognóstico de Perda', type:'select', options:['Possível','Provável','Remoto']},
+    {col:'ultima_decisao_do_processo', label:'Última Decisão do Processo', type:'text'},
+    {col:'ultima_decisao_do_laudo', label:'Última Decisão do Laudo', type:'text'},
+    {col:'data_da_pericia_medica', label:'Data da Perícia - Médica', type:'date'},
+    {col:'data_da_pericia_ergonomica', label:'Data da Perícia - Ergonômica', type:'date'},
+    {col:'pericia_medica', label:'Perícia Médica?', type:'select', options:['Sim','Não']},
+    {col:'pericia_ergonomico', label:'Perícia Ergonômica?', type:'select', options:['Sim','Não']},
+    {col:'status_da_pericia_medica', label:'Status da Perícia Médica', type:'select', options:['Aguardando','Realizada']},
+    {col:'status_da_pericia_ergnomico', label:'Status da Perícia Ergonômica', type:'select', options:['Aguardando','Realizada']},
+    {col:'tipo_de_pericia', label:'Tipo de Perícia', type:'text', placeholder:'Ex: Médica e Ergonômica'},
+    {col:'perito_medico_do_juizo', label:'Perito Médico do Juízo', type:'text'},
+    {col:'perito_engenheiro_do_juizo', label:'Perito Engenheiro do Juízo', type:'text'},
+    {col:'embraer_conclusao_laudo_ergonomico', label:'Embraer - Conclusão Laudo Ergonômico', type:'select', options:['Favorável','Desfavorável','Aguardando']},
+    {col:'embraer_conclusao_laudo_medico', label:'Embraer - Conclusão Laudo Médico', type:'select', options:['Favorável','Desfavorável','Aguardando']},
+    {col:'embraer_conclusao_grau_do_risco_ergonomico', label:'Embraer - Conclusão Grau do Risco Ergonômico', type:'select', options:['Sem Risco','Baixo','Médio','Alto']},
+    {col:'embraer_conclusao_nexo_doenca', label:'Embraer - Conclusão Nexo Doença', type:'select', options:['Concausal','Ocupacional','Não ocupacional','Aguardando']},
+    {col:'embraer_percentual_de_reducao_da_capacidade', label:'Embraer - % de Redução da Capacidade', type:'text', placeholder:'Ex: 12,5%'},
+    {col:'embraer_tipo_de_doenca', label:'Embraer - Tipo de Doença', type:'text'},
+    {col:'embraer_parte_do_corpo', label:'Embraer - Parte do Corpo', type:'text'},
+    {col:'tipo_de_doenca_ajustado', label:'Tipo de Doença - Ajustado', type:'text'},
+    {col:'acompanhamento', label:'Acompanhamento', type:'textarea'},
+  ],
+  resumo: [
+    {col:'processo', label:'Processo', mono:true},
+    {col:'reclamante', label:'Reclamante'},
+    {col:'status', label:'Status'},
+    {col:'fase', label:'Fase'},
+    {col:'risco_prognostico_de_perda', label:'Risco'},
+    {col:'embraer_conclusao_laudo_medico', label:'Laudo Médico'},
+    {col:'embraer_conclusao_laudo_ergonomico', label:'Laudo Ergonômico'},
+  ],
+});
+
+/* ===================== ABA: SOLICITAÇÃO DE CÁLCULOS (GERAL) =====================
+   Vai sempre pro mesmo destinatário (Embraer via Bernhoeft), variando só o
+   "Tipo de Subsídio" — cobre Liquidação de Sentença, Cálculo para Fins de
+   Acordo, Levantamento de Garantia, eSocial, Impugnações etc. */
+const CALCULOS_TO = 'embraer@bernhoeft.com.br';
+const CALCULOS_CC = 'embraer.pec@peixotoecury.com.br';
+const CALCULOS_COLUNAS_EXCEL = [
+  {label:'Processo', col:'numero_processo'}, {label:'Reclamante', col:'nome_reclamante'},
+  {label:'Tipo de Subsídio', col:'tipo_subsidio'}, {label:'Prazo', col:'prazo_envio'},
+  {label:'Link', col:'link_documentos'}, {label:'Outros', col:'outros_detalhes'},
+  {label:'Responsável', col:'responsavel_sigla'}, {label:'Status', col:'status'},
+  {label:'Criado em', col:'criado_em'}, {label:'Concluído em', col:'concluido_em'},
+];
+document.getElementById('form-calculos').addEventListener('submit', async function(ev){
+  ev.preventDefault();
+  const registro = {
+    numero_processo: document.getElementById('cc-processo').value.trim(),
+    nome_reclamante: document.getElementById('cc-reclamante').value.trim(),
+    tipo_subsidio: document.getElementById('cc-tipo-subsidio').value,
+    link_documentos: document.getElementById('cc-link').value.trim(),
+    prazo_envio: document.getElementById('cc-prazo').value,
+    outros_detalhes: document.getElementById('cc-outros').value.trim() || null,
+    responsavel_sigla: document.getElementById('cc-responsavel').value.trim(),
+    status: 'Pendente',
+    criado_em: new Date().toISOString(),
+  };
+  const prazoFmt = dataBR(registro.prazo_envio);
+  const assunto = `Solicitação de Cálculos — ${registro.tipo_subsidio} — Processo ${registro.numero_processo}`;
+  const corpo = `Prezados, boa tarde!\n\nSolicitamos, por gentileza, ${registro.tipo_subsidio.toLowerCase()} referente ao processo abaixo:\n\nProcesso: ${registro.numero_processo}\nReclamante: ${registro.nome_reclamante}\nÍntegra/documentos: ${registro.link_documentos}\n${registro.outros_detalhes ? 'Observações: ' + registro.outros_detalhes + '\n' : ''}\nPodem, por favor, providenciar até ${prazoFmt}?\n\nDesde já agradecemos.\n\nAtenciosamente,`;
+  try{
+    const { error } = await sb.from('embraer_solicitacoes_calculos').insert(registro);
+    if(error) throw error;
+    toast('Solicitação registrada. Abrindo e-mail…');
+    carregarHistoricoCalculos();
+  }catch(err){
+    console.error(err);
+    toast('E-mail aberto, mas NÃO foi possível salvar no histórico: ' + (err.message||err), true);
+  }
+  abrirEmail(CALCULOS_TO, CALCULOS_CC, assunto, corpo);
+  this.reset();
+});
+
+let HIST_CALCULOS = [];
+let HIST_CALCULOS_FILTRADO = [];
+async function carregarHistoricoCalculos(){
+  try{
+    const { data, error } = await sb.from('embraer_solicitacoes_calculos').select('*').order('criado_em', {ascending:false}).limit(200);
+    if(error) throw error;
+    HIST_CALCULOS = data || [];
+    document.getElementById('erro-conexao').innerHTML = '';
+    renderHistoricoCalculos();
+  }catch(err){
+    console.error(err);
+    document.getElementById('cc-tbody').innerHTML = `<tr><td colspan="8" class="empty-state">Erro ao carregar histórico — a tabela embraer_solicitacoes_calculos provavelmente ainda não existe.</td></tr>`;
+  }
+}
+function renderHistoricoCalculos(){
+  const termo = document.getElementById('cc-busca').value.toLowerCase();
+  const status = document.getElementById('cc-flt-status').value;
+  const rows = HIST_CALCULOS.filter(r =>
+    (!termo || (r.numero_processo||'').toLowerCase().includes(termo) || (r.nome_reclamante||'').toLowerCase().includes(termo)) &&
+    (!status || (r.status||'Pendente') === status)
+  );
+  HIST_CALCULOS_FILTRADO = rows;
+  const tbody = document.getElementById('cc-tbody');
+  if(!rows.length){ tbody.innerHTML = `<tr><td colspan="8" class="empty-state">Nenhuma solicitação encontrada.</td></tr>`; return; }
+  tbody.innerHTML = rows.map(r => `<tr>
+    <td class="mono">${esc(r.numero_processo)}</td>
+    <td>${esc(r.nome_reclamante)}</td>
+    <td>${esc(r.tipo_subsidio)}</td>
+    <td class="mono">${dataBR(r.prazo_envio)||''}</td>
+    <td>${esc(r.responsavel_sigla)}</td>
+    <td><span class="badge ${r.status==='Concluído'?'badge-green':'badge-orange'}">${esc(r.status||'Pendente')}</span></td>
+    <td class="mono">${fmtDataHora(r.criado_em)}</td>
+    <td>
+      ${r.status !== 'Concluído' ? `<button class="row-btn" onclick="concluirCalculo(${r.id})">✅ Concluir</button>` : ''}
+      <button class="row-btn" onclick="verDetalhesCalculo(${r.id})">👁️ Ver</button>
+      <button class="row-btn" onclick="excluirRegistroGenerico('embraer_solicitacoes_calculos', ${r.id}, carregarHistoricoCalculos)">🗑️ Excluir</button>
+    </td>
+  </tr>`).join('');
+}
+async function concluirCalculo(id){
+  const { error } = await sb.from('embraer_solicitacoes_calculos').update({ status: 'Concluído', concluido_em: new Date().toISOString() }).eq('id', id);
+  if(error){ toast('Erro ao concluir: ' + error.message, true); return; }
+  toast('Solicitação marcada como concluída.');
+  carregarHistoricoCalculos();
+}
+function verDetalhesCalculo(id){
+  const r = HIST_CALCULOS.find(x => x.id === id);
+  if(!r) return;
+  const texto = `Processo: ${r.numero_processo}\nReclamante: ${r.nome_reclamante}\nTipo de Subsídio: ${r.tipo_subsidio}\nPrazo: ${dataBR(r.prazo_envio)||''}\nLink: ${r.link_documentos}\nOutros: ${r.outros_detalhes||''}\nResponsável: ${r.responsavel_sigla}\nStatus: ${r.status||'Pendente'}`;
+  abrirVerDetalhes(`Solicitação de Cálculos — ${r.numero_processo}`, textoParaHtmlDetalhes(texto));
+}
+
+/* Excluir genérico usado pelas abas de e-mail — recebe a função de recarregar
+   como parâmetro, já que cada aba tem seu próprio histórico em memória. */
+async function excluirRegistroGenerico(tabela, id, recarregar){
+  if(!confirm('Excluir este registro? Essa ação não pode ser desfeita.')) return;
+  const { error } = await sb.from(tabela).delete().eq('id', id);
+  if(error){ toast('Erro ao excluir: ' + error.message, true); return; }
+  toast('Registro excluído.');
+  recarregar();
+}
+ABA_CARREGADORES['calculos'] = { carregado: false, fn: carregarHistoricoCalculos };
+
+/* ===================== ABA: DETERMINAÇÃO PARA REINTEGRAÇÃO =====================
+   Notificação pros 4 contatos do cliente Embraer — texto puro (mailto: não
+   reproduz a tabela colorida usada no e-mail original do Outlook). */
+const REINTEGRACAO_COLUNAS_EXCEL = [
+  {label:'Processo', col:'processo'}, {label:'Reclamante', col:'reclamante'}, {label:'Setor', col:'setor'},
+  {label:'Telefone', col:'telefone_reclamante'}, {label:'Valor do Risco', col:'valor_risco'}, {label:'Prognóstico', col:'prognostico'},
+  {label:'Prazo', col:'prazo_reintegracao'}, {label:'Interesse em Acordo', col:'interesse_acordo'}, {label:'Resultado Laudo', col:'resultado_laudo'},
+  {label:'Valor da Multa', col:'valor_multa'}, {label:'Fundamentos', col:'fundamentos'}, {label:'Outras Obs', col:'outras_obs'},
+  {label:'Link PDF', col:'link_pdf'}, {label:'Responsável', col:'responsavel_sigla'}, {label:'Status', col:'status'}, {label:'Criado em', col:'criado_em'},
+];
+async function enviarDeterminacaoReintegracao(ev){
+  ev.preventDefault();
+  const g = id => document.getElementById(id).value.trim() || null;
+  const obrigatorios = [['ri-processo','Nº do Processo'],['ri-reclamante','Reclamante'],['ri-prazo','Prazo para Reintegração'],['ri-responsavel','Responsável']];
+  for(const [id, label] of obrigatorios){ if(!document.getElementById(id).value.trim()){ toast(`Preencha o campo "${label}".`, true); return; } }
+  const registro = {
+    processo: g('ri-processo'), reclamante: g('ri-reclamante'), setor: g('ri-setor'),
+    telefone_reclamante: g('ri-telefone'), valor_risco: parseMoedaBR(document.getElementById('ri-valor-risco').value),
+    prognostico: g('ri-prognostico'), prazo_reintegracao: g('ri-prazo'), interesse_acordo: g('ri-interesse-acordo'),
+    resultado_laudo: g('ri-resultado-laudo'), valor_multa: g('ri-valor-multa'), fundamentos: g('ri-fundamentos'),
+    outras_obs: g('ri-outras-obs'), link_pdf: g('ri-link-pdf'), responsavel_sigla: g('ri-responsavel'),
+    status: 'Pendente', criado_em: new Date().toISOString(),
+  };
+  const prazoFmt = dataBR(registro.prazo_reintegracao);
+  const assunto = `DETERMINAÇÃO PARA REINTEGRAÇÃO — ${registro.processo} — ${registro.reclamante}`;
+  const corpo = `Fomos intimados a realizar a reintegração do Reclamante em referência.\n\n`
+    + `Nº do Processo: ${registro.processo}\n`
+    + `Setor: ${registro.setor || 'N/A'}\n`
+    + `Reclamante: ${registro.reclamante}\n`
+    + `Telefone do Reclamante: ${registro.telefone_reclamante || 'N/A'}\n`
+    + `Valor do Risco: ${registro.valor_risco != null ? fmtMoeda(registro.valor_risco) : 'N/A'}\n`
+    + `Prognóstico: ${registro.prognostico || 'N/A'}\n`
+    + `Prazo para Reintegração: ${prazoFmt}\n`
+    + `Tem interesse em acordo?: ${registro.interesse_acordo || 'N/A'}\n`
+    + `Resultado Laudo: ${registro.resultado_laudo || 'N/A'}\n`
+    + `Valor da Multa: ${registro.valor_multa || 'N/A'}\n`
+    + `Fundamentos da Decisão: ${registro.fundamentos || 'N/A'}\n`
+    + `Outras obs: ${registro.outras_obs || 'N/A'}\n`
+    + (registro.link_pdf ? `Documento: ${registro.link_pdf}\n` : '')
+    + `\nAlertamos ao prazo de ${prazoFmt} para juntada de comprovante de reintegração nos autos.\n\nFicamos à disposição!\n\nAtenciosamente,`;
+  try{
+    const { error } = await sb.from('embraer_determinacao_reintegracao').insert(registro);
+    if(error) throw error;
+    toast('Determinação registrada. Abrindo e-mail…');
+    carregarHistoricoReintegracao();
+  }catch(err){
+    console.error(err);
+    toast('E-mail aberto, mas NÃO foi possível salvar no histórico: ' + (err.message||err), true);
+  }
+  abrirEmail(DECISAO_TO_BASE, DECISAO_CC, assunto, corpo);
+  document.querySelectorAll('#view-reintegracao input, #view-reintegracao select, #view-reintegracao textarea').forEach(el => el.value = '');
+}
+
+let HIST_REINTEGRACAO = [];
+let HIST_REINTEGRACAO_FILTRADO = [];
+async function carregarHistoricoReintegracao(){
+  try{
+    const { data, error } = await sb.from('embraer_determinacao_reintegracao').select('*').order('criado_em', {ascending:false}).limit(200);
+    if(error) throw error;
+    HIST_REINTEGRACAO = data || [];
+    document.getElementById('erro-conexao').innerHTML = '';
+    renderHistoricoReintegracao();
+  }catch(err){
+    console.error(err);
+    document.getElementById('ri-tbody').innerHTML = `<tr><td colspan="6" class="empty-state">Erro ao carregar histórico — a tabela embraer_determinacao_reintegracao provavelmente ainda não existe.</td></tr>`;
+  }
+}
+function renderHistoricoReintegracao(){
+  const termo = document.getElementById('ri-busca').value.toLowerCase();
+  const status = document.getElementById('ri-flt-status').value;
+  const rows = HIST_REINTEGRACAO.filter(r =>
+    (!termo || (r.processo||'').toLowerCase().includes(termo) || (r.reclamante||'').toLowerCase().includes(termo)) &&
+    (!status || (r.status||'Pendente') === status)
+  );
+  HIST_REINTEGRACAO_FILTRADO = rows;
+  const tbody = document.getElementById('ri-tbody');
+  if(!rows.length){ tbody.innerHTML = `<tr><td colspan="6" class="empty-state">Nenhuma determinação encontrada.</td></tr>`; return; }
+  tbody.innerHTML = rows.map(r => `<tr>
+    <td class="mono">${esc(r.processo)}</td>
+    <td>${esc(r.reclamante)}</td>
+    <td class="mono">${dataBR(r.prazo_reintegracao)||''}</td>
+    <td><span class="badge ${r.status==='Concluído'?'badge-green':'badge-orange'}">${esc(r.status||'Pendente')}</span></td>
+    <td class="mono">${fmtDataHora(r.criado_em)}</td>
+    <td>
+      ${r.status !== 'Concluído' ? `<button class="row-btn" onclick="concluirReintegracao(${r.id})">✅ Concluir</button>` : ''}
+      <button class="row-btn" onclick="verDetalhesReintegracao(${r.id})">👁️ Ver</button>
+      <button class="row-btn" onclick="excluirRegistroGenerico('embraer_determinacao_reintegracao', ${r.id}, carregarHistoricoReintegracao)">🗑️ Excluir</button>
+    </td>
+  </tr>`).join('');
+}
+async function concluirReintegracao(id){
+  const { error } = await sb.from('embraer_determinacao_reintegracao').update({ status: 'Concluído', concluido_em: new Date().toISOString() }).eq('id', id);
+  if(error){ toast('Erro ao concluir: ' + error.message, true); return; }
+  toast('Determinação marcada como concluída.');
+  carregarHistoricoReintegracao();
+}
+function verDetalhesReintegracao(id){
+  const r = HIST_REINTEGRACAO.find(x => x.id === id);
+  if(!r) return;
+  const texto = `Processo: ${r.processo}\nReclamante: ${r.reclamante}\nSetor: ${r.setor||''}\nTelefone: ${r.telefone_reclamante||''}\nValor do Risco: ${r.valor_risco!=null?fmtMoeda(r.valor_risco):''}\nPrognóstico: ${r.prognostico||''}\nPrazo: ${dataBR(r.prazo_reintegracao)||''}\nInteresse em Acordo: ${r.interesse_acordo||''}\nResultado Laudo: ${r.resultado_laudo||''}\nValor da Multa: ${r.valor_multa||''}\nFundamentos: ${r.fundamentos||''}\nOutras Obs: ${r.outras_obs||''}\nStatus: ${r.status||'Pendente'}`;
+  abrirVerDetalhes(`Determinação de Reintegração — ${r.processo}`, textoParaHtmlDetalhes(texto));
+}
+ABA_CARREGADORES['reintegracao'] = { carregado: false, fn: carregarHistoricoReintegracao };
+
+/* ===================== ABA: AJUSTE DE FASE E PROGNÓSTICO NO ELAW =====================
+   Notificação interna pro(a) assistente responsável pelo lançamento. */
+popularSelectProfissionais(document.getElementById('el-advogado'), 'Advogado');
+popularSelectProfissionais(document.getElementById('el-assistente'), 'Assistente');
+const ELAW_COLUNAS_EXCEL = [
+  {label:'Processo', col:'processo'}, {label:'Reclamante', col:'reclamante'}, {label:'Advogado Solicitante', col:'advogado_solicitante'},
+  {label:'Assistente Responsável', col:'assistente_responsavel'}, {label:'Novo Prognóstico', col:'novo_prognostico'},
+  {label:'Nova Fase', col:'nova_fase'}, {label:'Observações', col:'observacoes'}, {label:'Status', col:'status'}, {label:'Criado em', col:'criado_em'},
+];
+document.getElementById('form-elaw').addEventListener('submit', async function(ev){
+  ev.preventDefault();
+  const g = id => document.getElementById(id).value.trim() || null;
+  const registro = {
+    advogado_solicitante: g('el-advogado'), assistente_responsavel: g('el-assistente'),
+    processo: g('el-processo'), reclamante: g('el-reclamante'),
+    novo_prognostico: g('el-novo-prognostico'), nova_fase: g('el-nova-fase'),
+    observacoes: g('el-obs'), status: 'Pendente', criado_em: new Date().toISOString(),
+  };
+  const emailAssistente = emailPorNome(registro.assistente_responsavel);
+  const assunto = `Ajuste de Fase e Prognóstico no Elaw — Embraer — ${registro.processo}`;
+  const corpo = `Olá, ${registro.assistente_responsavel}.\n\n`
+    + `Uma nova solicitação de ajuste de fase/prognóstico no Elaw foi registrada pelo(a) advogado(a) ${registro.advogado_solicitante}.\n\n`
+    + `Cliente: Embraer\nProcesso: ${registro.processo}\nReclamante: ${registro.reclamante}\n`
+    + `Novo Prognóstico: ${registro.novo_prognostico || 'N/A'}\nNova Fase: ${registro.nova_fase || 'N/A'}\n`
+    + `Observações: ${registro.observacoes || 'N/A'}\n\n`
+    + `Por gentileza, realizar o ajuste e inserir a decisão no Elaw.\n\nAtenciosamente,`;
+  try{
+    const { error } = await sb.from('embraer_ajuste_fase_prognostico').insert(registro);
+    if(error) throw error;
+    toast('Comunicado registrado. Abrindo e-mail…');
+    carregarHistoricoElaw();
+  }catch(err){
+    console.error(err);
+    toast('E-mail aberto, mas NÃO foi possível salvar no histórico: ' + (err.message||err), true);
+  }
+  if(emailAssistente) abrirEmail(emailAssistente, '', assunto, corpo);
+  else toast('Assistente sem e-mail cadastrado — abra o e-mail manualmente.', true);
+  this.reset();
+});
+
+let HIST_ELAW = [];
+let HIST_ELAW_FILTRADO = [];
+async function carregarHistoricoElaw(){
+  try{
+    const { data, error } = await sb.from('embraer_ajuste_fase_prognostico').select('*').order('criado_em', {ascending:false}).limit(200);
+    if(error) throw error;
+    HIST_ELAW = data || [];
+    document.getElementById('erro-conexao').innerHTML = '';
+    renderHistoricoElaw();
+  }catch(err){
+    console.error(err);
+    document.getElementById('el-tbody').innerHTML = `<tr><td colspan="8" class="empty-state">Erro ao carregar histórico — a tabela embraer_ajuste_fase_prognostico provavelmente ainda não existe.</td></tr>`;
+  }
+}
+function renderHistoricoElaw(){
+  const termo = document.getElementById('el-busca').value.toLowerCase();
+  const status = document.getElementById('el-flt-status').value;
+  const rows = HIST_ELAW.filter(r =>
+    (!termo || (r.processo||'').toLowerCase().includes(termo) || (r.reclamante||'').toLowerCase().includes(termo)) &&
+    (!status || (r.status||'Pendente') === status)
+  );
+  HIST_ELAW_FILTRADO = rows;
+  const tbody = document.getElementById('el-tbody');
+  if(!rows.length){ tbody.innerHTML = `<tr><td colspan="8" class="empty-state">Nenhum comunicado encontrado.</td></tr>`; return; }
+  tbody.innerHTML = rows.map(r => `<tr>
+    <td class="mono">${esc(r.processo)}</td>
+    <td>${esc(r.reclamante)}</td>
+    <td>${esc(r.assistente_responsavel)}</td>
+    <td>${esc(r.novo_prognostico)}</td>
+    <td>${esc(r.nova_fase)}</td>
+    <td><span class="badge ${r.status==='Concluído'?'badge-green':'badge-orange'}">${esc(r.status||'Pendente')}</span></td>
+    <td class="mono">${fmtDataHora(r.criado_em)}</td>
+    <td>
+      ${r.status !== 'Concluído' ? `<button class="row-btn" onclick="concluirElaw(${r.id})">✅ Concluir</button>` : ''}
+      <button class="row-btn" onclick="verDetalhesElaw(${r.id})">👁️ Ver</button>
+      <button class="row-btn" onclick="excluirRegistroGenerico('embraer_ajuste_fase_prognostico', ${r.id}, carregarHistoricoElaw)">🗑️ Excluir</button>
+    </td>
+  </tr>`).join('');
+}
+async function concluirElaw(id){
+  const { error } = await sb.from('embraer_ajuste_fase_prognostico').update({ status: 'Concluído', concluido_em: new Date().toISOString() }).eq('id', id);
+  if(error){ toast('Erro ao concluir: ' + error.message, true); return; }
+  toast('Comunicado marcado como concluído.');
+  carregarHistoricoElaw();
+}
+function verDetalhesElaw(id){
+  const r = HIST_ELAW.find(x => x.id === id);
+  if(!r) return;
+  const texto = `Processo: ${r.processo}\nReclamante: ${r.reclamante}\nAdvogado Solicitante: ${r.advogado_solicitante}\nAssistente Responsável: ${r.assistente_responsavel}\nNovo Prognóstico: ${r.novo_prognostico||''}\nNova Fase: ${r.nova_fase||''}\nObservações: ${r.observacoes||''}\nStatus: ${r.status||'Pendente'}`;
+  abrirVerDetalhes(`Ajuste de Fase/Prognóstico — ${r.processo}`, textoParaHtmlDetalhes(texto));
+}
+ABA_CARREGADORES['elaw'] = { carregado: false, fn: carregarHistoricoElaw };
 
 /* ===================== REPORTE DE DECISÃO ===================== */
 const DECISAO_SECOES = ['laudo', 'sentenca', 'acordao', 'execucao'];
