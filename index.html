@@ -100,7 +100,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13
 .filter-select{background:#fff;border:1px solid #BFD6E4;border-radius:var(--radius);padding:8px 12px;color:var(--preto-pc);font-size:12px;font-family:var(--font);outline:none;}
 .filter-select:focus{border-color:var(--azul-pc);box-shadow:0 0 0 3px rgba(0,169,224,.14);}
 
-.table-wrap{overflow-x:auto;}
+.table-wrap{overflow-x:auto;padding-bottom:6px;}
+.table-wrap::-webkit-scrollbar{height:10px;}
+.table-wrap::-webkit-scrollbar-track{background:var(--surface2);border-radius:5px;}
+.table-wrap::-webkit-scrollbar-thumb{background:var(--azul-pc);border-radius:5px;}
+.table-wrap::-webkit-scrollbar-thumb:hover{background:var(--escuro-pc);}
 table.sol-table{width:100%;border-collapse:collapse;min-width:900px;background:#fff;}
 table.sol-table thead th{position:sticky;top:0;background:var(--escuro-pc);color:#fff;padding:10px 12px;text-transform:uppercase;font-size:10px;letter-spacing:.6px;text-align:left;white-space:nowrap;}
 table.sol-table tbody td{padding:10px 12px;border-bottom:1px solid #E5EEF4;color:var(--preto-pc);font-size:12px;vertical-align:middle;max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
