@@ -193,7 +193,7 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
         </div>
         <div class="mc-form-grid">
           <div class="mc-form-group"><label>Advogado Responsável <span class="req">*</span></label><select id="d-advogado-responsavel" required><option value="">Selecione…</option></select></div>
-          <div class="mc-form-group"><label>Advogado da Parte Contrária</label><input type="text" id="d-advogado-contraria" placeholder="Nome completo"></div>
+          <div class="mc-form-group"><label>Advogado da Parte Contrária <span class="req">*</span></label><input required type="text" id="d-advogado-contraria" placeholder="Nome completo"></div>
         </div>
 
         <div class="section-title">Tipo de Reporte</div>
@@ -209,15 +209,14 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
         <div id="d-grupo-laudo-campos" style="display:none;">
         <div class="section-title">Periculosidade — Perícia</div>
         <div class="mc-form-grid cols-3">
-          <div class="mc-form-group"><label>Perito</label><input type="text" id="d-perito-peri"></div>
-          <div class="mc-form-group"><label>Data da Perícia</label><input type="text" id="d-data-pericia-peri" placeholder="dd/mm/aaaa"></div>
-          <div class="mc-form-group"><label>Mais um dia de perícia (especificar)</label><input type="text" id="d-pericia-dia-adicional"></div>
+          <div class="mc-form-group"><label>Perito <span class="req">*</span></label><input required type="text" id="d-perito-peri"></div>
+          <div class="mc-form-group"><label>Data da Perícia <span class="req">*</span></label><input required type="text" id="d-data-pericia-peri" placeholder="dd/mm/aaaa"></div>
+          <div class="mc-form-group"><label>Mais um dia de perícia (especificar) <span class="req">*</span></label><input required type="text" id="d-pericia-dia-adicional"></div>
         </div>
 
         <div class="section-title">Periculosidade — Laudo</div>
         <div class="mc-form-grid cols-3">
-          <div class="mc-form-group"><label>Resultado do Laudo</label>
-            <select id="d-laudo-peri-resultado">
+          <div class="mc-form-group"><label>Resultado do Laudo <span class="req">*</span></label><select required id="d-laudo-peri-resultado">
               <option value="">—</option>
               <option>Aguardando Realização de Perícia</option>
               <option>Aguardando Resultado do Laudo</option>
@@ -227,17 +226,16 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
               <option>Sem Pedido</option>
             </select>
           </div>
-          <div class="mc-form-group"><label>Data Início (Imprescrito)</label><input type="date" id="d-laudo-peri-data-inicio"></div>
-          <div class="mc-form-group"><label>Data Final (Imprescrito)</label><input type="date" id="d-laudo-peri-data-final"></div>
+          <div class="mc-form-group"><label>Data Início (Imprescrito) <span class="req">*</span></label><input required type="date" id="d-laudo-peri-data-inicio"></div>
+          <div class="mc-form-group"><label>Data Final (Imprescrito) <span class="req">*</span></label><input required type="date" id="d-laudo-peri-data-final"></div>
         </div>
-        <div class="mc-form-group"><label>Motivo da Periculosidade (Laudo)</label><textarea id="d-laudo-peri-motivo" rows="2" placeholder="Ex: energia elétrica, produtos inflamáveis, atividade em altura..."></textarea></div>
-        <div class="mc-form-group"><label>Detalhamento da Periculosidade</label><textarea id="d-laudo-peri-detalhamento" rows="2" placeholder="Ex: qual área/atividade específica, distância do agente, etc."></textarea></div>
-        <div class="mc-form-group"><label>Fundamentação Técnica (se Laudo Favorável)</label><textarea id="d-laudo-peri-fundamentacao" rows="2" placeholder="Por que o laudo foi favorável — pra reaproveitar em outros casos"></textarea></div>
+        <div class="mc-form-group"><label>Motivo da Periculosidade (Laudo) <span class="req">*</span></label><textarea required id="d-laudo-peri-motivo" rows="2" placeholder="Ex: energia elétrica, produtos inflamáveis, atividade em altura..."></textarea></div>
+        <div class="mc-form-group"><label>Detalhamento da Periculosidade <span class="req">*</span></label><textarea required id="d-laudo-peri-detalhamento" rows="2" placeholder="Ex: qual área/atividade específica, distância do agente, etc."></textarea></div>
+        <div class="mc-form-group"><label>Fundamentação Técnica (se Laudo Favorável) <span class="req">*</span></label><textarea required id="d-laudo-peri-fundamentacao" rows="2" placeholder="Por que o laudo foi favorável — pra reaproveitar em outros casos"></textarea></div>
 
         <div class="section-title">Insalubridade — Laudo</div>
         <div class="mc-form-grid cols-3">
-          <div class="mc-form-group"><label>Resultado do Laudo</label>
-            <select id="d-laudo-insalu-resultado">
+          <div class="mc-form-group"><label>Resultado do Laudo <span class="req">*</span></label><select required id="d-laudo-insalu-resultado">
               <option value="">—</option>
               <option>Aguardando Realização de Perícia</option>
               <option>Aguardando Resultado do Laudo</option>
@@ -247,42 +245,40 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
               <option>Sem Pedido</option>
             </select>
           </div>
-          <div class="mc-form-group"><label>Data Início (Imprescrito)</label><input type="date" id="d-laudo-insalu-data-inicio"></div>
-          <div class="mc-form-group"><label>Data Final (Imprescrito)</label><input type="date" id="d-laudo-insalu-data-final"></div>
+          <div class="mc-form-group"><label>Data Início (Imprescrito) <span class="req">*</span></label><input required type="date" id="d-laudo-insalu-data-inicio"></div>
+          <div class="mc-form-group"><label>Data Final (Imprescrito) <span class="req">*</span></label><input required type="date" id="d-laudo-insalu-data-final"></div>
         </div>
         <div class="mc-form-grid">
-          <div class="mc-form-group"><label>Motivo da Insalubridade (Laudo)</label><textarea id="d-laudo-insalu-motivo" rows="2" placeholder="Ex: ruído, agentes químicos, calor..."></textarea></div>
-          <div class="mc-form-group"><label>Detalhamento da Insalubridade</label><textarea id="d-laudo-insalu-detalhamento" rows="2" placeholder="Ex: ausência de EPI's, qual o agente, por que condenou"></textarea></div>
+          <div class="mc-form-group"><label>Motivo da Insalubridade (Laudo) <span class="req">*</span></label><textarea required id="d-laudo-insalu-motivo" rows="2" placeholder="Ex: ruído, agentes químicos, calor..."></textarea></div>
+          <div class="mc-form-group"><label>Detalhamento da Insalubridade <span class="req">*</span></label><textarea required id="d-laudo-insalu-detalhamento" rows="2" placeholder="Ex: ausência de EPI's, qual o agente, por que condenou"></textarea></div>
         </div>
-        <div class="mc-form-group"><label>Outros</label><textarea id="d-laudo-insalu-outros" rows="2"></textarea></div>
-        <div class="mc-form-group"><label>Fundamentação Técnica (se Laudo Favorável)</label><textarea id="d-laudo-insalu-fundamentacao" rows="2" placeholder="Por que o laudo foi favorável — pra reaproveitar em outros casos"></textarea></div>
+        <div class="mc-form-group"><label>Outros <span class="req">*</span></label><textarea required id="d-laudo-insalu-outros" rows="2"></textarea></div>
+        <div class="mc-form-group"><label>Fundamentação Técnica (se Laudo Favorável) <span class="req">*</span></label><textarea required id="d-laudo-insalu-fundamentacao" rows="2" placeholder="Por que o laudo foi favorável — pra reaproveitar em outros casos"></textarea></div>
 
         <div class="section-title">Ergonômico / Perícia Médica</div>
-        <div class="mc-form-group"><label>Laudo Pericial Ergonômico</label><textarea id="d-laudo-ergonomico" rows="2"></textarea></div>
+        <div class="mc-form-group"><label>Laudo Pericial Ergonômico <span class="req">*</span></label><textarea required id="d-laudo-ergonomico" rows="2"></textarea></div>
         <div class="mc-form-grid cols-3">
-          <div class="mc-form-group"><label>Perito</label><input type="text" id="d-perito-medica"></div>
-          <div class="mc-form-group"><label>Data da Perícia</label><input type="text" id="d-data-pericia-medica" placeholder="dd/mm/aaaa"></div>
+          <div class="mc-form-group"><label>Perito <span class="req">*</span></label><input required type="text" id="d-perito-medica"></div>
+          <div class="mc-form-group"><label>Data da Perícia <span class="req">*</span></label><input required type="text" id="d-data-pericia-medica" placeholder="dd/mm/aaaa"></div>
         </div>
         <div class="mc-form-grid">
-          <div class="mc-form-group"><label>Doença Detectada</label><textarea id="d-medica-doenca" rows="2"></textarea></div>
-          <div class="mc-form-group"><label>Área do Corpo</label><textarea id="d-medica-area-corpo" rows="2"></textarea></div>
+          <div class="mc-form-group"><label>Doença Detectada <span class="req">*</span></label><textarea required id="d-medica-doenca" rows="2"></textarea></div>
+          <div class="mc-form-group"><label>Área do Corpo <span class="req">*</span></label><textarea required id="d-medica-area-corpo" rows="2"></textarea></div>
         </div>
         <div class="mc-form-grid">
-          <div class="mc-form-group"><label>Motivos</label><input type="text" id="d-medica-motivos"></div>
-          <div class="mc-form-group"><label>Fonte de Informação</label>
-            <select id="d-medica-fonte-informacao"><option value="">—</option><option>Petição Inicial</option><option>Laudo Pericial</option></select>
+          <div class="mc-form-group"><label>Motivos <span class="req">*</span></label><input required type="text" id="d-medica-motivos"></div>
+          <div class="mc-form-group"><label>Fonte de Informação <span class="req">*</span></label><select required id="d-medica-fonte-informacao"><option value="">—</option><option>Petição Inicial</option><option>Laudo Pericial</option></select>
           </div>
         </div>
-        <div class="mc-form-group"><label>Resultado do Laudo</label><textarea id="d-medica-laudo-resultado" rows="2"></textarea></div>
-        <div class="mc-form-group"><label>Fundamentação Técnica (se Laudo Favorável)</label><textarea id="d-medica-fundamentacao" rows="2" placeholder="Por que o laudo foi favorável — pra reaproveitar em outros casos"></textarea></div>
+        <div class="mc-form-group"><label>Resultado do Laudo <span class="req">*</span></label><textarea required id="d-medica-laudo-resultado" rows="2"></textarea></div>
+        <div class="mc-form-group"><label>Fundamentação Técnica (se Laudo Favorável) <span class="req">*</span></label><textarea required id="d-medica-fundamentacao" rows="2" placeholder="Por que o laudo foi favorável — pra reaproveitar em outros casos"></textarea></div>
         </div>
 
         <div id="d-grupo-sentenca-campos" style="display:none;">
         <div class="section-title">Sentença</div>
         <div class="info-box">ℹ️ Os campos de Periculosidade e Insalubridade abaixo são o resultado da sentença sobre esses dois temas — compare com o "Resultado do Laudo" de cada um (lá em cima) pra ver se a sentença seguiu o laudo.</div>
         <div class="mc-form-grid cols-3">
-          <div class="mc-form-group"><label>Resultado</label>
-            <select id="d-sentenca-resultado">
+          <div class="mc-form-group"><label>Resultado <span class="req">*</span></label><select required id="d-sentenca-resultado">
               <option value="">—</option>
               <option>Procedente</option>
               <option>Improcedente</option>
@@ -293,52 +289,46 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
               <option>Pendente</option>
             </select>
           </div>
-          <div class="mc-form-group"><label>Data da Sentença</label><input type="date" id="d-sentenca-data"></div>
-          <div class="mc-form-group"><label>Juiz da Sentença</label><input type="text" id="d-sentenca-juiz"></div>
+          <div class="mc-form-group"><label>Data da Sentença <span class="req">*</span></label><input required type="date" id="d-sentenca-data"></div>
+          <div class="mc-form-group"><label>Juiz da Sentença <span class="req">*</span></label><input required type="text" id="d-sentenca-juiz"></div>
         </div>
         <div class="mc-form-grid">
-          <div class="mc-form-group"><label>Pedidos deferidos em sentença</label><textarea id="d-sentenca-deferidos" rows="2"></textarea></div>
-          <div class="mc-form-group"><label>Pedidos indeferidos em sentença</label><textarea id="d-sentenca-indeferidos" rows="2"></textarea></div>
+          <div class="mc-form-group"><label>Pedidos deferidos em sentença <span class="req">*</span></label><textarea required id="d-sentenca-deferidos" rows="2"></textarea></div>
+          <div class="mc-form-group"><label>Pedidos indeferidos em sentença <span class="req">*</span></label><textarea required id="d-sentenca-indeferidos" rows="2"></textarea></div>
         </div>
-        <div class="mc-form-group"><label>Causa Raiz</label><textarea id="d-sentenca-causa-raiz" rows="2"></textarea></div>
+        <div class="mc-form-group"><label>Causa Raiz <span class="req">*</span></label><textarea required id="d-sentenca-causa-raiz" rows="2"></textarea></div>
         <div class="mc-form-grid">
-          <div class="mc-form-group"><label>Principal Pedido Favorável</label><textarea id="d-sentenca-principal-favoravel" rows="2"></textarea></div>
-          <div class="mc-form-group"><label>Principal Pedido Desfavorável</label><textarea id="d-sentenca-principal-desfavoravel" rows="2"></textarea></div>
+          <div class="mc-form-group"><label>Principal Pedido Favorável <span class="req">*</span></label><textarea required id="d-sentenca-principal-favoravel" rows="2"></textarea></div>
+          <div class="mc-form-group"><label>Principal Pedido Desfavorável <span class="req">*</span></label><textarea required id="d-sentenca-principal-desfavoravel" rows="2"></textarea></div>
         </div>
-        <div class="mc-form-group"><label>Obrigação de Fazer</label><textarea id="d-sentenca-obrigacao-fazer" rows="2" placeholder="Ex: reintegração imediata, retificação de CTPS, fornecimento de documentos..."></textarea></div>
+        <div class="mc-form-group"><label>Obrigação de Fazer <span class="req">*</span></label><textarea required id="d-sentenca-obrigacao-fazer" rows="2" placeholder="Ex: reintegração imediata, retificação de CTPS, fornecimento de documentos..."></textarea></div>
 
         <div class="sub-title">Sentença — Reintegração</div>
         <div class="mc-form-grid cols-3">
-          <div class="mc-form-group"><label>Há Reintegração?</label>
-            <select id="d-sentenca-reintegracao"><option value="">—</option><option>Sim</option><option>Não</option></select>
+          <div class="mc-form-group"><label>Há Reintegração? <span class="req">*</span></label><select required id="d-sentenca-reintegracao"><option value="">—</option><option>Sim</option><option>Não</option></select>
           </div>
-          <div class="mc-form-group"><label>Resultado da Reintegração</label>
-            <select id="d-sentenca-reintegracao-resultado"><option value="">—</option><option>Deferida</option><option>Indeferida</option><option>Parcialmente Deferida</option><option>Pendente</option></select>
+          <div class="mc-form-group"><label>Resultado da Reintegração <span class="req">*</span></label><select required id="d-sentenca-reintegracao-resultado"><option value="">—</option><option>Deferida</option><option>Indeferida</option><option>Parcialmente Deferida</option><option>Pendente</option></select>
           </div>
         </div>
-        <div class="mc-form-group"><label>Nota sobre a Reintegração</label><textarea id="d-sentenca-reintegracao-nota" rows="2"></textarea></div>
+        <div class="mc-form-group"><label>Nota sobre a Reintegração <span class="req">*</span></label><textarea required id="d-sentenca-reintegracao-nota" rows="2"></textarea></div>
 
         <div class="sub-title">Sentença — Periculosidade</div>
-        <div class="mc-form-group"><label>Periculosidade na Sentença foi igual ao Laudo?</label>
-          <select id="d-decisao-peri-igual-laudo"><option value="">—</option><option>Sim</option><option>Não</option><option>Parcialmente</option></select>
+        <div class="mc-form-group"><label>Periculosidade na Sentença foi igual ao Laudo? <span class="req">*</span></label><select required id="d-decisao-peri-igual-laudo"><option value="">—</option><option>Sim</option><option>Não</option><option>Parcialmente</option></select>
         </div>
 
         <div class="sub-title">Sentença — Insalubridade</div>
-        <div class="mc-form-group"><label>Insalubridade na Sentença foi igual ao Laudo?</label>
-          <select id="d-decisao-insalu-igual-laudo"><option value="">—</option><option>Sim</option><option>Não</option><option>Parcialmente</option></select>
+        <div class="mc-form-group"><label>Insalubridade na Sentença foi igual ao Laudo? <span class="req">*</span></label><select required id="d-decisao-insalu-igual-laudo"><option value="">—</option><option>Sim</option><option>Não</option><option>Parcialmente</option></select>
         </div>
 
         <div class="sub-title">Sentença — Embargos de Declaração</div>
-        <div class="mc-form-group"><label>É caso de Embargos de Declaração?</label>
-          <select id="d-sentenca-embargos"><option value="">—</option><option>Sim</option><option>Não</option></select>
+        <div class="mc-form-group"><label>É caso de Embargos de Declaração? <span class="req">*</span></label><select required id="d-sentenca-embargos"><option value="">—</option><option>Sim</option><option>Não</option></select>
         </div>
         </div>
 
         <div id="d-grupo-acordao-campos" style="display:none;">
         <div class="section-title">Acórdão TRT</div>
         <div class="mc-form-grid cols-3">
-          <div class="mc-form-group"><label>Resultado (Reclamada)</label>
-            <select id="d-acordao-trt-reclamada">
+          <div class="mc-form-group"><label>Resultado (Reclamada) <span class="req">*</span></label><select required id="d-acordao-trt-reclamada">
               <option value="">—</option>
               <option>Manteve</option>
               <option>Reforma parcial em favor do Reclamante</option>
@@ -349,25 +339,22 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
               <option>Não conhecido</option>
             </select>
           </div>
-          <div class="mc-form-group"><label>Data do Acórdão</label><input type="date" id="d-acordao-trt-data"></div>
-          <div class="mc-form-group"><label>TRT / Turma</label><input type="text" id="d-acordao-trt-turma" placeholder="Ex: TRT-15, 4ª Turma"></div>
+          <div class="mc-form-group"><label>Data do Acórdão <span class="req">*</span></label><input required type="date" id="d-acordao-trt-data"></div>
+          <div class="mc-form-group"><label>TRT / Turma <span class="req">*</span></label><input required type="text" id="d-acordao-trt-turma" placeholder="Ex: TRT-15, 4ª Turma"></div>
         </div>
-        <div class="mc-form-group"><label>Relator</label><input type="text" id="d-acordao-trt-relator"></div>
-        <div class="mc-form-group"><label>Resumo do Acórdão TRT</label><textarea id="d-acordao-trt-resumo" rows="3" placeholder="Resumo em poucas linhas do que foi decidido e dos principais fundamentos — entra direto no corpo do e-mail."></textarea></div>
+        <div class="mc-form-group"><label>Relator <span class="req">*</span></label><input required type="text" id="d-acordao-trt-relator"></div>
+        <div class="mc-form-group"><label>Resumo do Acórdão TRT <span class="req">*</span></label><textarea required id="d-acordao-trt-resumo" rows="3" placeholder="Resumo em poucas linhas do que foi decidido e dos principais fundamentos — entra direto no corpo do e-mail."></textarea></div>
 
         <div class="sub-title">Acórdão TRT — Embargos e Recurso de Revista</div>
-        <div class="mc-form-group"><label>É caso de Embargos de Declaração?</label>
-          <select id="d-trt-embargos"><option value="">—</option><option>Sim</option><option>Não</option></select>
+        <div class="mc-form-group"><label>É caso de Embargos de Declaração? <span class="req">*</span></label><select required id="d-trt-embargos"><option value="">—</option><option>Sim</option><option>Não</option></select>
         </div>
         <div class="info-box">ℹ️ Se <b>Não</b> a Embargos, preencher o Recurso de Revista abaixo.</div>
-        <div class="mc-form-group"><label>Resultado do Recurso de Revista</label>
-          <select id="d-recurso-revista-resultado"><option value="">—</option><option>Admitido</option><option>Denegado Seguimento</option><option>Pendente</option></select>
+        <div class="mc-form-group"><label>Resultado do Recurso de Revista <span class="req">*</span></label><select required id="d-recurso-revista-resultado"><option value="">—</option><option>Admitido</option><option>Denegado Seguimento</option><option>Pendente</option></select>
         </div>
 
         <div class="section-title">Acórdão TST</div>
         <div class="mc-form-grid cols-3">
-          <div class="mc-form-group"><label>Resultado</label>
-            <select id="d-acordao-tst">
+          <div class="mc-form-group"><label>Resultado <span class="req">*</span></label><select required id="d-acordao-tst">
               <option value="">—</option>
               <option>Manteve</option>
               <option>Reforma parcial em favor do Reclamante</option>
@@ -378,9 +365,8 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
               <option>Não conhecido</option>
             </select>
           </div>
-          <div class="mc-form-group"><label>Data do Acórdão TST</label><input type="date" id="d-acordao-tst-data"></div>
-          <div class="mc-form-group"><label>Turma</label>
-            <select id="d-acordao-tst-camara">
+          <div class="mc-form-group"><label>Data do Acórdão TST <span class="req">*</span></label><input required type="date" id="d-acordao-tst-data"></div>
+          <div class="mc-form-group"><label>Turma <span class="req">*</span></label><select required id="d-acordao-tst-camara">
               <option value="">—</option>
               <option>1ª Turma</option>
               <option>2ª Turma</option>
@@ -393,72 +379,68 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
             </select>
           </div>
         </div>
-        <div class="mc-form-group"><label>Ministro</label><input type="text" id="d-acordao-tst-ministro"></div>
-        <div class="mc-form-group"><label>Resumo do Acórdão TST</label><textarea id="d-acordao-tst-resumo" rows="3" placeholder="Resumo em poucas linhas do que foi decidido e dos principais fundamentos — entra direto no corpo do e-mail."></textarea></div>
+        <div class="mc-form-group"><label>Ministro <span class="req">*</span></label><input required type="text" id="d-acordao-tst-ministro"></div>
+        <div class="mc-form-group"><label>Resumo do Acórdão TST <span class="req">*</span></label><textarea required id="d-acordao-tst-resumo" rows="3" placeholder="Resumo em poucas linhas do que foi decidido e dos principais fundamentos — entra direto no corpo do e-mail."></textarea></div>
 
         <div class="sub-title">Acórdão TST — Embargos de Declaração</div>
-        <div class="mc-form-group"><label>É caso de Embargos de Declaração?</label>
-          <select id="d-tst-embargos"><option value="">—</option><option>Sim</option><option>Não</option></select>
+        <div class="mc-form-group"><label>É caso de Embargos de Declaração? <span class="req">*</span></label><select required id="d-tst-embargos"><option value="">—</option><option>Sim</option><option>Não</option></select>
         </div>
         </div>
 
         <div id="d-grupo-execucao-campos" style="display:none;">
         <div class="section-title">Status</div>
         <div class="mc-form-grid">
-          <div class="mc-form-group"><label>Execução</label>
-            <select id="d-execucao"><option value="">—</option><option>Sim</option><option>Não</option></select>
+          <div class="mc-form-group"><label>Execução <span class="req">*</span></label><select required id="d-execucao"><option value="">—</option><option>Sim</option><option>Não</option></select>
           </div>
-          <div class="mc-form-group"><label>Última Movimentação Processual</label><input type="text" id="d-ultima-movimentacao"></div>
+          <div class="mc-form-group"><label>Última Movimentação Processual <span class="req">*</span></label><input required type="text" id="d-ultima-movimentacao"></div>
         </div>
-        <div class="mc-form-group"><label>Resumo da Execução</label><textarea id="d-execucao-resumo" rows="3" placeholder="Resumo em poucas linhas dos impactos e próximos passos da execução — entra direto no corpo do e-mail."></textarea></div>
+        <div class="mc-form-group"><label>Resumo da Execução <span class="req">*</span></label><textarea required id="d-execucao-resumo" rows="3" placeholder="Resumo em poucas linhas dos impactos e próximos passos da execução — entra direto no corpo do e-mail."></textarea></div>
 
         <div class="sub-title">Execução — Valores</div>
         <div class="info-box">ℹ️ Cada valor abaixo é independente e opcional, preencha só os que se aplicarem ao caso. Os que estiverem preenchidos entram no resumo do e-mail.</div>
         <div class="mc-form-grid">
-          <div class="mc-form-group"><label>Cálculo do Reclamante (R$)</label><input type="text" inputmode="decimal" placeholder="0,00" id="d-exec-calc-reclamante-valor"></div>
-          <div class="mc-form-group"><label>Cálculo do Reclamante — Data</label><input type="date" id="d-exec-calc-reclamante-data"></div>
+          <div class="mc-form-group"><label>Cálculo do Reclamante (R$) <span class="req">*</span></label><input required type="text" inputmode="decimal" placeholder="0,00" id="d-exec-calc-reclamante-valor"></div>
+          <div class="mc-form-group"><label>Cálculo do Reclamante — Data <span class="req">*</span></label><input required type="date" id="d-exec-calc-reclamante-data"></div>
         </div>
         <div class="mc-form-grid">
-          <div class="mc-form-group"><label>Cálculo da Reclamada (R$)</label><input type="text" inputmode="decimal" placeholder="0,00" id="d-exec-calc-reclamada-valor"></div>
-          <div class="mc-form-group"><label>Cálculo da Reclamada — Data</label><input type="date" id="d-exec-calc-reclamada-data"></div>
+          <div class="mc-form-group"><label>Cálculo da Reclamada (R$) <span class="req">*</span></label><input required type="text" inputmode="decimal" placeholder="0,00" id="d-exec-calc-reclamada-valor"></div>
+          <div class="mc-form-group"><label>Cálculo da Reclamada — Data <span class="req">*</span></label><input required type="date" id="d-exec-calc-reclamada-data"></div>
         </div>
         <div class="mc-form-grid">
-          <div class="mc-form-group"><label>Pagamento do Processo (R$)</label><input type="text" inputmode="decimal" placeholder="0,00" id="d-exec-pagamento-valor"></div>
-          <div class="mc-form-group"><label>Pagamento do Processo — Data</label><input type="date" id="d-exec-pagamento-data"></div>
+          <div class="mc-form-group"><label>Pagamento do Processo (R$) <span class="req">*</span></label><input required type="text" inputmode="decimal" placeholder="0,00" id="d-exec-pagamento-valor"></div>
+          <div class="mc-form-group"><label>Pagamento do Processo — Data <span class="req">*</span></label><input required type="date" id="d-exec-pagamento-data"></div>
         </div>
         <div class="mc-form-grid">
-          <div class="mc-form-group"><label>INSS (R$)</label><input type="text" inputmode="decimal" placeholder="0,00" id="d-exec-inss-valor"></div>
-          <div class="mc-form-group"><label>INSS — Data</label><input type="date" id="d-exec-inss-data"></div>
+          <div class="mc-form-group"><label>INSS (R$) <span class="req">*</span></label><input required type="text" inputmode="decimal" placeholder="0,00" id="d-exec-inss-valor"></div>
+          <div class="mc-form-group"><label>INSS — Data <span class="req">*</span></label><input required type="date" id="d-exec-inss-data"></div>
         </div>
         <div class="mc-form-grid">
-          <div class="mc-form-group"><label>Garantia da Execução (R$)</label><input type="text" inputmode="decimal" placeholder="0,00" id="d-exec-garantia-valor"></div>
-          <div class="mc-form-group"><label>Garantia da Execução — Data</label><input type="date" id="d-exec-garantia-data"></div>
+          <div class="mc-form-group"><label>Garantia da Execução (R$) <span class="req">*</span></label><input required type="text" inputmode="decimal" placeholder="0,00" id="d-exec-garantia-valor"></div>
+          <div class="mc-form-group"><label>Garantia da Execução — Data <span class="req">*</span></label><input required type="date" id="d-exec-garantia-data"></div>
         </div>
         <div class="mc-form-grid">
-          <div class="mc-form-group"><label>Custas (R$)</label><input type="text" inputmode="decimal" placeholder="0,00" id="d-exec-custas-valor"></div>
-          <div class="mc-form-group"><label>Custas — Data</label><input type="date" id="d-exec-custas-data"></div>
+          <div class="mc-form-group"><label>Custas (R$) <span class="req">*</span></label><input required type="text" inputmode="decimal" placeholder="0,00" id="d-exec-custas-valor"></div>
+          <div class="mc-form-group"><label>Custas — Data <span class="req">*</span></label><input required type="date" id="d-exec-custas-data"></div>
         </div>
         <div class="mc-form-grid">
-          <div class="mc-form-group"><label>GRU (R$)</label><input type="text" inputmode="decimal" placeholder="0,00" id="d-exec-gru-valor"></div>
-          <div class="mc-form-group"><label>GRU — Data</label><input type="date" id="d-exec-gru-data"></div>
+          <div class="mc-form-group"><label>GRU (R$) <span class="req">*</span></label><input required type="text" inputmode="decimal" placeholder="0,00" id="d-exec-gru-valor"></div>
+          <div class="mc-form-group"><label>GRU — Data <span class="req">*</span></label><input required type="date" id="d-exec-gru-data"></div>
         </div>
         <div class="mc-form-grid cols-3">
-          <div class="mc-form-group"><label>Sentença de Liquidação / Homologação dos Cálculos</label>
-            <select id="d-exec-homologacao"><option value="">—</option><option>Sim</option><option>Não</option></select>
+          <div class="mc-form-group"><label>Sentença de Liquidação / Homologação dos Cálculos <span class="req">*</span></label><select required id="d-exec-homologacao"><option value="">—</option><option>Sim</option><option>Não</option></select>
           </div>
-          <div class="mc-form-group"><label>Valor(es) Homologado(s) (R$)</label><input type="text" inputmode="decimal" placeholder="0,00" id="d-exec-valor-homologado"></div>
-          <div class="mc-form-group"><label>Data da Homologação</label><input type="date" id="d-exec-valor-homologado-data"></div>
+          <div class="mc-form-group"><label>Valor(es) Homologado(s) (R$) <span class="req">*</span></label><input required type="text" inputmode="decimal" placeholder="0,00" id="d-exec-valor-homologado"></div>
+          <div class="mc-form-group"><label>Data da Homologação <span class="req">*</span></label><input required type="date" id="d-exec-valor-homologado-data"></div>
         </div>
         <div class="mc-form-grid cols-3">
-          <div class="mc-form-group"><label>Solicitação de Pagamento Inserida</label>
-            <select id="d-exec-solicitacao-pagamento"><option value="">—</option><option>Sim</option><option>Não</option></select>
+          <div class="mc-form-group"><label>Solicitação de Pagamento Inserida <span class="req">*</span></label><select required id="d-exec-solicitacao-pagamento"><option value="">—</option><option>Sim</option><option>Não</option></select>
           </div>
-          <div class="mc-form-group"><label>Data da Solicitação de Pagamento</label><input type="date" id="d-exec-solicitacao-pagamento-data"></div>
+          <div class="mc-form-group"><label>Data da Solicitação de Pagamento <span class="req">*</span></label><input required type="date" id="d-exec-solicitacao-pagamento-data"></div>
         </div>
         </div>
 
         <div class="section-title">Observações</div>
-        <div class="mc-form-group"><label>Observações Adicionais</label><textarea id="d-observacoes-adicionais" rows="3" placeholder="Opcional — qualquer informação adicional relevante, entra no corpo de todos os e-mails deste reporte."></textarea></div>
+        <div class="mc-form-group"><label>Observações Adicionais <span class="req">*</span></label><textarea required id="d-observacoes-adicionais" rows="3" placeholder="Opcional — qualquer informação adicional relevante, entra no corpo de todos os e-mails deste reporte."></textarea></div>
 
         <div class="section-title">Envio de E-mails</div>
         <div class="info-box alerta"><span>⚠️</span><span><b>Toda decisão precisa ser enviada por e-mail — sempre, sem exceção.</b> O e-mail sempre sai completo, com todos os campos preenchidos no reporte (separados por seção). Cada bloco abaixo (Laudo, Sentença, Acórdão, Execução) tem seu próprio checkbox "Enviar também para o cliente" — marcado, o e-mail vai para o cliente Embraer com cópia para o grupo interno; desmarcado, vai só para o grupo interno. Marque os e-mails que devem ser abertos no Outlook assim que o reporte for salvo — o 1º marcado abre direto; se marcar mais de um, os demais aparecem como botão pra você clicar um de cada vez.</span></div>
@@ -540,8 +522,7 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
             <div class="mc-form-group"><label>Nome do Reclamante <span class="req">*</span></label><input type="text" id="cc-reclamante" required placeholder="Nome completo"></div>
           </div>
           <div class="mc-form-group">
-            <label>Qual tipo de subsídio será necessário? <span class="req">*</span></label>
-            <select id="cc-tipo-subsidio" required>
+            <label>Qual tipo de subsídio será necessário? <span class="req">*</span></label><select id="cc-tipo-subsidio" required>
               <option value="" disabled selected>Selecione…</option>
               <option>Cálculo Inicial</option>
               <option>Liquidação de Sentença</option>
@@ -564,7 +545,7 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
             <div class="mc-form-group"><label>Link para acesso/download da íntegra e documentos <span class="req">*</span></label><input type="text" id="cc-link" required placeholder="https://…"></div>
             <div class="mc-form-group"><label>Prazo para envio <span class="req">*</span></label><input type="date" id="cc-prazo" required></div>
           </div>
-          <div class="mc-form-group"><label>Outros (maiores detalhamentos)</label><textarea id="cc-outros" rows="3" placeholder="Opcional"></textarea></div>
+          <div class="mc-form-group"><label>Outros (maiores detalhamentos) <span class="req">*</span></label><textarea required id="cc-outros" rows="3" placeholder="Opcional"></textarea></div>
           <div class="mc-form-group"><label>Responsável pela solicitação (sigla) <span class="req">*</span></label><input type="text" id="cc-responsavel" required placeholder="Ex: VCR"></div>
           <button type="submit" class="btn-cyan">✉️ Gerar e-mail e registrar solicitação</button>
         </form>
@@ -596,28 +577,25 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
         <div class="mc-form-grid cols-3">
           <div class="mc-form-group"><label>Nº do Processo <span class="req">*</span></label><input type="text" id="ri-processo" required placeholder="0000000-00.0000.0.00.0000"></div>
           <div class="mc-form-group"><label>Reclamante <span class="req">*</span></label><input type="text" id="ri-reclamante" required></div>
-          <div class="mc-form-group"><label>Setor</label><input type="text" id="ri-setor"></div>
+          <div class="mc-form-group"><label>Setor <span class="req">*</span></label><input required type="text" id="ri-setor"></div>
         </div>
         <div class="mc-form-grid cols-3">
-          <div class="mc-form-group"><label>Telefone do Reclamante</label><input type="text" id="ri-telefone" placeholder="N/A"></div>
-          <div class="mc-form-group"><label>Valor do Risco (R$)</label><input type="text" inputmode="decimal" placeholder="0,00" id="ri-valor-risco"></div>
-          <div class="mc-form-group"><label>Prognóstico</label>
-            <select id="ri-prognostico"><option value="">—</option><option>Possível</option><option>Provável</option><option>Remoto</option><option>N/A</option></select>
+          <div class="mc-form-group"><label>Telefone do Reclamante <span class="req">*</span></label><input required type="text" id="ri-telefone" placeholder="N/A"></div>
+          <div class="mc-form-group"><label>Valor do Risco (R$) <span class="req">*</span></label><input required type="text" inputmode="decimal" placeholder="0,00" id="ri-valor-risco"></div>
+          <div class="mc-form-group"><label>Prognóstico <span class="req">*</span></label><select required id="ri-prognostico"><option value="">—</option><option>Possível</option><option>Provável</option><option>Remoto</option><option>N/A</option></select>
           </div>
         </div>
         <div class="mc-form-grid cols-3">
           <div class="mc-form-group"><label>Prazo para Reintegração <span class="req">*</span></label><input type="date" id="ri-prazo" required></div>
-          <div class="mc-form-group"><label>Tem Interesse em Acordo?</label>
-            <select id="ri-interesse-acordo"><option value="">—</option><option>Sim</option><option>Não</option><option>N/A</option></select>
+          <div class="mc-form-group"><label>Tem Interesse em Acordo? <span class="req">*</span></label><select required id="ri-interesse-acordo"><option value="">—</option><option>Sim</option><option>Não</option><option>N/A</option></select>
           </div>
-          <div class="mc-form-group"><label>Resultado Laudo</label>
-            <select id="ri-resultado-laudo"><option value="">—</option><option>Favorável</option><option>Desfavorável</option><option>N/A</option></select>
+          <div class="mc-form-group"><label>Resultado Laudo <span class="req">*</span></label><select required id="ri-resultado-laudo"><option value="">—</option><option>Favorável</option><option>Desfavorável</option><option>N/A</option></select>
           </div>
         </div>
-        <div class="mc-form-group"><label>Valor da Multa</label><input type="text" id="ri-valor-multa" placeholder='Ex: R$ 100,00 por dia'></div>
-        <div class="mc-form-group"><label>Fundamentos da Decisão</label><textarea id="ri-fundamentos" rows="3"></textarea></div>
-        <div class="mc-form-group"><label>Outras Obs</label><textarea id="ri-outras-obs" rows="2"></textarea></div>
-        <div class="mc-form-group"><label>Link do PDF (Acórdão/Decisão)</label><input type="text" id="ri-link-pdf" placeholder="https://…"></div>
+        <div class="mc-form-group"><label>Valor da Multa <span class="req">*</span></label><input required type="text" id="ri-valor-multa" placeholder='Ex: R$ 100,00 por dia'></div>
+        <div class="mc-form-group"><label>Fundamentos da Decisão <span class="req">*</span></label><textarea required id="ri-fundamentos" rows="3"></textarea></div>
+        <div class="mc-form-group"><label>Outras Obs <span class="req">*</span></label><textarea required id="ri-outras-obs" rows="2"></textarea></div>
+        <div class="mc-form-group"><label>Link do PDF (Acórdão/Decisão) <span class="req">*</span></label><input required type="text" id="ri-link-pdf" placeholder="https://…"></div>
         <div class="mc-form-group"><label>Responsável pela solicitação (sigla) <span class="req">*</span></label><input type="text" id="ri-responsavel" required placeholder="Ex: VCR"></div>
         <button type="submit" class="btn-cyan" id="ri-btn-enviar" onclick="enviarDeterminacaoReintegracao(event)">✉️ Gerar e-mail e registrar</button>
       </div>
@@ -650,14 +628,13 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
           <div class="mc-form-group"><label>Nome do Reclamante <span class="req">*</span></label><input type="text" id="pe-reclamante" required></div>
         </div>
         <div class="mc-form-grid cols-3">
-          <div class="mc-form-group"><label>Tipo de Perícia</label>
-            <select id="pe-tipo"><option value="">—</option><option>Médica</option><option>Ergonômica</option><option>Técnica</option><option>Médica e Ergonômica</option><option>Outra</option></select>
+          <div class="mc-form-group"><label>Tipo de Perícia <span class="req">*</span></label><select required id="pe-tipo"><option value="">—</option><option>Médica</option><option>Ergonômica</option><option>Técnica</option><option>Médica e Ergonômica</option><option>Outra</option></select>
           </div>
           <div class="mc-form-group"><label>Data da Perícia <span class="req">*</span></label><input type="date" id="pe-data" required></div>
-          <div class="mc-form-group"><label>Horário</label><input type="text" id="pe-horario" placeholder="Ex: 08:00"></div>
+          <div class="mc-form-group"><label>Horário <span class="req">*</span></label><input required type="text" id="pe-horario" placeholder="Ex: 08:00"></div>
         </div>
-        <div class="mc-form-group"><label>Local da Perícia</label><input type="text" id="pe-local" placeholder="Opcional"></div>
-        <div class="mc-form-group"><label>Observações Adicionais</label><textarea id="pe-observacoes" rows="2" placeholder="Opcional — qualquer informação adicional relevante para o e-mail"></textarea></div>
+        <div class="mc-form-group"><label>Local da Perícia <span class="req">*</span></label><input required type="text" id="pe-local" placeholder="Opcional"></div>
+        <div class="mc-form-group"><label>Observações Adicionais <span class="req">*</span></label><textarea required id="pe-observacoes" rows="2" placeholder="Opcional — qualquer informação adicional relevante para o e-mail"></textarea></div>
         <div class="mc-form-group"><label>Responsável pela solicitação (sigla) <span class="req">*</span></label><input type="text" id="pe-responsavel" required placeholder="Ex: BCF"></div>
         <button type="button" class="btn-cyan" onclick="enviarAgendamentoPericia(event)">✉️ Gerar e-mail e registrar</button>
       </div>
@@ -694,7 +671,7 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
           <div class="mc-form-group"><label>Prazo para envio <span class="req">*</span></label><input type="date" id="qe-prazo" required></div>
           <div class="mc-form-group"><label>Responsável pela solicitação (sigla) <span class="req">*</span></label><input type="text" id="qe-responsavel" required placeholder="Ex: BCF"></div>
         </div>
-        <div class="mc-form-group"><label>Observações Adicionais</label><textarea id="qe-observacoes" rows="2" placeholder="Opcional — qualquer informação adicional relevante para o e-mail"></textarea></div>
+        <div class="mc-form-group"><label>Observações Adicionais <span class="req">*</span></label><textarea required id="qe-observacoes" rows="2" placeholder="Opcional — qualquer informação adicional relevante para o e-mail"></textarea></div>
         <button type="button" class="btn-cyan" onclick="enviarQuesitosErgonomicos(event)">✉️ Gerar e-mail e registrar</button>
       </div>
     </div>
@@ -731,8 +708,8 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
           <div class="mc-form-group"><label>Prazo <span class="req">*</span></label><input type="date" id="sm-prazo" required></div>
           <div class="mc-form-group"><label>Responsável pela solicitação (sigla) <span class="req">*</span></label><input type="text" id="sm-responsavel" required placeholder="Ex: VCR"></div>
         </div>
-        <div class="mc-form-group"><label>Link para cópia integral</label><input type="text" id="sm-link" placeholder="https://…"></div>
-        <div class="mc-form-group"><label>Observações Adicionais</label><textarea id="sm-observacoes" rows="3" placeholder="Opcional — qualquer informação adicional relevante para o e-mail (ex: pontos específicos a esclarecer, contexto do caso)"></textarea></div>
+        <div class="mc-form-group"><label>Link para cópia integral <span class="req">*</span></label><input required type="text" id="sm-link" placeholder="https://…"></div>
+        <div class="mc-form-group"><label>Observações Adicionais <span class="req">*</span></label><textarea required id="sm-observacoes" rows="3" placeholder="Opcional — qualquer informação adicional relevante para o e-mail (ex: pontos específicos a esclarecer, contexto do caso)"></textarea></div>
         <button type="button" class="btn-cyan" onclick="enviarSubsidioMedico(event)">✉️ Gerar e-mail e registrar</button>
       </div>
     </div>
@@ -764,9 +741,9 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
           <div class="mc-form-group"><label>Advogado a Inscrever <span class="req">*</span></label><select id="so-advogado" required><option value="">Selecione…</option></select></div>
           <div class="mc-form-group"><label>Assistente Responsável <span class="req">*</span></label><select id="so-assistente" required><option value="">Selecione…</option></select></div>
         </div>
-        <div class="mc-form-group"><label>Processo (opcional, pra referência/busca)</label><input type="text" id="so-processo" placeholder="0000000-00.0000.0.00.0000"></div>
+        <div class="mc-form-group"><label>Processo (opcional, pra referência/busca) <span class="req">*</span></label><input required type="text" id="so-processo" placeholder="0000000-00.0000.0.00.0000"></div>
         <div class="mc-form-group"><label>Texto da Pauta/Sessão <span class="req">*</span></label><textarea id="so-pauta" rows="8" required placeholder="Cole aqui o texto completo da pauta de julgamento (turma, data da sessão, processo, partes, advogados etc.)"></textarea></div>
-        <div class="mc-form-group"><label>Observações Adicionais</label><textarea id="so-observacoes" rows="2" placeholder="Opcional — qualquer informação adicional relevante para o e-mail"></textarea></div>
+        <div class="mc-form-group"><label>Observações Adicionais <span class="req">*</span></label><textarea required id="so-observacoes" rows="2" placeholder="Opcional — qualquer informação adicional relevante para o e-mail"></textarea></div>
         <button type="button" class="btn-cyan" onclick="enviarInscricaoSO(event)">✉️ Gerar e-mail e registrar</button>
       </div>
     </div>
@@ -804,11 +781,9 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
             <div class="mc-form-group"><label>Reclamante <span class="req">*</span></label><input type="text" id="el-reclamante" required></div>
           </div>
           <div class="mc-form-grid">
-            <div class="mc-form-group"><label>Novo Prognóstico</label>
-              <select id="el-novo-prognostico"><option value="">—</option><option>Possível</option><option>Provável</option><option>Remoto</option></select>
+            <div class="mc-form-group"><label>Novo Prognóstico <span class="req">*</span></label><select required id="el-novo-prognostico"><option value="">—</option><option>Possível</option><option>Provável</option><option>Remoto</option></select>
             </div>
-            <div class="mc-form-group"><label>Nova Fase</label>
-              <select id="el-nova-fase">
+            <div class="mc-form-group"><label>Nova Fase <span class="req">*</span></label><select required id="el-nova-fase">
                 <option value="">—</option>
                 <option>Inicial</option><option>Instrução</option><option>Recursal</option>
                 <option>Recursal TRT</option><option>Recursal TST</option>
@@ -816,7 +791,7 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
               </select>
             </div>
           </div>
-          <div class="mc-form-group"><label>Observações</label><textarea id="el-obs" rows="3" placeholder="Opcional"></textarea></div>
+          <div class="mc-form-group"><label>Observações <span class="req">*</span></label><textarea required id="el-obs" rows="3" placeholder="Opcional"></textarea></div>
           <button type="submit" class="btn-cyan">✉️ Gerar e-mail e registrar comunicado</button>
         </form>
       </div>
@@ -1069,17 +1044,18 @@ const CRUD_REGISTRY = {};
 function crudCampoHtml(key, f){
   const id = `${key}-${f.col}`;
   const reqMark = f.required ? ' <span class="req">*</span>' : '';
+  const reqAttr = f.required ? ' required' : '';
   let inputHtml;
   if(f.type === 'select'){
-    inputHtml = `<select id="${id}">${f.required ? '' : '<option value="">—</option>'}${f.options.map(o=>`<option>${esc(o)}</option>`).join('')}</select>`;
+    inputHtml = `<select id="${id}"${reqAttr}>${f.required ? '' : '<option value="">—</option>'}${f.options.map(o=>`<option>${esc(o)}</option>`).join('')}</select>`;
   } else if(f.type === 'textarea'){
-    inputHtml = `<textarea id="${id}" rows="2"></textarea>`;
+    inputHtml = `<textarea id="${id}" rows="2"${reqAttr}></textarea>`;
   } else if(f.type === 'date'){
-    inputHtml = `<input type="date" id="${id}">`;
+    inputHtml = `<input type="date" id="${id}"${reqAttr}>`;
   } else if(f.type === 'money'){
-    inputHtml = `<input type="text" inputmode="decimal" placeholder="0,00" id="${id}">`;
+    inputHtml = `<input type="text" inputmode="decimal" placeholder="0,00" id="${id}"${reqAttr}>`;
   } else {
-    inputHtml = `<input type="text" id="${id}"${f.placeholder ? ` placeholder="${esc(f.placeholder)}"` : ''}>`;
+    inputHtml = `<input type="text" id="${id}"${f.placeholder ? ` placeholder="${esc(f.placeholder)}"` : ''}${reqAttr}>`;
   }
   return `<div class="mc-form-group"><label>${esc(f.label)}${reqMark}</label>${inputHtml}</div>`;
 }
@@ -1264,57 +1240,57 @@ crudMontarView({
   fields: [
     {col:'processso_no', label:'Processo nº', type:'text', required:true, placeholder:'0000000-00.0000.0.00.0000'},
     {col:'nome_do_reclamante', label:'Nome do Reclamante', type:'text', required:true},
-    {col:'tipo_de_processo_rt_ou_ms', label:'Tipo de Processo (RT ou MS)', type:'select', options:['RT','MS']},
-    {col:'chapa', label:'Chapa', type:'text'},
-    {col:'vt', label:'VT', type:'text'},
-    {col:'juiz', label:'Juiz', type:'text'},
-    {col:'comarca', label:'Comarca', type:'text'},
-    {col:'advogado_reclamante', label:'Advogado Reclamante', type:'text'},
-    {col:'informar_outros_processos_do_mesmo_reclamante', label:'Outros Processos do Mesmo Reclamante', type:'textarea'},
-    {col:'unidade_embraer', label:'Unidade Embraer', type:'select', options:['SP','SJK','EGM','ELEB','SOD','TTE','VCP','GPX','BOT','Outro']},
-    {col:'diretoria', label:'Diretoria', type:'text'},
-    {col:'gerencia', label:'Gerência', type:'text'},
-    {col:'admissao', label:'Admissão', type:'date'},
-    {col:'demissao', label:'Demissão', type:'text', placeholder:'dd/mm/aaaa ou "Ativo"'},
-    {col:'distribuicao_da_acao', label:'Distribuição da Ação', type:'date'},
-    {col:'qual_o_fundamento_do_pedido_de_reintegracao', label:'Fundamento do Pedido de Reintegração', type:'textarea', placeholder:'Ex: aposentadoria, CIPA, doença CCT, doença B-91...'},
-    {col:'se_for_doenca_cct_qual_doenca_alegada', label:'Se Doença CCT, Qual Doença Alegada', type:'text'},
-    {col:'familia_cid', label:'Família CID', type:'text'},
-    {col:'familia_cid_reintegracao', label:'Família CID - Reintegração', type:'text'},
-    {col:'quando_alega_ter_adquirido_a_doenca', label:'Quando Alega Ter Adquirido a Doença?', type:'text'},
-    {col:'alega_ter_adquirido_a_doenca_no_periodo_de_vigencia_da_cct', label:'Alega Ter Adquirido no Período de Vigência da CCT?', type:'select', options:['Sim','Não']},
-    {col:'empregado_reintegrado', label:'Empregado Reintegrado?', type:'select', options:['Sim','Não']},
-    {col:'data_reintegracao', label:'Data Reintegração', type:'date'},
-    {col:'a_pericia_medica_ja_ocorreu', label:'A Perícia Médica Já Ocorreu?', type:'select', options:['Sim','Não']},
-    {col:'qual_o_resultado_da_pericia_medica', label:'Resultado da Perícia Médica', type:'select', options:['Favorável','Desfavorável','Aguardando']},
-    {col:'a_pericia_ergonomica_ja_ocorreu', label:'A Perícia Ergonômica Já Ocorreu?', type:'select', options:['Sim','Não']},
-    {col:'qual_o_resultado_da_pericia_ergonomica', label:'Resultado da Perícia Ergonômica', type:'select', options:['Favorável','Desfavorável','Aguardando']},
-    {col:'tem_audiencia_futura_agendada_se_sim_para_quando', label:'Audiência Futura Agendada? Para Quando?', type:'text'},
-    {col:'houve_decisao_liminar', label:'Houve Decisão Liminar?', type:'select', options:['Reintegração deferida','Reintegração indeferida','Aguardando decisão','Não houve pedido liminar']},
-    {col:'houve_pedido_de_reconsideracao_da_decisao_por_parte_da_emb', label:'Pedido de Reconsideração pela Embraer?', type:'select', options:['Sim','Não','N/A']},
-    {col:'houve_mandado_de_seguranca_por_parte_da_embraer', label:'Mandado de Segurança pela Embraer?', type:'select', options:['Sim','Não','N/A']},
-    {col:'sentenca', label:'Sentença', type:'select', options:['Reintegração deferida','Reintegração indeferida','Aguardando decisão']},
-    {col:'houve_recurso_ordinario_por_parte_da_embraer', label:'Recurso Ordinário pela Embraer?', type:'select', options:['Sim','Não']},
-    {col:'acordao_trt', label:'Acórdão TRT', type:'select', options:['Manteve decisão VT','Reformou decisão VT','Aguardando decisão']},
-    {col:'acordao_tst', label:'Acórdão TST', type:'select', options:['Manteve decisão TRT','Reformou decisão TRT','Aguardando decisão']},
-    {col:'ultima_decisao_reintegracao_deferida_ou_indeferida', label:'Última Decisão (Deferida ou Indeferida)', type:'select', options:['Reintegração deferida','Reintegração indeferida']},
-    {col:'onde_foi_a_ultima_decisao', label:'Onde Foi a Última Decisão', type:'text', placeholder:'Ex: VT, TRT, TST'},
-    {col:'status', label:'Status', type:'select', options:['Ativo','Encerrado']},
-    {col:'fase_processual', label:'Fase Processual', type:'text'},
-    {col:'risco_do_elaw', label:'Risco do Elaw', type:'select', options:['Possível','Provável','Remoto']},
-    {col:'valor_do_risco', label:'Valor do Risco [ELAW]', type:'money'},
-    {col:'valor_da_provisao', label:'Valor da Provisão [ELAW]', type:'money'},
-    {col:'escritorio_que_preencheu_a_planilha', label:'Escritório que Preencheu', type:'text', placeholder:'Peixoto e Cury'},
-    {col:'analise_objetiva_dos_documentos_apresentados_pelo_reclaman', label:'Análise Objetiva dos Documentos Apresentados', type:'textarea'},
-    {col:'risco_em_relacao_aos_documentos_apresentados', label:'Risco em Relação aos Documentos', type:'text'},
-    {col:'analise_das_condicoes_juridicas', label:'Análise das Condições Jurídicas', type:'textarea', placeholder:'Laudo médico, decisões, juízes...'},
-    {col:'risco_em_relacao_as_condicoes_juridicas', label:'Risco em Relação às Condições Jurídicas', type:'text'},
-    {col:'risco_em_relacao_a_analise_comparativa_de_i_a', label:'Risco em Relação à Análise Comparativa de I.A.', type:'text'},
-    {col:'tempo_provavel_para_a_reintegracao', label:'Tempo Provável para a Reintegração', type:'text'},
-    {col:'probabilidade_de_reintegracao', label:'Probabilidade de Reintegração', type:'text'},
-    {col:'obs', label:'OBS', type:'textarea'},
-    {col:'obs_marol', label:'OBS MAROL', type:'textarea'},
-    {col:'sigla', label:'Sigla', type:'text'},
+    {required:true, col:'tipo_de_processo_rt_ou_ms', label:'Tipo de Processo (RT ou MS)', type:'select', options:['RT','MS']},
+    {required:true, col:'chapa', label:'Chapa', type:'text'},
+    {required:true, col:'vt', label:'VT', type:'text'},
+    {required:true, col:'juiz', label:'Juiz', type:'text'},
+    {required:true, col:'comarca', label:'Comarca', type:'text'},
+    {required:true, col:'advogado_reclamante', label:'Advogado Reclamante', type:'text'},
+    {required:true, col:'informar_outros_processos_do_mesmo_reclamante', label:'Outros Processos do Mesmo Reclamante', type:'textarea'},
+    {required:true, col:'unidade_embraer', label:'Unidade Embraer', type:'select', options:['SP','SJK','EGM','ELEB','SOD','TTE','VCP','GPX','BOT','Outro']},
+    {required:true, col:'diretoria', label:'Diretoria', type:'text'},
+    {required:true, col:'gerencia', label:'Gerência', type:'text'},
+    {required:true, col:'admissao', label:'Admissão', type:'date'},
+    {required:true, col:'demissao', label:'Demissão', type:'text', placeholder:'dd/mm/aaaa ou "Ativo"'},
+    {required:true, col:'distribuicao_da_acao', label:'Distribuição da Ação', type:'date'},
+    {required:true, col:'qual_o_fundamento_do_pedido_de_reintegracao', label:'Fundamento do Pedido de Reintegração', type:'textarea', placeholder:'Ex: aposentadoria, CIPA, doença CCT, doença B-91...'},
+    {required:true, col:'se_for_doenca_cct_qual_doenca_alegada', label:'Se Doença CCT, Qual Doença Alegada', type:'text'},
+    {required:true, col:'familia_cid', label:'Família CID', type:'text'},
+    {required:true, col:'familia_cid_reintegracao', label:'Família CID - Reintegração', type:'text'},
+    {required:true, col:'quando_alega_ter_adquirido_a_doenca', label:'Quando Alega Ter Adquirido a Doença?', type:'text'},
+    {required:true, col:'alega_ter_adquirido_a_doenca_no_periodo_de_vigencia_da_cct', label:'Alega Ter Adquirido no Período de Vigência da CCT?', type:'select', options:['Sim','Não']},
+    {required:true, col:'empregado_reintegrado', label:'Empregado Reintegrado?', type:'select', options:['Sim','Não']},
+    {required:true, col:'data_reintegracao', label:'Data Reintegração', type:'date'},
+    {required:true, col:'a_pericia_medica_ja_ocorreu', label:'A Perícia Médica Já Ocorreu?', type:'select', options:['Sim','Não']},
+    {required:true, col:'qual_o_resultado_da_pericia_medica', label:'Resultado da Perícia Médica', type:'select', options:['Favorável','Desfavorável','Aguardando']},
+    {required:true, col:'a_pericia_ergonomica_ja_ocorreu', label:'A Perícia Ergonômica Já Ocorreu?', type:'select', options:['Sim','Não']},
+    {required:true, col:'qual_o_resultado_da_pericia_ergonomica', label:'Resultado da Perícia Ergonômica', type:'select', options:['Favorável','Desfavorável','Aguardando']},
+    {required:true, col:'tem_audiencia_futura_agendada_se_sim_para_quando', label:'Audiência Futura Agendada? Para Quando?', type:'text'},
+    {required:true, col:'houve_decisao_liminar', label:'Houve Decisão Liminar?', type:'select', options:['Reintegração deferida','Reintegração indeferida','Aguardando decisão','Não houve pedido liminar']},
+    {required:true, col:'houve_pedido_de_reconsideracao_da_decisao_por_parte_da_emb', label:'Pedido de Reconsideração pela Embraer?', type:'select', options:['Sim','Não','N/A']},
+    {required:true, col:'houve_mandado_de_seguranca_por_parte_da_embraer', label:'Mandado de Segurança pela Embraer?', type:'select', options:['Sim','Não','N/A']},
+    {required:true, col:'sentenca', label:'Sentença', type:'select', options:['Reintegração deferida','Reintegração indeferida','Aguardando decisão']},
+    {required:true, col:'houve_recurso_ordinario_por_parte_da_embraer', label:'Recurso Ordinário pela Embraer?', type:'select', options:['Sim','Não']},
+    {required:true, col:'acordao_trt', label:'Acórdão TRT', type:'select', options:['Manteve decisão VT','Reformou decisão VT','Aguardando decisão']},
+    {required:true, col:'acordao_tst', label:'Acórdão TST', type:'select', options:['Manteve decisão TRT','Reformou decisão TRT','Aguardando decisão']},
+    {required:true, col:'ultima_decisao_reintegracao_deferida_ou_indeferida', label:'Última Decisão (Deferida ou Indeferida)', type:'select', options:['Reintegração deferida','Reintegração indeferida']},
+    {required:true, col:'onde_foi_a_ultima_decisao', label:'Onde Foi a Última Decisão', type:'text', placeholder:'Ex: VT, TRT, TST'},
+    {required:true, col:'status', label:'Status', type:'select', options:['Ativo','Encerrado']},
+    {required:true, col:'fase_processual', label:'Fase Processual', type:'text'},
+    {required:true, col:'risco_do_elaw', label:'Risco do Elaw', type:'select', options:['Possível','Provável','Remoto']},
+    {required:true, col:'valor_do_risco', label:'Valor do Risco [ELAW]', type:'money'},
+    {required:true, col:'valor_da_provisao', label:'Valor da Provisão [ELAW]', type:'money'},
+    {required:true, col:'escritorio_que_preencheu_a_planilha', label:'Escritório que Preencheu', type:'text', placeholder:'Peixoto e Cury'},
+    {required:true, col:'analise_objetiva_dos_documentos_apresentados_pelo_reclaman', label:'Análise Objetiva dos Documentos Apresentados', type:'textarea'},
+    {required:true, col:'risco_em_relacao_aos_documentos_apresentados', label:'Risco em Relação aos Documentos', type:'text'},
+    {required:true, col:'analise_das_condicoes_juridicas', label:'Análise das Condições Jurídicas', type:'textarea', placeholder:'Laudo médico, decisões, juízes...'},
+    {required:true, col:'risco_em_relacao_as_condicoes_juridicas', label:'Risco em Relação às Condições Jurídicas', type:'text'},
+    {required:true, col:'risco_em_relacao_a_analise_comparativa_de_i_a', label:'Risco em Relação à Análise Comparativa de I.A.', type:'text'},
+    {required:true, col:'tempo_provavel_para_a_reintegracao', label:'Tempo Provável para a Reintegração', type:'text'},
+    {required:true, col:'probabilidade_de_reintegracao', label:'Probabilidade de Reintegração', type:'text'},
+    {required:true, col:'obs', label:'OBS', type:'textarea'},
+    {required:true, col:'obs_marol', label:'OBS MAROL', type:'textarea'},
+    {required:true, col:'sigla', label:'Sigla', type:'text'},
   ],
   resumo: [
     {col:'processso_no', label:'Processo', mono:true},
@@ -1337,35 +1313,35 @@ crudMontarView({
   fields: [
     {col:'processso_no', label:'Processo nº', type:'text', required:true, placeholder:'0000000-00.0000.0.00.0000'},
     {col:'nome_do_reclamante', label:'Nome do Reclamante', type:'text', required:true},
-    {col:'tipo_de_processo_rt_ou_ms', label:'Tipo de Processo (RT ou MS)', type:'select', options:['RT','MS']},
-    {col:'chapa', label:'Chapa', type:'text'},
-    {col:'vt', label:'VT', type:'text'},
-    {col:'comarca', label:'Comarca', type:'text'},
-    {col:'advogado_reclamante', label:'Advogado Reclamante', type:'text'},
-    {col:'informar_outros_processos_do_mesmo_reclamante', label:'Outros Processos do Mesmo Reclamante', type:'textarea'},
-    {col:'unidade_embraer', label:'Unidade Embraer', type:'select', options:['SP','SJK','EGM','ELEB','SOD','TTE','VCP','GPX','BOT','Outro']},
-    {col:'vice_presidencia', label:'Vice-Presidência', type:'text'},
-    {col:'diretoria', label:'Diretoria', type:'text'},
-    {col:'gerencia', label:'Gerência', type:'text'},
-    {col:'admissao', label:'Admissão', type:'date'},
-    {col:'demissao', label:'Demissão', type:'text', placeholder:'dd/mm/aaaa ou "Ativo"'},
-    {col:'distribuicao_da_acao', label:'Distribuição da Ação', type:'date'},
-    {col:'grupo_de_objetos', label:'Grupo de Objetos', type:'text'},
-    {col:'objetos', label:'Objetos', type:'textarea'},
-    {col:'motivo_da_relevancia', label:'Motivo da Relevância', type:'textarea'},
-    {col:'resumo_do_processo_com_enfase_na_relevancia', label:'Resumo do Processo (Ênfase na Relevância)', type:'textarea'},
-    {col:'houve_decisao_liminar', label:'Houve Decisão Liminar?', type:'select', options:['Deferida','Indeferida','Aguardando decisão','Não houve pedido liminar']},
-    {col:'sentenca', label:'Sentença', type:'select', options:['Pedido procedente','Improcedente','Aguardando decisão']},
-    {col:'acordao_trt', label:'Acórdão TRT', type:'select', options:['Manteve decisão VT','Reformou decisão VT','Aguardando decisão']},
-    {col:'acordao_tst', label:'Acórdão TST', type:'select', options:['Manteve decisão TRT','Reformou decisão TRT','Aguardando decisão']},
-    {col:'status', label:'Status', type:'select', options:['Ativo','Encerrado']},
-    {col:'fase_processual', label:'Fase Processual', type:'text'},
-    {col:'risco', label:'Risco', type:'select', options:['Possível','Provável','Remoto']},
-    {col:'valor_do_risco', label:'Valor do Risco [ELAW]', type:'money'},
-    {col:'valor_da_provisao', label:'Valor da Provisão [ELAW]', type:'money'},
-    {col:'escritorio_que_preencheu_a_planilha', label:'Escritório que Preencheu', type:'text', placeholder:'Peixoto e Cury'},
-    {col:'obs', label:'OBS', type:'textarea'},
-    {col:'obs_marol', label:'OBS MAROL', type:'textarea'},
+    {required:true, col:'tipo_de_processo_rt_ou_ms', label:'Tipo de Processo (RT ou MS)', type:'select', options:['RT','MS']},
+    {required:true, col:'chapa', label:'Chapa', type:'text'},
+    {required:true, col:'vt', label:'VT', type:'text'},
+    {required:true, col:'comarca', label:'Comarca', type:'text'},
+    {required:true, col:'advogado_reclamante', label:'Advogado Reclamante', type:'text'},
+    {required:true, col:'informar_outros_processos_do_mesmo_reclamante', label:'Outros Processos do Mesmo Reclamante', type:'textarea'},
+    {required:true, col:'unidade_embraer', label:'Unidade Embraer', type:'select', options:['SP','SJK','EGM','ELEB','SOD','TTE','VCP','GPX','BOT','Outro']},
+    {required:true, col:'vice_presidencia', label:'Vice-Presidência', type:'text'},
+    {required:true, col:'diretoria', label:'Diretoria', type:'text'},
+    {required:true, col:'gerencia', label:'Gerência', type:'text'},
+    {required:true, col:'admissao', label:'Admissão', type:'date'},
+    {required:true, col:'demissao', label:'Demissão', type:'text', placeholder:'dd/mm/aaaa ou "Ativo"'},
+    {required:true, col:'distribuicao_da_acao', label:'Distribuição da Ação', type:'date'},
+    {required:true, col:'grupo_de_objetos', label:'Grupo de Objetos', type:'text'},
+    {required:true, col:'objetos', label:'Objetos', type:'textarea'},
+    {required:true, col:'motivo_da_relevancia', label:'Motivo da Relevância', type:'textarea'},
+    {required:true, col:'resumo_do_processo_com_enfase_na_relevancia', label:'Resumo do Processo (Ênfase na Relevância)', type:'textarea'},
+    {required:true, col:'houve_decisao_liminar', label:'Houve Decisão Liminar?', type:'select', options:['Deferida','Indeferida','Aguardando decisão','Não houve pedido liminar']},
+    {required:true, col:'sentenca', label:'Sentença', type:'select', options:['Pedido procedente','Improcedente','Aguardando decisão']},
+    {required:true, col:'acordao_trt', label:'Acórdão TRT', type:'select', options:['Manteve decisão VT','Reformou decisão VT','Aguardando decisão']},
+    {required:true, col:'acordao_tst', label:'Acórdão TST', type:'select', options:['Manteve decisão TRT','Reformou decisão TRT','Aguardando decisão']},
+    {required:true, col:'status', label:'Status', type:'select', options:['Ativo','Encerrado']},
+    {required:true, col:'fase_processual', label:'Fase Processual', type:'text'},
+    {required:true, col:'risco', label:'Risco', type:'select', options:['Possível','Provável','Remoto']},
+    {required:true, col:'valor_do_risco', label:'Valor do Risco [ELAW]', type:'money'},
+    {required:true, col:'valor_da_provisao', label:'Valor da Provisão [ELAW]', type:'money'},
+    {required:true, col:'escritorio_que_preencheu_a_planilha', label:'Escritório que Preencheu', type:'text', placeholder:'Peixoto e Cury'},
+    {required:true, col:'obs', label:'OBS', type:'textarea'},
+    {required:true, col:'obs_marol', label:'OBS MAROL', type:'textarea'},
   ],
   resumo: [
     {col:'processso_no', label:'Processo', mono:true},
@@ -1406,64 +1382,64 @@ crudMontarView({
   icone: '🧪',
   fields: [
     {col:'processo', label:'Processo', type:'text', required:true, placeholder:'0000000-00.0000.0.00.0000'},
-    {col:'resp_verificar', label:'Resp. Verificar', type:'text'},
-    {col:'responsavel_pela_pasta', label:'Responsável pela Pasta', type:'text'},
-    {col:'id_elaw', label:'ID Elaw', type:'text'},
-    {col:'status', label:'Status', type:'select', options:['Ativo','Encerrado']},
-    {col:'pasta_p_c', label:'Pasta P&C', type:'text'},
+    {required:true, col:'resp_verificar', label:'Resp. Verificar', type:'text'},
+    {required:true, col:'responsavel_pela_pasta', label:'Responsável pela Pasta', type:'text'},
+    {required:true, col:'id_elaw', label:'ID Elaw', type:'text'},
+    {required:true, col:'status', label:'Status', type:'select', options:['Ativo','Encerrado']},
+    {required:true, col:'pasta_p_c', label:'Pasta P&C', type:'text'},
     {col:'reclamante', label:'Reclamante', type:'text', required:true},
-    {col:'advogado_reclamante', label:'Advogado Reclamante', type:'text'},
-    {col:'tipo_de_acao', label:'Tipo de Ação', type:'text'},
-    {col:'grupo_de_objetos', label:'Grupo de Objetos', type:'text'},
-    {col:'objetos', label:'Objetos', type:'textarea'},
-    {col:'fase', label:'Fase', type:'text'},
-    {col:'local_dos_autos', label:'Local dos Autos', type:'select', options:['VT','TRT','TST']},
-    {col:'vara', label:'Vara', type:'text'},
-    {col:'comarca', label:'Comarca', type:'text'},
-    {col:'uf', label:'UF', type:'select', options:UF_LISTA},
-    {col:'grupo_empresas', label:'Grupo Empresas', type:'text', placeholder:'Ex: Embraer S.A.'},
-    {col:'esfera', label:'Esfera', type:'text'},
-    {col:'categoria_do_cargo', label:'Categoria do Cargo', type:'text'},
-    {col:'ultimo_cargo', label:'Último Cargo', type:'text'},
-    {col:'risco_prognostico_de_perda', label:'Risco - Prognóstico de Perda', type:'select', options:['Possível','Provável','Remoto']},
-    {col:'valor_da_causa', label:'Valor da Causa', type:'money'},
-    {col:'valor_do_risco', label:'Valor do Risco', type:'money'},
-    {col:'valor_da_provisao', label:'Valor da Provisão', type:'money'},
-    {col:'diferenca', label:'Diferença', type:'money'},
-    {col:'ultima_decisao', label:'Última Decisão', type:'text'},
-    {col:'insal_e_peri', label:'Insal. e Peri.', type:'select', options:['Insalubridade','Periculosidade','Insalubridade e Periculosidade']},
-    {col:'perito_do_juizo', label:'Perito do Juízo', type:'text'},
-    {col:'local_da_pericia_planta_abreviada', label:'Local da Perícia - Planta Abreviada', type:'text'},
-    {col:'data_da_pericia', label:'Data da Perícia', type:'date'},
-    {col:'local_da_pericia', label:'Local da Perícia', type:'text'},
-    {col:'laudo_apresentado', label:'Laudo Apresentado?', type:'select', options:['Sim','Não']},
-    {col:'data_de_apresentacao_do_laudo', label:'Data de Apresentação do Laudo', type:'date'},
-    {col:'resultado_do_laudo_geral', label:'Resultado do Laudo Geral', type:'select', options:['Favorável','Desfavorável','Aguardando']},
-    {col:'periodo_da_condenacao_de_periculosidade', label:'Período da Condenação de Periculosidade', type:'text'},
-    {col:'periodo_da_condenacao_da_insalubridade', label:'Período da Condenação de Insalubridade', type:'text'},
-    {col:'planta', label:'Planta', type:'text'},
-    {col:'setores_periciados_unificada', label:'Setores Periciados - Unificada', type:'text'},
-    {col:'setores_periciados', label:'Setores Periciados', type:'textarea'},
-    {col:'ha_pedido_de_periculosidade', label:'Há Pedido de Periculosidade?', type:'select', options:['Sim','Não']},
-    {col:'agente_da_periculosidade', label:'Agente da Periculosidade', type:'text'},
-    {col:'resultado_do_laudo_periculosidade', label:'Resultado do Laudo Periculosidade', type:'select', options:['Favorável','Desfavorável','Aguardando','N/A']},
-    {col:'inflamaveis', label:'Inflamáveis', type:'select', options:SIM_NAO_NA},
-    {col:'combustivel', label:'Combustível', type:'select', options:SIM_NAO_NA},
-    {col:'explosivos', label:'Explosivos', type:'select', options:SIM_NAO_NA},
-    {col:'energia_eletrica', label:'Energia Elétrica', type:'select', options:SIM_NAO_NA},
-    {col:'obs_periculosidade', label:'Obs Periculosidade', type:'textarea'},
-    {col:'ha_pedido_de_insalubridade', label:'Há Pedido de Insalubridade?', type:'select', options:['Sim','Não']},
-    {col:'agente_da_insalubridade', label:'Agente da Insalubridade', type:'text'},
-    {col:'resultado_do_laudo_insalubridade', label:'Resultado do Laudo Insalubridade', type:'select', options:['Favorável','Desfavorável','Aguardando','N/A']},
-    {col:'grau_de_enquadramento', label:'Grau de Enquadramento', type:'select', options:['Mínimo','Médio','Máximo','N/A']},
-    {col:'agentes_biologicos', label:'Agentes Biológicos', type:'select', options:SIM_NAO_NA},
-    {col:'ruido', label:'Ruído', type:'select', options:SIM_NAO_NA},
-    {col:'qual_area_deu_o_ruido', label:'Qual Área Deu o Ruído', type:'text'},
-    {col:'agentes_quimicos', label:'Agentes Químicos', type:'select', options:SIM_NAO_NA},
-    {col:'solventes', label:'Solventes', type:'select', options:SIM_NAO_NA},
-    {col:'oleos_e_graxas', label:'Óleos e Graxas', type:'select', options:SIM_NAO_NA},
-    {col:'obs_insalubridade', label:'Obs Insalubridade', type:'textarea'},
-    {col:'marol_respostas', label:'Marol - Respostas', type:'text'},
+    {required:true, col:'advogado_reclamante', label:'Advogado Reclamante', type:'text'},
+    {required:true, col:'tipo_de_acao', label:'Tipo de Ação', type:'text'},
+    {required:true, col:'grupo_de_objetos', label:'Grupo de Objetos', type:'text'},
+    {required:true, col:'objetos', label:'Objetos', type:'textarea'},
+    {required:true, col:'fase', label:'Fase', type:'text'},
+    {required:true, col:'local_dos_autos', label:'Local dos Autos', type:'select', options:['VT','TRT','TST']},
+    {required:true, col:'vara', label:'Vara', type:'text'},
+    {required:true, col:'comarca', label:'Comarca', type:'text'},
+    {required:true, col:'uf', label:'UF', type:'select', options:UF_LISTA},
+    {required:true, col:'grupo_empresas', label:'Grupo Empresas', type:'text', placeholder:'Ex: Embraer S.A.'},
+    {required:true, col:'esfera', label:'Esfera', type:'text'},
+    {required:true, col:'categoria_do_cargo', label:'Categoria do Cargo', type:'text'},
+    {required:true, col:'ultimo_cargo', label:'Último Cargo', type:'text'},
+    {required:true, col:'risco_prognostico_de_perda', label:'Risco - Prognóstico de Perda', type:'select', options:['Possível','Provável','Remoto']},
+    {required:true, col:'valor_da_causa', label:'Valor da Causa', type:'money'},
+    {required:true, col:'valor_do_risco', label:'Valor do Risco', type:'money'},
+    {required:true, col:'valor_da_provisao', label:'Valor da Provisão', type:'money'},
+    {required:true, col:'diferenca', label:'Diferença', type:'money'},
+    {required:true, col:'ultima_decisao', label:'Última Decisão', type:'text'},
+    {required:true, col:'insal_e_peri', label:'Insal. e Peri.', type:'select', options:['Insalubridade','Periculosidade','Insalubridade e Periculosidade']},
+    {required:true, col:'perito_do_juizo', label:'Perito do Juízo', type:'text'},
+    {required:true, col:'local_da_pericia_planta_abreviada', label:'Local da Perícia - Planta Abreviada', type:'text'},
+    {required:true, col:'data_da_pericia', label:'Data da Perícia', type:'date'},
+    {required:true, col:'local_da_pericia', label:'Local da Perícia', type:'text'},
+    {required:true, col:'laudo_apresentado', label:'Laudo Apresentado?', type:'select', options:['Sim','Não']},
+    {required:true, col:'data_de_apresentacao_do_laudo', label:'Data de Apresentação do Laudo', type:'date'},
+    {required:true, col:'resultado_do_laudo_geral', label:'Resultado do Laudo Geral', type:'select', options:['Favorável','Desfavorável','Aguardando']},
+    {required:true, col:'periodo_da_condenacao_de_periculosidade', label:'Período da Condenação de Periculosidade', type:'text'},
+    {required:true, col:'periodo_da_condenacao_da_insalubridade', label:'Período da Condenação de Insalubridade', type:'text'},
+    {required:true, col:'planta', label:'Planta', type:'text'},
+    {required:true, col:'setores_periciados_unificada', label:'Setores Periciados - Unificada', type:'text'},
+    {required:true, col:'setores_periciados', label:'Setores Periciados', type:'textarea'},
+    {required:true, col:'ha_pedido_de_periculosidade', label:'Há Pedido de Periculosidade?', type:'select', options:['Sim','Não']},
+    {required:true, col:'agente_da_periculosidade', label:'Agente da Periculosidade', type:'text'},
+    {required:true, col:'resultado_do_laudo_periculosidade', label:'Resultado do Laudo Periculosidade', type:'select', options:['Favorável','Desfavorável','Aguardando','N/A']},
+    {required:true, col:'inflamaveis', label:'Inflamáveis', type:'select', options:SIM_NAO_NA},
+    {required:true, col:'combustivel', label:'Combustível', type:'select', options:SIM_NAO_NA},
+    {required:true, col:'explosivos', label:'Explosivos', type:'select', options:SIM_NAO_NA},
+    {required:true, col:'energia_eletrica', label:'Energia Elétrica', type:'select', options:SIM_NAO_NA},
+    {required:true, col:'obs_periculosidade', label:'Obs Periculosidade', type:'textarea'},
+    {required:true, col:'ha_pedido_de_insalubridade', label:'Há Pedido de Insalubridade?', type:'select', options:['Sim','Não']},
+    {required:true, col:'agente_da_insalubridade', label:'Agente da Insalubridade', type:'text'},
+    {required:true, col:'resultado_do_laudo_insalubridade', label:'Resultado do Laudo Insalubridade', type:'select', options:['Favorável','Desfavorável','Aguardando','N/A']},
+    {required:true, col:'grau_de_enquadramento', label:'Grau de Enquadramento', type:'select', options:['Mínimo','Médio','Máximo','N/A']},
+    {required:true, col:'agentes_biologicos', label:'Agentes Biológicos', type:'select', options:SIM_NAO_NA},
+    {required:true, col:'ruido', label:'Ruído', type:'select', options:SIM_NAO_NA},
+    {required:true, col:'qual_area_deu_o_ruido', label:'Qual Área Deu o Ruído', type:'text'},
+    {required:true, col:'agentes_quimicos', label:'Agentes Químicos', type:'select', options:SIM_NAO_NA},
+    {required:true, col:'solventes', label:'Solventes', type:'select', options:SIM_NAO_NA},
+    {required:true, col:'oleos_e_graxas', label:'Óleos e Graxas', type:'select', options:SIM_NAO_NA},
+    {required:true, col:'obs_insalubridade', label:'Obs Insalubridade', type:'textarea'},
+    {required:true, col:'marol_respostas', label:'Marol - Respostas', type:'text'},
   ],
   resumo: [
     {col:'processo', label:'Processo', mono:true},
@@ -1486,48 +1462,48 @@ crudMontarView({
   icone: '🩺',
   fields: [
     {col:'processo', label:'Processo', type:'text', required:true, placeholder:'0000000-00.0000.0.00.0000'},
-    {col:'cid', label:'CID', type:'text', placeholder:'Ex: H83.3, M554.5'},
-    {col:'familia_cid', label:'Família CID', type:'text'},
-    {col:'setor', label:'Setor', type:'text'},
-    {col:'id_elaw', label:'ID Elaw', type:'text'},
-    {col:'status', label:'Status', type:'select', options:['Ativo','Encerrado']},
-    {col:'pasta_p_c', label:'Pasta P&C', type:'text'},
+    {required:true, col:'cid', label:'CID', type:'text', placeholder:'Ex: H83.3, M554.5'},
+    {required:true, col:'familia_cid', label:'Família CID', type:'text'},
+    {required:true, col:'setor', label:'Setor', type:'text'},
+    {required:true, col:'id_elaw', label:'ID Elaw', type:'text'},
+    {required:true, col:'status', label:'Status', type:'select', options:['Ativo','Encerrado']},
+    {required:true, col:'pasta_p_c', label:'Pasta P&C', type:'text'},
     {col:'reclamante', label:'Reclamante', type:'text', required:true},
-    {col:'advogado_reclamante', label:'Advogado Reclamante', type:'text'},
-    {col:'tipo_de_acao', label:'Tipo de Ação', type:'text'},
-    {col:'grupo_de_objetos', label:'Grupo de Objetos', type:'text'},
-    {col:'objetos', label:'Objetos', type:'textarea'},
-    {col:'fase', label:'Fase', type:'text'},
-    {col:'local_dos_autos', label:'Local dos Autos', type:'select', options:['VT','TRT','TST']},
-    {col:'vara', label:'Vara', type:'text'},
-    {col:'comarca', label:'Comarca', type:'text'},
-    {col:'uf', label:'UF', type:'select', options:UF_LISTA},
-    {col:'empresa', label:'Empresa', type:'text'},
-    {col:'grupo_de_empresas', label:'Grupo de Empresas', type:'text'},
-    {col:'esfera', label:'Esfera', type:'text'},
-    {col:'categoria_do_cargo', label:'Categoria do Cargo', type:'text'},
-    {col:'ultimo_cargo', label:'Último Cargo', type:'text'},
-    {col:'risco_prognostico_de_perda', label:'Risco - Prognóstico de Perda', type:'select', options:['Possível','Provável','Remoto']},
-    {col:'ultima_decisao_do_processo', label:'Última Decisão do Processo', type:'text'},
-    {col:'ultima_decisao_do_laudo', label:'Última Decisão do Laudo', type:'text'},
-    {col:'data_da_pericia_medica', label:'Data da Perícia - Médica', type:'date'},
-    {col:'data_da_pericia_ergonomica', label:'Data da Perícia - Ergonômica', type:'date'},
-    {col:'pericia_medica', label:'Perícia Médica?', type:'select', options:['Sim','Não']},
-    {col:'pericia_ergonomico', label:'Perícia Ergonômica?', type:'select', options:['Sim','Não']},
-    {col:'status_da_pericia_medica', label:'Status da Perícia Médica', type:'select', options:['Aguardando','Realizada']},
-    {col:'status_da_pericia_ergnomico', label:'Status da Perícia Ergonômica', type:'select', options:['Aguardando','Realizada']},
-    {col:'tipo_de_pericia', label:'Tipo de Perícia', type:'text', placeholder:'Ex: Médica e Ergonômica'},
-    {col:'perito_medico_do_juizo', label:'Perito Médico do Juízo', type:'text'},
-    {col:'perito_engenheiro_do_juizo', label:'Perito Engenheiro do Juízo', type:'text'},
-    {col:'embraer_conclusao_laudo_ergonomico', label:'Embraer - Conclusão Laudo Ergonômico', type:'select', options:['Favorável','Desfavorável','Aguardando']},
-    {col:'embraer_conclusao_laudo_medico', label:'Embraer - Conclusão Laudo Médico', type:'select', options:['Favorável','Desfavorável','Aguardando']},
-    {col:'embraer_conclusao_grau_do_risco_ergonomico', label:'Embraer - Conclusão Grau do Risco Ergonômico', type:'select', options:['Sem Risco','Baixo','Médio','Alto']},
-    {col:'embraer_conclusao_nexo_doenca', label:'Embraer - Conclusão Nexo Doença', type:'select', options:['Concausal','Ocupacional','Não ocupacional','Aguardando']},
-    {col:'embraer_percentual_de_reducao_da_capacidade', label:'Embraer - % de Redução da Capacidade', type:'text', placeholder:'Ex: 12,5%'},
-    {col:'embraer_tipo_de_doenca', label:'Embraer - Tipo de Doença', type:'text'},
-    {col:'embraer_parte_do_corpo', label:'Embraer - Parte do Corpo', type:'text'},
-    {col:'tipo_de_doenca_ajustado', label:'Tipo de Doença - Ajustado', type:'text'},
-    {col:'acompanhamento', label:'Acompanhamento', type:'textarea'},
+    {required:true, col:'advogado_reclamante', label:'Advogado Reclamante', type:'text'},
+    {required:true, col:'tipo_de_acao', label:'Tipo de Ação', type:'text'},
+    {required:true, col:'grupo_de_objetos', label:'Grupo de Objetos', type:'text'},
+    {required:true, col:'objetos', label:'Objetos', type:'textarea'},
+    {required:true, col:'fase', label:'Fase', type:'text'},
+    {required:true, col:'local_dos_autos', label:'Local dos Autos', type:'select', options:['VT','TRT','TST']},
+    {required:true, col:'vara', label:'Vara', type:'text'},
+    {required:true, col:'comarca', label:'Comarca', type:'text'},
+    {required:true, col:'uf', label:'UF', type:'select', options:UF_LISTA},
+    {required:true, col:'empresa', label:'Empresa', type:'text'},
+    {required:true, col:'grupo_de_empresas', label:'Grupo de Empresas', type:'text'},
+    {required:true, col:'esfera', label:'Esfera', type:'text'},
+    {required:true, col:'categoria_do_cargo', label:'Categoria do Cargo', type:'text'},
+    {required:true, col:'ultimo_cargo', label:'Último Cargo', type:'text'},
+    {required:true, col:'risco_prognostico_de_perda', label:'Risco - Prognóstico de Perda', type:'select', options:['Possível','Provável','Remoto']},
+    {required:true, col:'ultima_decisao_do_processo', label:'Última Decisão do Processo', type:'text'},
+    {required:true, col:'ultima_decisao_do_laudo', label:'Última Decisão do Laudo', type:'text'},
+    {required:true, col:'data_da_pericia_medica', label:'Data da Perícia - Médica', type:'date'},
+    {required:true, col:'data_da_pericia_ergonomica', label:'Data da Perícia - Ergonômica', type:'date'},
+    {required:true, col:'pericia_medica', label:'Perícia Médica?', type:'select', options:['Sim','Não']},
+    {required:true, col:'pericia_ergonomico', label:'Perícia Ergonômica?', type:'select', options:['Sim','Não']},
+    {required:true, col:'status_da_pericia_medica', label:'Status da Perícia Médica', type:'select', options:['Aguardando','Realizada']},
+    {required:true, col:'status_da_pericia_ergnomico', label:'Status da Perícia Ergonômica', type:'select', options:['Aguardando','Realizada']},
+    {required:true, col:'tipo_de_pericia', label:'Tipo de Perícia', type:'text', placeholder:'Ex: Médica e Ergonômica'},
+    {required:true, col:'perito_medico_do_juizo', label:'Perito Médico do Juízo', type:'text'},
+    {required:true, col:'perito_engenheiro_do_juizo', label:'Perito Engenheiro do Juízo', type:'text'},
+    {required:true, col:'embraer_conclusao_laudo_ergonomico', label:'Embraer - Conclusão Laudo Ergonômico', type:'select', options:['Favorável','Desfavorável','Aguardando']},
+    {required:true, col:'embraer_conclusao_laudo_medico', label:'Embraer - Conclusão Laudo Médico', type:'select', options:['Favorável','Desfavorável','Aguardando']},
+    {required:true, col:'embraer_conclusao_grau_do_risco_ergonomico', label:'Embraer - Conclusão Grau do Risco Ergonômico', type:'select', options:['Sem Risco','Baixo','Médio','Alto']},
+    {required:true, col:'embraer_conclusao_nexo_doenca', label:'Embraer - Conclusão Nexo Doença', type:'select', options:['Concausal','Ocupacional','Não ocupacional','Aguardando']},
+    {required:true, col:'embraer_percentual_de_reducao_da_capacidade', label:'Embraer - % de Redução da Capacidade', type:'text', placeholder:'Ex: 12,5%'},
+    {required:true, col:'embraer_tipo_de_doenca', label:'Embraer - Tipo de Doença', type:'text'},
+    {required:true, col:'embraer_parte_do_corpo', label:'Embraer - Parte do Corpo', type:'text'},
+    {required:true, col:'tipo_de_doenca_ajustado', label:'Tipo de Doença - Ajustado', type:'text'},
+    {required:true, col:'acompanhamento', label:'Acompanhamento', type:'textarea'},
   ],
   resumo: [
     {col:'processo', label:'Processo', mono:true},
