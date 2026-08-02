@@ -170,6 +170,8 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
   <button class="tab-btn" id="tab-btn-reintegracao" onclick="mudarAba('reintegracao')">⚖️ Determinação de Reintegração</button>
   <button class="tab-btn" id="tab-btn-elaw" onclick="mudarAba('elaw')">🗂️ Ajuste de Fase/Prognóstico</button>
   <button class="tab-btn" id="tab-btn-pericia" onclick="mudarAba('pericia')">🩹 Agendamento de Perícia</button>
+  <button class="tab-btn" id="tab-btn-quesitos" onclick="mudarAba('quesitos')">📐 Quesitos Ergonômicos</button>
+  <button class="tab-btn" id="tab-btn-subsidiomedico" onclick="mudarAba('subsidiomedico')">🩺 Subsídio de Quesitos Médicos</button>
   <button class="tab-btn" id="tab-btn-so" onclick="mudarAba('so')">🎙️ Inscrição S.O.</button>
 </div>
 
@@ -675,6 +677,78 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
     </div>
   </div>
 
+  <div class="view" id="view-quesitos">
+    <div class="dash-card">
+      <div class="dash-card-head">📐 Nova Solicitação de Quesitos Ergonômicos</div>
+      <div class="dash-card-body">
+        <div class="info-box">ℹ️ Vai sempre para <b>embraer@fabioproto.com.br</b>, com cópia para o grupo interno.</div>
+        <div class="mc-form-grid">
+          <div class="mc-form-group"><label>Número do Processo <span class="req">*</span></label><input type="text" id="qe-processo" required placeholder="0000000-00.0000.0.00.0000"></div>
+          <div class="mc-form-group"><label>Nome do Reclamante <span class="req">*</span></label><input type="text" id="qe-reclamante" required></div>
+        </div>
+        <div class="mc-form-grid">
+          <div class="mc-form-group"><label>Prazo para envio <span class="req">*</span></label><input type="date" id="qe-prazo" required></div>
+          <div class="mc-form-group"><label>Responsável pela solicitação (sigla) <span class="req">*</span></label><input type="text" id="qe-responsavel" required placeholder="Ex: BCF"></div>
+        </div>
+        <button type="button" class="btn-cyan" onclick="enviarQuesitosErgonomicos(event)">✉️ Gerar e-mail e registrar</button>
+      </div>
+    </div>
+    <div class="dash-card">
+      <div class="dash-card-head">📜 Histórico de Solicitações de Quesitos Ergonômicos <button class="export-btn" onclick="exportarExcelGenerico(HIST_QUESITOS_FILTRADO, 'Quesitos_Ergonomicos_Embraer', QUESITOS_COLUNAS_EXCEL)">⬇ Exportar Excel</button></div>
+      <div class="filters">
+        <input class="filter-input" id="qe-busca" placeholder="Buscar por processo ou reclamante…" oninput="renderHistoricoQuesitos()">
+        <select class="filter-select" id="qe-flt-status" onchange="renderHistoricoQuesitos()">
+          <option value="">Status: todos</option>
+          <option value="Pendente">Pendente</option>
+          <option value="Concluído">Concluído</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table class="sol-table">
+          <thead><tr><th>Processo</th><th>Reclamante</th><th>Prazo</th><th>Status</th><th>Enviado em</th><th>Ações</th></tr></thead>
+          <tbody id="qe-tbody"><tr><td colspan="6" class="empty-state">Carregando…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="view" id="view-subsidiomedico">
+    <div class="dash-card">
+      <div class="dash-card-head">🩺 Novo Subsídio de Quesitos Médicos</div>
+      <div class="dash-card-body">
+        <div class="info-box">ℹ️ Vai sempre para <b>rose@grupoproto.com.br</b> e <b>embraer@fabioproto.com.br</b>, com cópia para o grupo interno.</div>
+        <div class="mc-form-grid">
+          <div class="mc-form-group"><label>Número do Processo <span class="req">*</span></label><input type="text" id="sm-processo" required placeholder="0000000-00.0000.0.00.0000"></div>
+          <div class="mc-form-group"><label>Nome do Reclamante <span class="req">*</span></label><input type="text" id="sm-reclamante" required></div>
+        </div>
+        <div class="mc-form-grid cols-3">
+          <div class="mc-form-group"><label>ID dos Esclarecimentos <span class="req">*</span></label><input type="text" id="sm-id-esclarecimento" required placeholder="Ex: 9c14621"></div>
+          <div class="mc-form-group"><label>Prazo <span class="req">*</span></label><input type="date" id="sm-prazo" required></div>
+          <div class="mc-form-group"><label>Responsável pela solicitação (sigla) <span class="req">*</span></label><input type="text" id="sm-responsavel" required placeholder="Ex: VCR"></div>
+        </div>
+        <div class="mc-form-group"><label>Link para cópia integral</label><input type="text" id="sm-link" placeholder="https://…"></div>
+        <button type="button" class="btn-cyan" onclick="enviarSubsidioMedico(event)">✉️ Gerar e-mail e registrar</button>
+      </div>
+    </div>
+    <div class="dash-card">
+      <div class="dash-card-head">📜 Histórico de Subsídios de Quesitos Médicos <button class="export-btn" onclick="exportarExcelGenerico(HIST_SUBSIDIOMEDICO_FILTRADO, 'Subsidio_Quesitos_Medicos_Embraer', SUBSIDIOMEDICO_COLUNAS_EXCEL)">⬇ Exportar Excel</button></div>
+      <div class="filters">
+        <input class="filter-input" id="sm-busca" placeholder="Buscar por processo ou reclamante…" oninput="renderHistoricoSubsidioMedico()">
+        <select class="filter-select" id="sm-flt-status" onchange="renderHistoricoSubsidioMedico()">
+          <option value="">Status: todos</option>
+          <option value="Pendente">Pendente</option>
+          <option value="Concluído">Concluído</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table class="sol-table">
+          <thead><tr><th>Processo</th><th>Reclamante</th><th>ID Esclarecimento</th><th>Prazo</th><th>Status</th><th>Enviado em</th><th>Ações</th></tr></thead>
+          <tbody id="sm-tbody"><tr><td colspan="7" class="empty-state">Carregando…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
   <div class="view" id="view-so">
     <div class="dash-card">
       <div class="dash-card-head">🎙️ Nova Inscrição de Sustentação Oral</div>
@@ -1159,7 +1233,7 @@ function crudExportar(cfg){
   XLSX.writeFile(wb, `${cfg.titulo.replace(/\s+/g,'_')}_Embraer_${hojeISOlocal()}.xlsx`);
 }
 
-const ABAS = ['decisao','reintegrados','estrategicos','insalubridade','doencas','calculos','reintegracao','elaw','pericia','so'];
+const ABAS = ['decisao','reintegrados','estrategicos','insalubridade','doencas','calculos','reintegracao','elaw','pericia','quesitos','subsidiomedico','so'];
 const ABA_CARREGADORES = {};
 function mudarAba(aba){
   ABAS.forEach(a => {
@@ -1849,6 +1923,169 @@ function verDetalhesPericia(id){
   abrirVerDetalhes(`Agendamento de Perícia — ${r.processo}`, textoParaHtmlDetalhes(texto));
 }
 ABA_CARREGADORES['pericia'] = { carregado: false, fn: carregarHistoricoPericia };
+
+/* ===================== ABA: QUESITOS ERGONÔMICOS =====================
+   Pedido simples e curto (igual ao e-mail já usado manualmente): vai sempre
+   pra embraer@fabioproto.com.br, com cópia pro grupo interno. */
+const QUESITOS_TO = 'embraer@fabioproto.com.br';
+const QUESITOS_CC = 'embraer.pec@peixotoecury.com.br';
+const QUESITOS_COLUNAS_EXCEL = [
+  {label:'Processo', col:'processo'}, {label:'Reclamante', col:'reclamante'},
+  {label:'Prazo', col:'prazo_envio'}, {label:'Responsável', col:'responsavel_sigla'},
+  {label:'Status', col:'status'}, {label:'Criado em', col:'criado_em'}, {label:'Concluído em', col:'concluido_em'},
+];
+async function enviarQuesitosErgonomicos(ev){
+  ev.preventDefault();
+  const g = id => document.getElementById(id).value.trim() || null;
+  const obrigatorios = [['qe-processo','Número do Processo'],['qe-reclamante','Nome do Reclamante'],['qe-prazo','Prazo para envio'],['qe-responsavel','Responsável']];
+  for(const [id, label] of obrigatorios){ if(!document.getElementById(id).value.trim()){ toast(`Preencha o campo "${label}".`, true); return; } }
+  const registro = {
+    processo: g('qe-processo'), reclamante: g('qe-reclamante'), prazo_envio: g('qe-prazo'),
+    responsavel_sigla: g('qe-responsavel'), status: 'Pendente', criado_em: new Date().toISOString(),
+  };
+  const prazoFmt = dataBR(registro.prazo_envio);
+  const assunto = `Solicitação de quesitos ergonômicos - ${registro.processo}`;
+  const corpo = `Prezados, bom dia!\n\nPor gentileza, poderiam nos enviar quesitos ergonômicos?\n\nPrazo: ${prazoFmt}\n\nAtenciosamente,`;
+  try{
+    const { error } = await sb.from('embraer_quesitos_ergonomicos').insert(registro);
+    if(error) throw error;
+    toast('Solicitação registrada. Abrindo e-mail…');
+    carregarHistoricoQuesitos();
+  }catch(err){
+    console.error(err);
+    toast('E-mail aberto, mas NÃO foi possível salvar no histórico: ' + (err.message||err), true);
+  }
+  abrirEmail(QUESITOS_TO, QUESITOS_CC, assunto, corpo);
+  document.querySelectorAll('#view-quesitos input').forEach(el => el.value = '');
+}
+
+let HIST_QUESITOS = [];
+let HIST_QUESITOS_FILTRADO = [];
+async function carregarHistoricoQuesitos(){
+  try{
+    const { data, error } = await sb.from('embraer_quesitos_ergonomicos').select('*').order('criado_em', {ascending:false}).limit(200);
+    if(error) throw error;
+    HIST_QUESITOS = data || [];
+    document.getElementById('erro-conexao').innerHTML = '';
+    renderHistoricoQuesitos();
+  }catch(err){
+    console.error(err);
+    document.getElementById('qe-tbody').innerHTML = `<tr><td colspan="6" class="empty-state">Erro ao carregar histórico — a tabela embraer_quesitos_ergonomicos provavelmente ainda não existe.</td></tr>`;
+  }
+}
+function renderHistoricoQuesitos(){
+  const termo = document.getElementById('qe-busca').value.toLowerCase();
+  const status = document.getElementById('qe-flt-status').value;
+  const rows = HIST_QUESITOS.filter(r =>
+    (!termo || (r.processo||'').toLowerCase().includes(termo) || (r.reclamante||'').toLowerCase().includes(termo)) &&
+    (!status || (r.status||'Pendente') === status)
+  );
+  HIST_QUESITOS_FILTRADO = rows;
+  const tbody = document.getElementById('qe-tbody');
+  if(!rows.length){ tbody.innerHTML = `<tr><td colspan="6" class="empty-state">Nenhuma solicitação encontrada.</td></tr>`; return; }
+  tbody.innerHTML = rows.map(r => `<tr>
+    <td class="mono">${esc(r.processo)}</td>
+    <td>${esc(r.reclamante)}</td>
+    <td class="mono">${r.prazo_envio ? dataBR(r.prazo_envio) : ''}</td>
+    <td><span class="badge ${r.status==='Concluído'?'badge-green':'badge-orange'}">${esc(r.status||'Pendente')}</span></td>
+    <td class="mono">${fmtDataHora(r.criado_em)}</td>
+    <td>
+      ${r.status !== 'Concluído' ? `<button class="row-btn" onclick="concluirQuesitos(${r.id})">✅ Concluir</button>` : ''}
+      <button class="row-btn" onclick="excluirRegistroGenerico('embraer_quesitos_ergonomicos', ${r.id}, carregarHistoricoQuesitos)">🗑️ Excluir</button>
+    </td>
+  </tr>`).join('');
+}
+async function concluirQuesitos(id){
+  const { error } = await sb.from('embraer_quesitos_ergonomicos').update({ status: 'Concluído', concluido_em: new Date().toISOString() }).eq('id', id);
+  if(error){ toast('Erro ao concluir: ' + error.message, true); return; }
+  toast('Solicitação marcada como concluída.');
+  carregarHistoricoQuesitos();
+}
+ABA_CARREGADORES['quesitos'] = { carregado: false, fn: carregarHistoricoQuesitos };
+
+/* ===================== ABA: SUBSÍDIO DE QUESITOS MÉDICOS =====================
+   Pedido de subsídios pra impugnar esclarecimentos apresentados ao laudo pericial
+   médico. Vai sempre pra Rose Veiga (grupoproto) + embraer@fabioproto.com.br,
+   com cópia pro grupo interno. */
+const SUBSIDIOMEDICO_TO = 'rose@grupoproto.com.br,embraer@fabioproto.com.br';
+const SUBSIDIOMEDICO_CC = 'embraer.pec@peixotoecury.com.br';
+const SUBSIDIOMEDICO_COLUNAS_EXCEL = [
+  {label:'Processo', col:'processo'}, {label:'Reclamante', col:'reclamante'}, {label:'ID Esclarecimento', col:'id_esclarecimento'},
+  {label:'Prazo', col:'prazo'}, {label:'Link', col:'link_copia_integral'},
+  {label:'Responsável', col:'responsavel_sigla'}, {label:'Status', col:'status'}, {label:'Criado em', col:'criado_em'}, {label:'Concluído em', col:'concluido_em'},
+];
+async function enviarSubsidioMedico(ev){
+  ev.preventDefault();
+  const g = id => document.getElementById(id).value.trim() || null;
+  const obrigatorios = [['sm-processo','Número do Processo'],['sm-reclamante','Nome do Reclamante'],['sm-id-esclarecimento','ID dos Esclarecimentos'],['sm-prazo','Prazo'],['sm-responsavel','Responsável']];
+  for(const [id, label] of obrigatorios){ if(!document.getElementById(id).value.trim()){ toast(`Preencha o campo "${label}".`, true); return; } }
+  const registro = {
+    processo: g('sm-processo'), reclamante: g('sm-reclamante'), id_esclarecimento: g('sm-id-esclarecimento'),
+    prazo: g('sm-prazo'), link_copia_integral: g('sm-link'),
+    responsavel_sigla: g('sm-responsavel'), status: 'Pendente', criado_em: new Date().toISOString(),
+  };
+  const prazoFmt = dataBR(registro.prazo);
+  const assunto = `Subsídios para manifestação aos esclarecimentos ao laudo pericial - Proc ${registro.processo} - Recte. ${registro.reclamante}  - PRAZO: ${prazoFmt}`;
+  const corpo = `Prezados, boa tarde!\n\nSobre o processo em referência, foram apresentados esclarecimentos ao laudo pericial (id. ${registro.id_esclarecimento}), sendo assim, solicitamos os subsídios para eventuais impugnações.\n\nPRAZO: ${prazoFmt}\n`
+    + (registro.link_copia_integral ? `\nCópia integral: ${registro.link_copia_integral}\n` : '')
+    + `\nPermanecemos à disposição.\n\nAtenciosamente,`;
+  try{
+    const { error } = await sb.from('embraer_subsidio_quesitos_medicos').insert(registro);
+    if(error) throw error;
+    toast('Solicitação registrada. Abrindo e-mail…');
+    carregarHistoricoSubsidioMedico();
+  }catch(err){
+    console.error(err);
+    toast('E-mail aberto, mas NÃO foi possível salvar no histórico: ' + (err.message||err), true);
+  }
+  abrirEmail(SUBSIDIOMEDICO_TO, SUBSIDIOMEDICO_CC, assunto, corpo);
+  document.querySelectorAll('#view-subsidiomedico input').forEach(el => el.value = '');
+}
+
+let HIST_SUBSIDIOMEDICO = [];
+let HIST_SUBSIDIOMEDICO_FILTRADO = [];
+async function carregarHistoricoSubsidioMedico(){
+  try{
+    const { data, error } = await sb.from('embraer_subsidio_quesitos_medicos').select('*').order('criado_em', {ascending:false}).limit(200);
+    if(error) throw error;
+    HIST_SUBSIDIOMEDICO = data || [];
+    document.getElementById('erro-conexao').innerHTML = '';
+    renderHistoricoSubsidioMedico();
+  }catch(err){
+    console.error(err);
+    document.getElementById('sm-tbody').innerHTML = `<tr><td colspan="7" class="empty-state">Erro ao carregar histórico — a tabela embraer_subsidio_quesitos_medicos provavelmente ainda não existe.</td></tr>`;
+  }
+}
+function renderHistoricoSubsidioMedico(){
+  const termo = document.getElementById('sm-busca').value.toLowerCase();
+  const status = document.getElementById('sm-flt-status').value;
+  const rows = HIST_SUBSIDIOMEDICO.filter(r =>
+    (!termo || (r.processo||'').toLowerCase().includes(termo) || (r.reclamante||'').toLowerCase().includes(termo)) &&
+    (!status || (r.status||'Pendente') === status)
+  );
+  HIST_SUBSIDIOMEDICO_FILTRADO = rows;
+  const tbody = document.getElementById('sm-tbody');
+  if(!rows.length){ tbody.innerHTML = `<tr><td colspan="7" class="empty-state">Nenhuma solicitação encontrada.</td></tr>`; return; }
+  tbody.innerHTML = rows.map(r => `<tr>
+    <td class="mono">${esc(r.processo)}</td>
+    <td>${esc(r.reclamante)}</td>
+    <td class="mono">${esc(r.id_esclarecimento)}</td>
+    <td class="mono">${r.prazo ? dataBR(r.prazo) : ''}</td>
+    <td><span class="badge ${r.status==='Concluído'?'badge-green':'badge-orange'}">${esc(r.status||'Pendente')}</span></td>
+    <td class="mono">${fmtDataHora(r.criado_em)}</td>
+    <td>
+      ${r.status !== 'Concluído' ? `<button class="row-btn" onclick="concluirSubsidioMedico(${r.id})">✅ Concluir</button>` : ''}
+      <button class="row-btn" onclick="excluirRegistroGenerico('embraer_subsidio_quesitos_medicos', ${r.id}, carregarHistoricoSubsidioMedico)">🗑️ Excluir</button>
+    </td>
+  </tr>`).join('');
+}
+async function concluirSubsidioMedico(id){
+  const { error } = await sb.from('embraer_subsidio_quesitos_medicos').update({ status: 'Concluído', concluido_em: new Date().toISOString() }).eq('id', id);
+  if(error){ toast('Erro ao concluir: ' + error.message, true); return; }
+  toast('Solicitação marcada como concluída.');
+  carregarHistoricoSubsidioMedico();
+}
+ABA_CARREGADORES['subsidiomedico'] = { carregado: false, fn: carregarHistoricoSubsidioMedico };
 
 /* ===================== ABA: INSCRIÇÃO S.O. (SUSTENTAÇÃO ORAL) =====================
    Pedido interno pro(a) assistente responsável inscrever um advogado numa
