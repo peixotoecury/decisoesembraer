@@ -457,6 +457,9 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
         </div>
         </div>
 
+        <div class="section-title">Observações</div>
+        <div class="mc-form-group"><label>Observações Adicionais</label><textarea id="d-observacoes-adicionais" rows="3" placeholder="Opcional — qualquer informação adicional relevante, entra no corpo de todos os e-mails deste reporte."></textarea></div>
+
         <div class="section-title">Envio de E-mails</div>
         <div class="info-box alerta"><span>⚠️</span><span><b>Toda decisão precisa ser enviada por e-mail — sempre, sem exceção.</b> O e-mail sempre sai completo, com todos os campos preenchidos no reporte (separados por seção). Cada bloco abaixo (Laudo, Sentença, Acórdão, Execução) tem seu próprio checkbox "Enviar também para o cliente" — marcado, o e-mail vai para o cliente Embraer com cópia para o grupo interno; desmarcado, vai só para o grupo interno. Marque os e-mails que devem ser abertos no Outlook assim que o reporte for salvo — o 1º marcado abre direto; se marcar mais de um, os demais aparecem como botão pra você clicar um de cada vez.</span></div>
 
@@ -654,6 +657,7 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
           <div class="mc-form-group"><label>Horário</label><input type="text" id="pe-horario" placeholder="Ex: 08:00"></div>
         </div>
         <div class="mc-form-group"><label>Local da Perícia</label><input type="text" id="pe-local" placeholder="Opcional"></div>
+        <div class="mc-form-group"><label>Observações Adicionais</label><textarea id="pe-observacoes" rows="2" placeholder="Opcional — qualquer informação adicional relevante para o e-mail"></textarea></div>
         <div class="mc-form-group"><label>Responsável pela solicitação (sigla) <span class="req">*</span></label><input type="text" id="pe-responsavel" required placeholder="Ex: BCF"></div>
         <button type="button" class="btn-cyan" onclick="enviarAgendamentoPericia(event)">✉️ Gerar e-mail e registrar</button>
       </div>
@@ -690,6 +694,7 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
           <div class="mc-form-group"><label>Prazo para envio <span class="req">*</span></label><input type="date" id="qe-prazo" required></div>
           <div class="mc-form-group"><label>Responsável pela solicitação (sigla) <span class="req">*</span></label><input type="text" id="qe-responsavel" required placeholder="Ex: BCF"></div>
         </div>
+        <div class="mc-form-group"><label>Observações Adicionais</label><textarea id="qe-observacoes" rows="2" placeholder="Opcional — qualquer informação adicional relevante para o e-mail"></textarea></div>
         <button type="button" class="btn-cyan" onclick="enviarQuesitosErgonomicos(event)">✉️ Gerar e-mail e registrar</button>
       </div>
     </div>
@@ -727,6 +732,7 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
           <div class="mc-form-group"><label>Responsável pela solicitação (sigla) <span class="req">*</span></label><input type="text" id="sm-responsavel" required placeholder="Ex: VCR"></div>
         </div>
         <div class="mc-form-group"><label>Link para cópia integral</label><input type="text" id="sm-link" placeholder="https://…"></div>
+        <div class="mc-form-group"><label>Observações Adicionais</label><textarea id="sm-observacoes" rows="3" placeholder="Opcional — qualquer informação adicional relevante para o e-mail (ex: pontos específicos a esclarecer, contexto do caso)"></textarea></div>
         <button type="button" class="btn-cyan" onclick="enviarSubsidioMedico(event)">✉️ Gerar e-mail e registrar</button>
       </div>
     </div>
@@ -760,6 +766,7 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
         </div>
         <div class="mc-form-group"><label>Processo (opcional, pra referência/busca)</label><input type="text" id="so-processo" placeholder="0000000-00.0000.0.00.0000"></div>
         <div class="mc-form-group"><label>Texto da Pauta/Sessão <span class="req">*</span></label><textarea id="so-pauta" rows="8" required placeholder="Cole aqui o texto completo da pauta de julgamento (turma, data da sessão, processo, partes, advogados etc.)"></textarea></div>
+        <div class="mc-form-group"><label>Observações Adicionais</label><textarea id="so-observacoes" rows="2" placeholder="Opcional — qualquer informação adicional relevante para o e-mail"></textarea></div>
         <button type="button" class="btn-cyan" onclick="enviarInscricaoSO(event)">✉️ Gerar e-mail e registrar</button>
       </div>
     </div>
@@ -1851,6 +1858,7 @@ async function enviarAgendamentoPericia(ev){
   const registro = {
     processo: g('pe-processo'), reclamante: g('pe-reclamante'), tipo_pericia: g('pe-tipo'),
     data_pericia: g('pe-data'), horario: g('pe-horario'), local_pericia: g('pe-local'),
+    observacoes: g('pe-observacoes'),
     responsavel_sigla: g('pe-responsavel'), status: 'Pendente', criado_em: new Date().toISOString(),
   };
   const dataFmt = dataBR(registro.data_pericia);
@@ -1858,6 +1866,7 @@ async function enviarAgendamentoPericia(ev){
   const corpo = `Informamos a designação da perícia${registro.tipo_pericia ? ' ' + registro.tipo_pericia.toLowerCase() : ''} do processo em referência para o dia ${dataFmt}${registro.horario ? ' às ' + registro.horario : ''}.\n\n`
     + `Processo: ${registro.processo}\nReclamante: ${registro.reclamante}\n`
     + (registro.local_pericia ? `Local: ${registro.local_pericia}\n` : '')
+    + (registro.observacoes ? `\nObservações adicionais: ${registro.observacoes}\n` : '')
     + `\nPor gentileza, poderiam acusar recebimento do envio?\n\nObrigada!\n\nAtenciosamente,`;
   try{
     const { error } = await sb.from('embraer_agendamento_pericia').insert(registro);
@@ -1869,7 +1878,7 @@ async function enviarAgendamentoPericia(ev){
     toast('E-mail aberto, mas NÃO foi possível salvar no histórico: ' + (err.message||err), true);
   }
   abrirEmail(CALCULOS_TO, CALCULOS_CC, assunto, corpo);
-  document.querySelectorAll('#view-pericia input, #view-pericia select').forEach(el => el.value = '');
+  document.querySelectorAll('#view-pericia input, #view-pericia select, #view-pericia textarea').forEach(el => el.value = '');
 }
 
 let HIST_PERICIA = [];
@@ -1941,11 +1950,14 @@ async function enviarQuesitosErgonomicos(ev){
   for(const [id, label] of obrigatorios){ if(!document.getElementById(id).value.trim()){ toast(`Preencha o campo "${label}".`, true); return; } }
   const registro = {
     processo: g('qe-processo'), reclamante: g('qe-reclamante'), prazo_envio: g('qe-prazo'),
+    observacoes: g('qe-observacoes'),
     responsavel_sigla: g('qe-responsavel'), status: 'Pendente', criado_em: new Date().toISOString(),
   };
   const prazoFmt = dataBR(registro.prazo_envio);
   const assunto = `Solicitação de quesitos ergonômicos - ${registro.processo}`;
-  const corpo = `Prezados, bom dia!\n\nPor gentileza, poderiam nos enviar quesitos ergonômicos?\n\nPrazo: ${prazoFmt}\n\nAtenciosamente,`;
+  const corpo = `Prezados, bom dia!\n\nPor gentileza, poderiam nos enviar quesitos ergonômicos?\n\nPrazo: ${prazoFmt}\n`
+    + (registro.observacoes ? `\nObservações adicionais: ${registro.observacoes}\n` : '')
+    + `\nAtenciosamente,`;
   try{
     const { error } = await sb.from('embraer_quesitos_ergonomicos').insert(registro);
     if(error) throw error;
@@ -1956,7 +1968,7 @@ async function enviarQuesitosErgonomicos(ev){
     toast('E-mail aberto, mas NÃO foi possível salvar no histórico: ' + (err.message||err), true);
   }
   abrirEmail(QUESITOS_TO, QUESITOS_CC, assunto, corpo);
-  document.querySelectorAll('#view-quesitos input').forEach(el => el.value = '');
+  document.querySelectorAll('#view-quesitos input, #view-quesitos textarea').forEach(el => el.value = '');
 }
 
 let HIST_QUESITOS = [];
@@ -2021,13 +2033,14 @@ async function enviarSubsidioMedico(ev){
   for(const [id, label] of obrigatorios){ if(!document.getElementById(id).value.trim()){ toast(`Preencha o campo "${label}".`, true); return; } }
   const registro = {
     processo: g('sm-processo'), reclamante: g('sm-reclamante'), id_esclarecimento: g('sm-id-esclarecimento'),
-    prazo: g('sm-prazo'), link_copia_integral: g('sm-link'),
+    prazo: g('sm-prazo'), link_copia_integral: g('sm-link'), observacoes: g('sm-observacoes'),
     responsavel_sigla: g('sm-responsavel'), status: 'Pendente', criado_em: new Date().toISOString(),
   };
   const prazoFmt = dataBR(registro.prazo);
   const assunto = `Subsídios para manifestação aos esclarecimentos ao laudo pericial - Proc ${registro.processo} - Recte. ${registro.reclamante}  - PRAZO: ${prazoFmt}`;
   const corpo = `Prezados, boa tarde!\n\nSobre o processo em referência, foram apresentados esclarecimentos ao laudo pericial (id. ${registro.id_esclarecimento}), sendo assim, solicitamos os subsídios para eventuais impugnações.\n\nPRAZO: ${prazoFmt}\n`
     + (registro.link_copia_integral ? `\nCópia integral: ${registro.link_copia_integral}\n` : '')
+    + (registro.observacoes ? `\nObservações adicionais: ${registro.observacoes}\n` : '')
     + `\nPermanecemos à disposição.\n\nAtenciosamente,`;
   try{
     const { error } = await sb.from('embraer_subsidio_quesitos_medicos').insert(registro);
@@ -2039,7 +2052,7 @@ async function enviarSubsidioMedico(ev){
     toast('E-mail aberto, mas NÃO foi possível salvar no histórico: ' + (err.message||err), true);
   }
   abrirEmail(SUBSIDIOMEDICO_TO, SUBSIDIOMEDICO_CC, assunto, corpo);
-  document.querySelectorAll('#view-subsidiomedico input').forEach(el => el.value = '');
+  document.querySelectorAll('#view-subsidiomedico input, #view-subsidiomedico textarea').forEach(el => el.value = '');
 }
 
 let HIST_SUBSIDIOMEDICO = [];
@@ -2104,13 +2117,15 @@ async function enviarInscricaoSO(ev){
   for(const [id, label] of obrigatorios){ if(!document.getElementById(id).value.trim()){ toast(`Preencha o campo "${label}".`, true); return; } }
   const registro = {
     processo: g('so-processo'), advogado_inscrever: g('so-advogado'), assistente_responsavel: g('so-assistente'),
-    texto_pauta: g('so-pauta'), status: 'Pendente', criado_em: new Date().toISOString(),
+    texto_pauta: g('so-pauta'), observacoes: g('so-observacoes'), status: 'Pendente', criado_em: new Date().toISOString(),
   };
   const emailAssistente = emailPorNome(registro.assistente_responsavel);
   const assunto = `Inscrição S.O.${registro.processo ? ' — Processo ' + registro.processo : ''}`;
   const corpo = `Olá, ${registro.assistente_responsavel}.\n\n`
     + `Por gentileza, poderia inscrever ${registro.advogado_inscrever} na s.o. abaixo?\n\n`
-    + `${registro.texto_pauta}\n\nObrigada!`;
+    + `${registro.texto_pauta}\n`
+    + (registro.observacoes ? `\nObservações adicionais: ${registro.observacoes}\n` : '')
+    + `\nObrigada!`;
   try{
     const { error } = await sb.from('embraer_inscricao_so').insert(registro);
     if(error) throw error;
@@ -2282,6 +2297,7 @@ document.getElementById('form-decisao').addEventListener('submit', async functio
     exec_valor_homologado_data: g('d-exec-valor-homologado-data'),
     exec_solicitacao_pagamento: g('d-exec-solicitacao-pagamento'),
     exec_solicitacao_pagamento_data: g('d-exec-solicitacao-pagamento-data'),
+    observacoes_adicionais: g('d-observacoes-adicionais'),
     atualizado_em: new Date().toISOString(),
   };
   const tiposEmail = Array.from(document.querySelectorAll('.d-email-check:checked')).map(cb => cb.value);
@@ -2471,6 +2487,7 @@ function montarResumoCompleto(r){
     linha('Resumo', r.execucao_resumo),
   ]);
   if(temExecucaoValores(r)) partes += '\n' + resumoExecucaoValores(r);
+  partes += secaoTexto('Observações Adicionais', [r.observacoes_adicionais || null]);
   return partes;
 }
 /* Seção Execução — Valores: cada item é independente e opcional — só entra no
