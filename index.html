@@ -149,6 +149,10 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
 .vd-modal-body .section-title:first-child{margin-top:0;}
 .vd-close-btn{background:none;border:none;font-size:18px;cursor:pointer;color:var(--muted);padding:2px 8px;line-height:1;}
 .vd-close-btn:hover{color:var(--escuro-pc);}
+
+.enc-linha{display:flex;gap:12px;align-items:flex-end;margin-bottom:10px;}
+.enc-linha .mc-form-group{flex:1;margin-bottom:0;}
+.enc-linha .row-btn{flex-shrink:0;height:38px;}
 </style>
 </head>
 <body>
@@ -177,6 +181,7 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
   <button class="tab-btn" id="tab-btn-quesitos" onclick="mudarAba('quesitos')">📐 Quesitos Ergonômicos</button>
   <button class="tab-btn" id="tab-btn-subsidiomedico" onclick="mudarAba('subsidiomedico')">🩺 Subsídio de Quesitos Médicos</button>
   <button class="tab-btn" id="tab-btn-so" onclick="mudarAba('so')">🎙️ Inscrição S.O.</button>
+  <button class="tab-btn" id="tab-btn-encerramentos" onclick="mudarAba('encerramentos')">🏁 Encerramentos</button>
 </div>
 
 <div class="main">
@@ -770,6 +775,75 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
     </div>
   </div>
 
+  <div class="view" id="view-encerramentos">
+    <div class="dash-card">
+      <div class="dash-card-head" id="enc-form-titulo">🏁 Novo Encerramento</div>
+      <div class="dash-card-body">
+        <form id="form-encerramentos">
+          <div class="mc-form-grid cols-3">
+            <div class="mc-form-group"><label>Número do Processo <span class="req">*</span></label><input type="text" id="enc-processo" required placeholder="0000000-00.0000.0.00.0000"></div>
+            <div class="mc-form-group"><label>Nome do Reclamante <span class="req">*</span></label><input type="text" id="enc-reclamante" required></div>
+            <div class="mc-form-group"><label>Responsável (sigla) <span class="req">*</span></label><input type="text" id="enc-responsavel" required></div>
+          </div>
+          <div class="mc-form-group"><label>Motivo do Encerramento <span class="req">*</span></label>
+            <select id="enc-motivo" required>
+              <option value="">Selecione…</option>
+              <option>Acordo</option>
+              <option>Sentença Procedente Transitada em Julgado</option>
+              <option>Sentença Improcedente Transitada em Julgado</option>
+              <option>Sentença Parcialmente Procedente Transitada em Julgado</option>
+              <option>Extinção sem Resolução do Mérito</option>
+              <option>Pagamento e Quitação Integral</option>
+              <option>Prescrição</option>
+              <option>Outro</option>
+            </select>
+          </div>
+
+          <div class="section-title">Depósitos e Pagamentos</div>
+          <div class="info-box">ℹ️ Adicione uma linha para cada depósito ou pagamento do processo (Depósito de Garantia, Depósito Judicial, Execução ou Pagamento). O Total Pago abaixo soma automaticamente todas as linhas preenchidas.</div>
+          <div id="enc-linhas"></div>
+          <button type="button" class="row-btn" onclick="encAdicionarLinha()" style="margin-bottom:16px;">➕ Adicionar Depósito/Pagamento</button>
+
+          <div class="mc-form-grid">
+            <div class="mc-form-group"><label>Total Pago</label><input type="text" id="enc-total" readonly style="font-weight:700;color:var(--escuro-pc);background:var(--surface2);"></div>
+          </div>
+
+          <div class="section-title">Observações</div>
+          <div class="mc-form-group"><label>Observações Adicionais</label><textarea id="enc-observacoes" rows="2" placeholder="Opcional"></textarea></div>
+
+          <input type="hidden" id="enc-editing-id">
+          <div style="display:flex;gap:10px;margin-top:8px;">
+            <button type="submit" class="btn-cyan" id="enc-btn-salvar">💾 Registrar Encerramento</button>
+            <button type="button" class="row-btn" id="enc-btn-cancelar" style="display:none;white-space:nowrap;" onclick="encCancelarEdicao()">Cancelar edição</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="dash-card">
+      <div class="dash-card-head">📜 Encerramentos Registrados <button class="export-btn" onclick="encExportar()">⬇ Exportar Excel</button></div>
+      <div class="filters">
+        <input class="filter-input" id="enc-busca" placeholder="Buscar por processo ou reclamante…" oninput="renderHistoricoEncerramentos()">
+        <select class="filter-select" id="enc-flt-motivo" onchange="renderHistoricoEncerramentos()">
+          <option value="">Motivo: todos</option>
+          <option>Acordo</option>
+          <option>Sentença Procedente Transitada em Julgado</option>
+          <option>Sentença Improcedente Transitada em Julgado</option>
+          <option>Sentença Parcialmente Procedente Transitada em Julgado</option>
+          <option>Extinção sem Resolução do Mérito</option>
+          <option>Pagamento e Quitação Integral</option>
+          <option>Prescrição</option>
+          <option>Outro</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table class="sol-table">
+          <thead><tr><th>Processo</th><th>Reclamante</th><th>Motivo</th><th>Total Pago</th><th>Encerrado em</th><th>Ações</th></tr></thead>
+          <tbody id="enc-tbody"><tr><td colspan="6" class="empty-state">Carregando…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
   <div class="view" id="view-elaw">
     <div class="dash-card">
       <div class="dash-card-head">🗂️ Novo Comunicado de Ajuste de Fase e Prognóstico</div>
@@ -1220,7 +1294,7 @@ function crudExportar(cfg){
   XLSX.writeFile(wb, `${cfg.titulo.replace(/\s+/g,'_')}_Embraer_${hojeISOlocal()}.xlsx`);
 }
 
-const ABAS = ['decisao','reintegrados','estrategicos','insalubridade','doencas','calculos','reintegracao','elaw','pericia','quesitos','subsidiomedico','so'];
+const ABAS = ['decisao','reintegrados','estrategicos','insalubridade','doencas','calculos','reintegracao','elaw','pericia','quesitos','subsidiomedico','so','encerramentos'];
 const ABA_CARREGADORES = {};
 function mudarAba(aba){
   ABAS.forEach(a => {
@@ -2168,6 +2242,191 @@ function verDetalhesSO(id){
   abrirVerDetalhes(`Inscrição S.O. — ${r.processo||''}`, textoParaHtmlDetalhes(texto));
 }
 ABA_CARREGADORES['so'] = { carregado: false, fn: carregarHistoricoSO };
+
+/* ===================== ABA: ENCERRAMENTOS =====================
+   1 linha por processo encerrado, com uma lista livre de depósitos/pagamentos
+   (tipo + valor) que o usuário vai adicionando — o Total Pago é a soma de
+   todas as linhas preenchidas, calculada no cliente e também salva no banco
+   (valor_total) pra não precisar somar o JSON toda vez que listar/exportar. */
+const ENC_TIPOS_PAGAMENTO = ['Depósito de Garantia','Depósito Judicial','Execução','Pagamento'];
+
+function encLinhaHtml(tipo, valor){
+  return `<div class="enc-linha">
+    <div class="mc-form-group"><label>Tipo</label><select class="enc-linha-tipo">${ENC_TIPOS_PAGAMENTO.map(t=>`<option${t===tipo?' selected':''}>${t}</option>`).join('')}</select></div>
+    <div class="mc-form-group"><label>Valor (R$)</label><input type="text" inputmode="decimal" placeholder="0,00" class="enc-linha-valor" value="${valor!=null?String(valor).replace('.',','):''}" oninput="encAtualizarTotal()"></div>
+    <button type="button" class="row-btn" onclick="encRemoverLinha(this)" title="Remover linha">🗑️</button>
+  </div>`;
+}
+function encAdicionarLinha(tipo, valor){
+  document.getElementById('enc-linhas').insertAdjacentHTML('beforeend', encLinhaHtml(tipo || ENC_TIPOS_PAGAMENTO[0], valor));
+}
+function encRemoverLinha(btn){
+  btn.closest('.enc-linha').remove();
+  encAtualizarTotal();
+}
+function encColetarPagamentos(){
+  return [...document.querySelectorAll('#enc-linhas .enc-linha')].map(linha => ({
+    tipo: linha.querySelector('.enc-linha-tipo').value,
+    valor: parseMoedaBR(linha.querySelector('.enc-linha-valor').value),
+  })).filter(p => p.valor != null && p.valor > 0);
+}
+function encAtualizarTotal(){
+  const total = encColetarPagamentos().reduce((s,p) => s + p.valor, 0);
+  document.getElementById('enc-total').value = fmtMoeda(total);
+}
+
+document.getElementById('form-encerramentos').addEventListener('submit', async function(ev){
+  ev.preventDefault();
+  const pagamentos = encColetarPagamentos();
+  if(!pagamentos.length){ toast('Adicione ao menos um depósito ou pagamento com valor.', true); return; }
+  const registro = {
+    processo: document.getElementById('enc-processo').value.trim(),
+    reclamante: document.getElementById('enc-reclamante').value.trim(),
+    responsavel_sigla: document.getElementById('enc-responsavel').value.trim(),
+    motivo: document.getElementById('enc-motivo').value,
+    pagamentos: pagamentos,
+    valor_total: pagamentos.reduce((s,p) => s + p.valor, 0),
+    observacoes: document.getElementById('enc-observacoes').value.trim() || null,
+    atualizado_em: new Date().toISOString(),
+  };
+  const editId = document.getElementById('enc-editing-id').value;
+  try{
+    if(editId){
+      const { error } = await sb.from('embraer_encerramentos').update(registro).eq('id', editId);
+      if(error) throw error;
+      toast('Encerramento atualizado com sucesso.');
+    } else {
+      registro.criado_em = registro.atualizado_em;
+      const { error } = await sb.from('embraer_encerramentos').insert(registro);
+      if(error) throw error;
+      toast('Encerramento registrado com sucesso.');
+    }
+    encCancelarEdicao();
+    carregarHistoricoEncerramentos();
+  }catch(err){
+    console.error(err);
+    toast('Erro ao salvar: ' + (err.message||err), true);
+  }
+});
+
+function encCancelarEdicao(){
+  document.getElementById('form-encerramentos').reset();
+  document.getElementById('enc-linhas').innerHTML = '';
+  encAdicionarLinha();
+  encAtualizarTotal();
+  document.getElementById('enc-editing-id').value = '';
+  document.getElementById('enc-btn-salvar').textContent = '💾 Registrar Encerramento';
+  document.getElementById('enc-btn-cancelar').style.display = 'none';
+  document.getElementById('enc-form-titulo').textContent = '🏁 Novo Encerramento';
+}
+encAdicionarLinha();
+
+let HIST_ENCERRAMENTOS = [];
+let HIST_ENCERRAMENTOS_FILTRADO = [];
+async function carregarHistoricoEncerramentos(){
+  try{
+    const { data, error } = await sb.from('embraer_encerramentos').select('*').order('criado_em', {ascending:false}).limit(500);
+    if(error) throw error;
+    HIST_ENCERRAMENTOS = data || [];
+    document.getElementById('erro-conexao').innerHTML = '';
+    renderHistoricoEncerramentos();
+  }catch(err){
+    console.error(err);
+    document.getElementById('erro-conexao').innerHTML = `
+      <div class="error-banner">
+        <strong>Não foi possível carregar os encerramentos.</strong><br>
+        A tabela <code>embraer_encerramentos</code> provavelmente ainda não existe no Supabase. Rode o script SQL de criação (fornecido junto com este módulo) e recarregue a página.<br>
+        <span style="opacity:.75;">Detalhe técnico: ${esc(err.message || err)}</span>
+      </div>`;
+    document.getElementById('enc-tbody').innerHTML = `<tr><td colspan="6" class="empty-state">Erro ao carregar.</td></tr>`;
+  }
+}
+function renderHistoricoEncerramentos(){
+  const termo = document.getElementById('enc-busca').value.toLowerCase();
+  const motivo = document.getElementById('enc-flt-motivo').value;
+  const rows = HIST_ENCERRAMENTOS.filter(r =>
+    (!termo || (r.processo||'').toLowerCase().includes(termo) || (r.reclamante||'').toLowerCase().includes(termo)) &&
+    (!motivo || r.motivo === motivo)
+  );
+  HIST_ENCERRAMENTOS_FILTRADO = rows;
+  const tbody = document.getElementById('enc-tbody');
+  if(!rows.length){ tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Nenhum encerramento encontrado.</td></tr>'; return; }
+  tbody.innerHTML = rows.map(r => `<tr>
+    <td class="mono">${esc(r.processo)}</td>
+    <td>${esc(r.reclamante)}</td>
+    <td>${esc(r.motivo)}</td>
+    <td>${fmtMoeda(r.valor_total)}</td>
+    <td>${fmtDataHora(r.criado_em)}</td>
+    <td>
+      <button class="row-btn" onclick="encVerDetalhes(${r.id})">👁️ Ver</button>
+      <button class="row-btn" onclick="encEditar(${r.id})">✏️ Editar</button>
+      <button class="row-btn" onclick="encExcluir(${r.id})">🗑️ Excluir</button>
+    </td>
+  </tr>`).join('');
+}
+function encVerDetalhes(id){
+  const r = HIST_ENCERRAMENTOS.find(x => x.id === id);
+  if(!r) return;
+  const linhas = (r.pagamentos || []).map(p => `<div>${esc(p.tipo)}: <b>${fmtMoeda(p.valor)}</b></div>`).join('') || '<div>Nenhum pagamento registrado.</div>';
+  const html = `
+    <div class="section-title" style="margin-top:0;">Identificação</div>
+    <div>Processo: ${esc(r.processo)}<br>Reclamante: ${esc(r.reclamante)}<br>Responsável: ${esc(r.responsavel_sigla)}<br>Motivo: ${esc(r.motivo)}</div>
+    <div class="section-title">Depósitos e Pagamentos</div>
+    ${linhas}
+    <div style="margin-top:10px;"><b>Total Pago: ${fmtMoeda(r.valor_total)}</b></div>
+    ${r.observacoes ? `<div class="section-title">Observações</div><div>${esc(r.observacoes).replace(/\n/g,'<br>')}</div>` : ''}
+    <div class="section-title">Registro</div>
+    <div>Encerrado em: ${fmtDataHora(r.criado_em)}${r.atualizado_em && r.atualizado_em !== r.criado_em ? '<br>Última atualização: ' + fmtDataHora(r.atualizado_em) : ''}</div>`;
+  abrirVerDetalhes(`🏁 Encerramento — ${r.processo||''}`, html);
+}
+function encEditar(id){
+  const r = HIST_ENCERRAMENTOS.find(x => x.id === id);
+  if(!r) return;
+  document.getElementById('enc-processo').value = r.processo || '';
+  document.getElementById('enc-reclamante').value = r.reclamante || '';
+  document.getElementById('enc-responsavel').value = r.responsavel_sigla || '';
+  document.getElementById('enc-motivo').value = r.motivo || '';
+  document.getElementById('enc-observacoes').value = r.observacoes || '';
+  document.getElementById('enc-linhas').innerHTML = '';
+  (r.pagamentos && r.pagamentos.length ? r.pagamentos : [{tipo:ENC_TIPOS_PAGAMENTO[0], valor:null}]).forEach(p => encAdicionarLinha(p.tipo, p.valor));
+  encAtualizarTotal();
+  document.getElementById('enc-editing-id').value = id;
+  document.getElementById('enc-btn-salvar').textContent = '💾 Salvar Alterações';
+  document.getElementById('enc-btn-cancelar').style.display = '';
+  document.getElementById('enc-form-titulo').textContent = '✏️ Editando Encerramento';
+  window.scrollTo(0,0);
+}
+async function encExcluir(id){
+  if(!confirm('Excluir este encerramento? Essa ação não pode ser desfeita.')) return;
+  const { error } = await sb.from('embraer_encerramentos').delete().eq('id', id);
+  if(error){ toast('Erro ao excluir: ' + error.message, true); return; }
+  toast('Encerramento excluído.');
+  carregarHistoricoEncerramentos();
+}
+function encExportar(){
+  if(!HIST_ENCERRAMENTOS_FILTRADO.length){ alert('Não há encerramentos para exportar.'); return; }
+  const dados = HIST_ENCERRAMENTOS_FILTRADO.map(r => {
+    const obj = {
+      'Processo': r.processo || 'N/A',
+      'Reclamante': r.reclamante || 'N/A',
+      'Motivo': r.motivo || 'N/A',
+      'Responsável': r.responsavel_sigla || 'N/A',
+    };
+    ENC_TIPOS_PAGAMENTO.forEach(tipo => {
+      const soma = (r.pagamentos || []).filter(p => p.tipo === tipo).reduce((s,p) => s + (p.valor||0), 0);
+      obj[tipo] = soma ? fmtMoeda(soma) : '';
+    });
+    obj['Total Pago'] = r.valor_total != null ? fmtMoeda(r.valor_total) : 'N/A';
+    obj['Observações'] = r.observacoes || '';
+    obj['Encerrado em'] = fmtDataHora(r.criado_em) || 'N/A';
+    return obj;
+  });
+  const ws = XLSX.utils.json_to_sheet(dados);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Encerramentos');
+  XLSX.writeFile(wb, `Encerramentos_Embraer_${hojeISOlocal()}.xlsx`);
+}
+ABA_CARREGADORES['encerramentos'] = { carregado: false, fn: carregarHistoricoEncerramentos };
 
 /* ===================== REPORTE DE DECISÃO ===================== */
 const DECISAO_SECOES = ['laudo', 'sentenca', 'acordao', 'execucao'];
