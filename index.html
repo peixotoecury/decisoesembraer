@@ -773,6 +773,10 @@ table.sol-table tbody td.mono{max-width:215px;}
           <div class="mc-form-group"><label>Assistente Responsável <span class="req">*</span></label><select id="so-assistente" required><option value="">Selecione…</option></select></div>
         </div>
         <div class="mc-form-group"><label>Processo (opcional, pra referência/busca) <span class="req">*</span></label><input required type="text" id="so-processo" placeholder="0000000-00.0000.0.00.0000"></div>
+        <div class="mc-form-grid">
+          <div class="mc-form-group"><label>Turma do TRT</label><input type="text" id="so-turma-trt" placeholder="Ex: TRT-15, 4ª Turma"></div>
+          <div class="mc-form-group"><label>ID do Substabelecimento</label><input type="text" id="so-id-substabelecimento" placeholder="Opcional — se o advogado a inscrever for substabelecido"></div>
+        </div>
         <div class="mc-form-group"><label>Texto da Pauta/Sessão <span class="req">*</span></label><textarea id="so-pauta" rows="8" required placeholder="Cole aqui o texto completo da pauta de julgamento (turma, data da sessão, processo, partes, advogados etc.)"></textarea></div>
         <div class="mc-form-group"><label>Observações Adicionais <span class="req">*</span></label><textarea required id="so-observacoes" rows="2" placeholder="Opcional — qualquer informação adicional relevante para o e-mail"></textarea></div>
         <button type="button" class="btn-cyan" onclick="enviarInscricaoSO(event)">✉️ Gerar e-mail e registrar</button>
@@ -2256,7 +2260,8 @@ popularSelectProfissionais(document.getElementById('so-advogado'), 'Advogado');
 popularSelectProfissionais(document.getElementById('so-assistente'), 'Assistente');
 const SO_COLUNAS_EXCEL = [
   {label:'Processo', col:'processo'}, {label:'Advogado a Inscrever', col:'advogado_inscrever'},
-  {label:'Assistente Responsável', col:'assistente_responsavel'}, {label:'Texto da Pauta', col:'texto_pauta'},
+  {label:'Assistente Responsável', col:'assistente_responsavel'}, {label:'Turma do TRT', col:'turma_trt'},
+  {label:'ID do Substabelecimento', col:'id_substabelecimento'}, {label:'Texto da Pauta', col:'texto_pauta'},
   {label:'Status', col:'status'}, {label:'Criado em', col:'criado_em'},
 ];
 async function enviarInscricaoSO(ev){
@@ -2266,13 +2271,16 @@ async function enviarInscricaoSO(ev){
   for(const [id, label] of obrigatorios){ if(!document.getElementById(id).value.trim()){ toast(`Preencha o campo "${label}".`, true); return; } }
   const registro = {
     processo: g('so-processo'), advogado_inscrever: g('so-advogado'), assistente_responsavel: g('so-assistente'),
+    turma_trt: g('so-turma-trt'), id_substabelecimento: g('so-id-substabelecimento'),
     texto_pauta: g('so-pauta'), observacoes: g('so-observacoes'), status: 'Pendente', criado_em: new Date().toISOString(),
   };
   const emailAssistente = emailPorNome(registro.assistente_responsavel);
   const assunto = `Inscrição S.O.${registro.processo ? ' — Processo ' + registro.processo : ''}`;
   const corpo = `Olá, ${registro.assistente_responsavel}.\n\n`
     + `Por gentileza, poderia inscrever ${registro.advogado_inscrever} na s.o. abaixo?\n\n`
-    + `${registro.texto_pauta}\n`
+    + (registro.turma_trt ? `Turma do TRT: ${registro.turma_trt}\n` : '')
+    + (registro.id_substabelecimento ? `ID do Substabelecimento: ${registro.id_substabelecimento}\n` : '')
+    + `\n${registro.texto_pauta}\n`
     + (registro.observacoes ? `\nObservações adicionais: ${registro.observacoes}\n` : '')
     + `\nObrigada!`;
   try{
