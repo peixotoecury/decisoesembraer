@@ -183,6 +183,7 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
   <button class="tab-btn" id="tab-btn-subsidiomedico" onclick="mudarAba('subsidiomedico')">🩺 Subsídio de Quesitos Médicos</button>
   <button class="tab-btn" id="tab-btn-so" onclick="mudarAba('so')">🎙️ Inscrição S.O.</button>
   <button class="tab-btn" id="tab-btn-encerramentos" onclick="mudarAba('encerramentos')">🏁 Encerramentos</button>
+  <button class="tab-btn" id="tab-btn-levgarantia" onclick="mudarAba('levgarantia')">🔓 Levantamento de Garantia</button>
 </div>
 
 <div class="main">
@@ -859,6 +860,46 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
     </div>
   </div>
 
+  <div class="view" id="view-levgarantia">
+    <div class="dash-card">
+      <div class="dash-card-head">🔓 Novo Levantamento de Garantia / Devolução de Valor</div>
+      <div class="dash-card-body">
+        <div class="info-box">ℹ️ Vai sempre para o time Embraer + Grupo Embraer + advogados internos responsáveis (fixo). Depois de gerar, anexe manualmente o Despacho, o Alvará, a Guia de depósito e o comprovante de pagamento antes de enviar — o link de e-mail não anexa arquivo sozinho.</div>
+        <div class="mc-form-grid">
+          <div class="mc-form-group"><label>Número do Processo <span class="req">*</span></label><input type="text" id="lg-processo" required placeholder="0000000-00.0000.0.00.0000"></div>
+          <div class="mc-form-group"><label>Nome do Reclamante <span class="req">*</span></label><input type="text" id="lg-reclamante" required></div>
+        </div>
+        <div class="mc-form-grid cols-3">
+          <div class="mc-form-group"><label>Valor Original do Depósito Judicial <span class="req">*</span></label><input type="text" inputmode="decimal" placeholder="0,00" id="lg-valor-original" required></div>
+          <div class="mc-form-group"><label>Valor Residual a ser Levantado <span class="req">*</span></label><input type="text" inputmode="decimal" placeholder="0,00" id="lg-valor-residual" required></div>
+          <div class="mc-form-group"><label>Data de Pagamento do Depósito Judicial <span class="req">*</span></label><input type="date" id="lg-data-pagamento" required></div>
+        </div>
+        <div class="mc-form-grid">
+          <div class="mc-form-group"><label>Prazo <span class="req">*</span></label><input type="date" id="lg-prazo" required></div>
+          <div class="mc-form-group"><label>Responsável pela solicitação (sigla) <span class="req">*</span></label><input type="text" id="lg-responsavel" required placeholder="Ex: VCR"></div>
+        </div>
+        <button type="button" class="btn-cyan" onclick="enviarLevantamentoGarantia(event)">✉️ Gerar e-mail e registrar</button>
+      </div>
+    </div>
+    <div class="dash-card">
+      <div class="dash-card-head">📜 Histórico de Levantamentos de Garantia <button class="export-btn" onclick="exportarExcelGenerico(HIST_LEVGARANTIA_FILTRADO, 'Levantamento_Garantia_Embraer', LEVGARANTIA_COLUNAS_EXCEL)">⬇ Exportar Excel</button></div>
+      <div class="filters">
+        <input class="filter-input" id="lg-busca" placeholder="Buscar por processo ou reclamante…" oninput="renderHistoricoLevGarantia()">
+        <select class="filter-select" id="lg-flt-status" onchange="renderHistoricoLevGarantia()">
+          <option value="">Status: todos</option>
+          <option value="Pendente">Pendente</option>
+          <option value="Concluído">Concluído</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table class="sol-table">
+          <thead><tr><th>Processo</th><th>Reclamante</th><th>Valor Residual</th><th>Prazo</th><th>Status</th><th>Enviado em</th><th>Ações</th></tr></thead>
+          <tbody id="lg-tbody"><tr><td colspan="7" class="empty-state">Carregando…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
   <div class="view" id="view-elaw">
     <div class="dash-card">
       <div class="dash-card-head">🗂️ Novo Comunicado de Ajuste de Fase e Prognóstico</div>
@@ -1309,7 +1350,7 @@ function crudExportar(cfg){
   XLSX.writeFile(wb, `${cfg.titulo.replace(/\s+/g,'_')}_Embraer_${hojeISOlocal()}.xlsx`);
 }
 
-const ABAS = ['decisao','reintegrados','estrategicos','minutos_residuais','insalubridade','doencas','calculos','reintegracao','elaw','pericia','quesitos','subsidiomedico','so','encerramentos'];
+const ABAS = ['decisao','reintegrados','estrategicos','minutos_residuais','insalubridade','doencas','calculos','reintegracao','elaw','pericia','quesitos','subsidiomedico','so','encerramentos','levgarantia'];
 const ABA_CARREGADORES = {};
 function mudarAba(aba){
   ABAS.forEach(a => {
@@ -2477,6 +2518,97 @@ function encExportar(){
   XLSX.writeFile(wb, `Encerramentos_Embraer_${hojeISOlocal()}.xlsx`);
 }
 ABA_CARREGADORES['encerramentos'] = { carregado: false, fn: carregarHistoricoEncerramentos };
+
+/* ===================== ABA: LEVANTAMENTO DE GARANTIA / DEVOLUÇÃO DE VALOR =====================
+   Confirma pro time Embraer + advogados internos responsáveis que o levantamento
+   do saldo residual da garantia da execução foi autorizado e a transferência já
+   foi feita. Destinatários fixos (mesmo time da Decisão + advogados do caso). */
+const LEVGARANTIA_TO = 'julia.rohde@embraer.com.br,raphaela.rodrigues@embraer.com.br,isabela.smirne@embraer.com.br,talita.assis@embraer.com.br,embraer.pec@peixotoecury.com.br,bruna.fazenda@peixotoecury.com.br,annacarolina.baani@peixotoecury.com.br,nicolau.coelho@peixotoecury.com.br';
+const LEVGARANTIA_CC = 'josiane.nogueira@embraer.com.br,edina.silva@embraer.com.br,gabrielly.frutos@embraer.com.br';
+const LEVGARANTIA_COLUNAS_EXCEL = [
+  {label:'Processo', col:'processo'}, {label:'Reclamante', col:'reclamante'},
+  {label:'Valor Original do Depósito', col:'valor_original_deposito'}, {label:'Valor Residual a Levantar', col:'valor_residual_levantar'},
+  {label:'Data de Pagamento do Depósito', col:'data_pagamento_deposito'}, {label:'Prazo', col:'prazo'},
+  {label:'Responsável', col:'responsavel_sigla'}, {label:'Status', col:'status'},
+  {label:'Criado em', col:'criado_em'}, {label:'Concluído em', col:'concluido_em'},
+];
+async function enviarLevantamentoGarantia(ev){
+  ev.preventDefault();
+  const g = id => document.getElementById(id).value.trim() || null;
+  const numBR = id => parseMoedaBR(document.getElementById(id).value);
+  const obrigatorios = [['lg-processo','Número do Processo'],['lg-reclamante','Nome do Reclamante'],['lg-valor-original','Valor Original do Depósito Judicial'],['lg-valor-residual','Valor Residual a ser Levantado'],['lg-data-pagamento','Data de Pagamento do Depósito Judicial'],['lg-prazo','Prazo'],['lg-responsavel','Responsável pela solicitação']];
+  for(const [id, label] of obrigatorios){ if(!document.getElementById(id).value.trim()){ toast(`Preencha o campo "${label}".`, true); return; } }
+  const registro = {
+    processo: g('lg-processo'), reclamante: g('lg-reclamante'),
+    valor_original_deposito: numBR('lg-valor-original'), valor_residual_levantar: numBR('lg-valor-residual'),
+    data_pagamento_deposito: g('lg-data-pagamento'), prazo: g('lg-prazo'),
+    responsavel_sigla: g('lg-responsavel'), status: 'Pendente', criado_em: new Date().toISOString(),
+  };
+  const prazoFmt = dataBR(registro.prazo);
+  const assunto = `Levantamento Garantia: Prazo: ${prazoFmt} - Devolução de valor -  ${registro.reclamante} - ${registro.processo}`;
+  const corpo = `Boa tarde!\n\nInformamos, que conforme despacho anexo foi autorizado o levantamento à reclamada do saldo total de valores recolhidos à título de valores residuais relativos a garantia da execução referente ao processo de nº ${registro.processo}– Reclamante ${registro.reclamante}\n\n`
+    + `- Valor Original do "depósito judicial": ${fmtMoeda(registro.valor_original_deposito)}\n\n`
+    + `- Valor residual a ser levantado: ${fmtMoeda(registro.valor_residual_levantar)}\n\n`
+    + `- Data de pagamento do "depósito judicial": ${dataBR(registro.data_pagamento_deposito)}\n\n`
+    + `Conforme informado por vocês, a transferência já foi feita, sendo que faremos a inserção no elaw na sequência.\n\n`
+    + `Seguem anexos:\n\n1º Despacho determinando a liberação;\n2º Alvará de liberação;\n3º e 4º Guia de depósito judicial e comprovante de pagamento;\n\nAtenciosamente,`;
+  try{
+    const { error } = await sb.from('embraer_levantamento_garantia').insert(registro);
+    if(error) throw error;
+    toast('Levantamento registrado. Abrindo e-mail — não esqueça de anexar os PDFs…');
+    carregarHistoricoLevGarantia();
+  }catch(err){
+    console.error(err);
+    toast('E-mail aberto, mas NÃO foi possível salvar no histórico: ' + (err.message||err), true);
+  }
+  abrirEmail(LEVGARANTIA_TO, LEVGARANTIA_CC, assunto, corpo);
+  document.querySelectorAll('#view-levgarantia input').forEach(el => el.value = '');
+}
+
+let HIST_LEVGARANTIA = [];
+let HIST_LEVGARANTIA_FILTRADO = [];
+async function carregarHistoricoLevGarantia(){
+  try{
+    const { data, error } = await sb.from('embraer_levantamento_garantia').select('*').order('criado_em', {ascending:false}).limit(200);
+    if(error) throw error;
+    HIST_LEVGARANTIA = data || [];
+    document.getElementById('erro-conexao').innerHTML = '';
+    renderHistoricoLevGarantia();
+  }catch(err){
+    console.error(err);
+    document.getElementById('lg-tbody').innerHTML = `<tr><td colspan="7" class="empty-state">Erro ao carregar histórico — a tabela embraer_levantamento_garantia provavelmente ainda não existe.</td></tr>`;
+  }
+}
+function renderHistoricoLevGarantia(){
+  const termo = document.getElementById('lg-busca').value.toLowerCase();
+  const status = document.getElementById('lg-flt-status').value;
+  const rows = HIST_LEVGARANTIA.filter(r =>
+    (!termo || (r.processo||'').toLowerCase().includes(termo) || (r.reclamante||'').toLowerCase().includes(termo)) &&
+    (!status || (r.status||'Pendente') === status)
+  );
+  HIST_LEVGARANTIA_FILTRADO = rows;
+  const tbody = document.getElementById('lg-tbody');
+  if(!rows.length){ tbody.innerHTML = `<tr><td colspan="7" class="empty-state">Nenhum levantamento encontrado.</td></tr>`; return; }
+  tbody.innerHTML = rows.map(r => `<tr>
+    <td class="mono">${esc(r.processo)}</td>
+    <td>${esc(r.reclamante)}</td>
+    <td>${r.valor_residual_levantar != null ? fmtMoeda(r.valor_residual_levantar) : ''}</td>
+    <td class="mono">${r.prazo ? dataBR(r.prazo) : ''}</td>
+    <td><span class="badge ${r.status==='Concluído'?'badge-green':'badge-orange'}">${esc(r.status||'Pendente')}</span></td>
+    <td class="mono">${fmtDataHora(r.criado_em)}</td>
+    <td>
+      ${r.status !== 'Concluído' ? `<button class="row-btn" onclick="concluirLevGarantia(${r.id})">✅ Concluir</button>` : ''}
+      <button class="row-btn" onclick="excluirRegistroGenerico('embraer_levantamento_garantia', ${r.id}, carregarHistoricoLevGarantia)">🗑️ Excluir</button>
+    </td>
+  </tr>`).join('');
+}
+async function concluirLevGarantia(id){
+  const { error } = await sb.from('embraer_levantamento_garantia').update({ status: 'Concluído', concluido_em: new Date().toISOString() }).eq('id', id);
+  if(error){ toast('Erro ao concluir: ' + error.message, true); return; }
+  toast('Levantamento marcado como concluído.');
+  carregarHistoricoLevGarantia();
+}
+ABA_CARREGADORES['levgarantia'] = { carregado: false, fn: carregarHistoricoLevGarantia };
 
 /* ===================== REPORTE DE DECISÃO ===================== */
 const DECISAO_SECOES = ['laudo', 'sentenca', 'acordao', 'execucao'];
