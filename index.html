@@ -241,7 +241,7 @@ table.sol-table tbody td.mono{max-width:215px;}
 
         <div class="section-title">Periculosidade — Laudo</div>
         <div class="mc-form-grid cols-3">
-          <div class="mc-form-group"><label>Resultado do Laudo <span class="req">*</span></label><select required id="d-laudo-peri-resultado">
+          <div class="mc-form-group"><label>Resultado do Laudo <span class="req">*</span></label><select required id="d-laudo-peri-resultado" onchange="atualizarCamposLaudoPericia()">
               <option value="">—</option>
               <option>Aguardando Realização de Perícia</option>
               <option>Aguardando Resultado do Laudo</option>
@@ -260,7 +260,7 @@ table.sol-table tbody td.mono{max-width:215px;}
 
         <div class="section-title">Insalubridade — Laudo</div>
         <div class="mc-form-grid cols-3">
-          <div class="mc-form-group"><label>Resultado do Laudo <span class="req">*</span></label><select required id="d-laudo-insalu-resultado">
+          <div class="mc-form-group"><label>Resultado do Laudo <span class="req">*</span></label><select required id="d-laudo-insalu-resultado" onchange="atualizarCamposLaudoPericia()">
               <option value="">—</option>
               <option>Aguardando Realização de Perícia</option>
               <option>Aguardando Resultado do Laudo</option>
@@ -2658,6 +2658,27 @@ function atualizarSubAcordaoTST(){
   document.getElementById('d-acordao-tst-campos').style.display = marcado ? '' : 'none';
   sincronizarRequiredContainer('d-acordao-tst-campos');
 }
+
+/* "Sem Pedido"/"Sem Laudo" em Periculosidade ou Insalubridade significa que
+   não houve perícia/laudo pra aquele tema — os campos de detalhe (datas,
+   motivo, fundamentação) não fazem sentido e não podem continuar obrigatórios,
+   senão trava o salvamento mesmo com o resultado corretamente preenchido. */
+function atualizarCamposLaudoPericia(){
+  const NAO_TEM = ['Sem Pedido', 'Sem Laudo'];
+  const semPeri = NAO_TEM.includes(document.getElementById('d-laudo-peri-resultado').value);
+  const semInsalu = NAO_TEM.includes(document.getElementById('d-laudo-insalu-resultado').value);
+  ['d-laudo-peri-data-inicio','d-laudo-peri-data-final','d-laudo-peri-motivo','d-laudo-peri-detalhamento','d-laudo-peri-fundamentacao'].forEach(id => {
+    document.getElementById(id).required = !semPeri;
+  });
+  ['d-laudo-insalu-data-inicio','d-laudo-insalu-data-final','d-laudo-insalu-motivo','d-laudo-insalu-detalhamento','d-laudo-insalu-outros','d-laudo-insalu-fundamentacao'].forEach(id => {
+    document.getElementById(id).required = !semInsalu;
+  });
+  // Data/Perito/dia adicional da perícia física são compartilhados pelos dois temas —
+  // só deixam de ser obrigatórios se NENHUM dos dois teve pedido de perícia.
+  ['d-perito-peri','d-data-pericia-peri','d-pericia-dia-adicional'].forEach(id => {
+    document.getElementById(id).required = !(semPeri && semInsalu);
+  });
+}
 document.getElementById('form-decisao').addEventListener('submit', async function(ev){
   ev.preventDefault();
   const g = id => document.getElementById(id).value.trim() || null;
@@ -2762,6 +2783,7 @@ document.getElementById('form-decisao').addEventListener('submit', async functio
     this.reset();
     atualizarGruposDecisao();
     atualizarSubAcordaoTST();
+    atualizarCamposLaudoPericia();
     carregarHistoricoDecisao();
   }catch(err){
     console.error(err);
@@ -3115,6 +3137,7 @@ function iniciarRealtime(){
 
 atualizarGruposDecisao();
 atualizarSubAcordaoTST();
+atualizarCamposLaudoPericia();
 carregarHistoricoDecisao();
 iniciarRealtime();
 </script>
