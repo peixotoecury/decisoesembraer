@@ -2639,18 +2639,24 @@ function atualizarGruposDecisao(){
     document.getElementById('d-grupo-' + secao + '-envio').style.display = marcado ? '' : 'none';
   });
   document.getElementById('d-grupo-vazio-hint').style.display = algumMarcado ? 'none' : '';
+  // Campo required escondido (display:none) TRAVA o submit do formulário mesmo
+  // invisível — não basta esconder o grupo desmarcado, tem que tirar o required
+  // de tudo dentro dele também, senão o formulário nunca fica válido.
+  DECISAO_SECOES.forEach(secao => sincronizarRequiredContainer('d-grupo-' + secao + '-campos'));
+  if(document.getElementById('d-grupo-laudo').checked) atualizarCamposLaudoPericia();
 }
 
-/* Recurso de Revista/Acórdão TST só existe MUITO depois do Acórdão TRT (RO) —
-   antes, ambos eram sempre obrigatórios juntos dentro de "Acórdão", travando
-   quem só tinha o RO pra reportar. Agora só ficam obrigatórios quando o
-   advogado confirma que essa fase já existe. */
+/* Campo required dentro de um bloco escondido (display:none) continua travando
+   o submit do formulário mesmo não aparecendo na tela — testado e confirmado
+   neste app. sincronizarRequiredContainer usa offsetParent (null quando o
+   elemento ou qualquer ancestral está com display:none) em vez de checar só o
+   container direto — isso já resolve sozinho o caso de sub-blocos aninhados
+   (ex: Acórdão TST dentro de Acórdão) sem precisar de lógica extra por nível. */
 function sincronizarRequiredContainer(id){
   const container = document.getElementById(id);
-  const mostrar = container.style.display !== 'none';
   container.querySelectorAll('input, select, textarea').forEach(el => {
     if(el.type === 'checkbox' || el.type === 'radio' || el.readOnly) return;
-    el.required = mostrar;
+    el.required = el.offsetParent !== null;
   });
 }
 function atualizarSubAcordaoTST(){
