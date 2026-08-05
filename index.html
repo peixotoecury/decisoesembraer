@@ -172,6 +172,7 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
   <button class="tab-btn active" id="tab-btn-decisao" onclick="mudarAba('decisao')">📑 Reporte de Decisão</button>
   <button class="tab-btn" id="tab-btn-reintegrados" onclick="mudarAba('reintegrados')">🔁 Reintegrados</button>
   <button class="tab-btn" id="tab-btn-estrategicos" onclick="mudarAba('estrategicos')">♟️ Estratégicos</button>
+  <button class="tab-btn" id="tab-btn-minutos_residuais" onclick="mudarAba('minutos_residuais')">⏱️ Minutos Residuais</button>
   <button class="tab-btn" id="tab-btn-insalubridade" onclick="mudarAba('insalubridade')">🧪 Insalubridade e Periculosidade</button>
   <button class="tab-btn" id="tab-btn-doencas" onclick="mudarAba('doencas')">🩺 Doenças</button>
   <button class="tab-btn" id="tab-btn-calculos" onclick="mudarAba('calculos')">🧮 Solicitação de Cálculos</button>
@@ -204,6 +205,19 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
           <div class="mc-form-group"><label>Advogado Responsável <span class="req">*</span></label><select id="d-advogado-responsavel" required><option value="">Selecione…</option></select></div>
           <div class="mc-form-group"><label>Advogado da Parte Contrária <span class="req">*</span></label><input required type="text" id="d-advogado-contraria" placeholder="Nome completo"></div>
         </div>
+
+        <div class="section-title">Classificação do Caso</div>
+        <div class="mc-form-grid">
+          <div class="mc-form-group"><label>Este caso é de qual perfil?</label>
+            <select id="d-perfil-caso">
+              <option value="">Não se aplica</option>
+              <option>Reintegrados</option>
+              <option>Estratégicos</option>
+              <option>Minutos Residuais</option>
+            </select>
+          </div>
+        </div>
+        <div class="mc-form-group"><label>Observações sobre o Perfil do Caso</label><textarea id="d-perfil-caso-obs" rows="2" placeholder="Ex: motivo de estar nessa lista, contexto adicional…"></textarea></div>
 
         <div class="section-title">Tipo de Reporte</div>
         <div class="info-box"><span>ℹ️</span><span>Marque o(s) tipo(s) que você está reportando agora — só os campos correspondentes aparecem, pra não precisar rolar o formulário todo. Pode marcar mais de um (ex: Sentença + Acórdão no mesmo reporte).</span></div>
@@ -518,6 +532,7 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
 
   <div class="view" id="view-reintegrados"></div>
   <div class="view" id="view-estrategicos"></div>
+  <div class="view" id="view-minutos_residuais"></div>
   <div class="view" id="view-insalubridade"></div>
   <div class="view" id="view-doencas"></div>
   <div class="view" id="view-calculos">
@@ -1294,7 +1309,7 @@ function crudExportar(cfg){
   XLSX.writeFile(wb, `${cfg.titulo.replace(/\s+/g,'_')}_Embraer_${hojeISOlocal()}.xlsx`);
 }
 
-const ABAS = ['decisao','reintegrados','estrategicos','insalubridade','doencas','calculos','reintegracao','elaw','pericia','quesitos','subsidiomedico','so','encerramentos'];
+const ABAS = ['decisao','reintegrados','estrategicos','minutos_residuais','insalubridade','doencas','calculos','reintegracao','elaw','pericia','quesitos','subsidiomedico','so','encerramentos'];
 const ABA_CARREGADORES = {};
 function mudarAba(aba){
   ABAS.forEach(a => {
@@ -1427,6 +1442,41 @@ crudMontarView({
     {col:'risco', label:'Risco'},
     {col:'valor_do_risco', label:'Valor do Risco', money:true},
     {col:'valor_da_provisao', label:'Valor da Provisão', money:true},
+  ],
+});
+
+/* ===================== ABA: MINUTOS RESIDUAIS =====================
+   Espelha a planilha "P&C - Minutos Residuais.xlsx" — 1 linha por processo. */
+crudMontarView({
+  key: 'minutos_residuais',
+  table: 'embraer_minutos_residuais',
+  titulo: 'Minutos Residuais',
+  icone: '⏱️',
+  fields: [
+    {col:'numero_processo', label:'Número do Processo', type:'text', required:true, placeholder:'0000000-00.0000.0.00.0000'},
+    {col:'nome_parte_contraria', label:'Nome Parte Contrária', type:'text', required:true},
+    {required:true, col:'ultimo_cargo', label:'Último Cargo', type:'text'},
+    {required:true, col:'empresa', label:'Empresa', type:'text'},
+    {required:true, col:'comarca', label:'Comarca', type:'text'},
+    {required:true, col:'vara_local', label:'Vara/Local', type:'text'},
+    {required:true, col:'foro_tribunal_orgao', label:'Foro/Tribunal/Órgão', type:'text'},
+    {required:true, col:'objeto', label:'Objeto', type:'text'},
+    {required:true, col:'status', label:'Status', type:'select', options:['Ativo','Encerrado']},
+    {required:true, col:'data_distribuicao', label:'Data de Distribuição', type:'date'},
+    {required:true, col:'fase_processual', label:'Fase Processual', type:'text'},
+    {required:true, col:'prognostico', label:'Prognóstico', type:'select', options:['Possível','Provável','Remoto']},
+    {required:true, col:'valor_da_causa', label:'Valor da Causa', type:'money'},
+    {required:true, col:'provisao', label:'Provisão', type:'money'},
+    {required:true, col:'valor_do_risco', label:'Valor do Risco', type:'money'},
+  ],
+  resumo: [
+    {col:'numero_processo', label:'Processo', mono:true},
+    {col:'nome_parte_contraria', label:'Parte Contrária'},
+    {col:'status', label:'Status'},
+    {col:'fase_processual', label:'Fase'},
+    {col:'prognostico', label:'Prognóstico'},
+    {col:'valor_do_risco', label:'Valor do Risco', money:true},
+    {col:'provisao', label:'Provisão', money:true},
   ],
 });
 
@@ -2455,6 +2505,8 @@ document.getElementById('form-decisao').addEventListener('submit', async functio
     responsavel_sigla: g('d-responsavel'),
     advogado_responsavel: g('d-advogado-responsavel'),
     advogado_parte_contraria: g('d-advogado-contraria'),
+    perfil_caso: g('d-perfil-caso'),
+    perfil_caso_obs: g('d-perfil-caso-obs'),
     perito_peri: g('d-perito-peri'),
     data_pericia_peri: g('d-data-pericia-peri'),
     pericia_dia_adicional: g('d-pericia-dia-adicional'),
@@ -2648,6 +2700,8 @@ function montarResumoCompleto(r){
     linha('Responsável (sigla)', r.responsavel_sigla),
     linha('Advogado Responsável', r.advogado_responsavel),
     linha('Advogado da Parte Contrária', r.advogado_parte_contraria),
+    linha('Perfil do Caso', r.perfil_caso),
+    linha('Observações do Perfil', r.perfil_caso_obs),
   ]);
   partes += secaoTexto('Periculosidade — Perícia', [
     linha('Perito', r.perito_peri),
