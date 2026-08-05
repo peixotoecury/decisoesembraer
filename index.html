@@ -105,7 +105,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13
 .table-wrap::-webkit-scrollbar-track{background:var(--surface2);border-radius:5px;}
 .table-wrap::-webkit-scrollbar-thumb{background:var(--azul-pc);border-radius:5px;}
 .table-wrap::-webkit-scrollbar-thumb:hover{background:var(--escuro-pc);}
-table.sol-table{width:100%;border-collapse:collapse;min-width:900px;background:#fff;}
+table.sol-table{width:100%;border-collapse:collapse;background:#fff;}
 table.sol-table thead th{position:sticky;top:0;background:var(--escuro-pc);color:#fff;padding:10px 12px;text-transform:uppercase;font-size:10px;letter-spacing:.6px;text-align:left;white-space:nowrap;}
 table.sol-table tbody td{padding:10px 12px;border-bottom:1px solid #E5EEF4;color:var(--preto-pc);font-size:12px;vertical-align:middle;max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 table.sol-table tbody td:has(.row-btn){white-space:normal;overflow:visible;text-overflow:clip;max-width:none;}
@@ -372,13 +372,17 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
         <div class="sub-title">Acórdão TRT — Embargos e Recurso de Revista</div>
         <div class="mc-form-group"><label>É caso de Embargos de Declaração? <span class="req">*</span></label><select required id="d-trt-embargos"><option value="">—</option><option>Sim</option><option>Não</option></select>
         </div>
-        <div class="info-box">ℹ️ Se <b>Não</b> a Embargos, preencher o Recurso de Revista abaixo.</div>
-        <div class="mc-form-group"><label>Resultado do Recurso de Revista <span class="req">*</span></label><select required id="d-recurso-revista-resultado"><option value="">—</option><option>Admitido</option><option>Denegado Seguimento</option><option>Pendente</option></select>
+
+        <div class="check-row"><input type="checkbox" id="d-tem-acordao-tst" onchange="atualizarSubAcordaoTST()"><label for="d-tem-acordao-tst">Já há Recurso de Revista / Acórdão do TST neste processo?</label></div>
+        <div class="info-box">👆 Se o processo ainda não chegou nessa fase, não marque — o reporte fica só com o Acórdão TRT acima.</div>
+
+        <div id="d-acordao-tst-campos" style="display:none;">
+        <div class="mc-form-group"><label>Resultado do Recurso de Revista <span class="req">*</span></label><select id="d-recurso-revista-resultado"><option value="">—</option><option>Admitido</option><option>Denegado Seguimento</option><option>Pendente</option></select>
         </div>
 
         <div class="section-title">Acórdão TST</div>
         <div class="mc-form-grid cols-3">
-          <div class="mc-form-group"><label>Resultado <span class="req">*</span></label><select required id="d-acordao-tst">
+          <div class="mc-form-group"><label>Resultado <span class="req">*</span></label><select id="d-acordao-tst">
               <option value="">—</option>
               <option>Manteve</option>
               <option>Reforma parcial em favor do Reclamante</option>
@@ -389,8 +393,8 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
               <option>Não conhecido</option>
             </select>
           </div>
-          <div class="mc-form-group"><label>Data do Acórdão TST <span class="req">*</span></label><input required type="date" id="d-acordao-tst-data"></div>
-          <div class="mc-form-group"><label>Turma <span class="req">*</span></label><select required id="d-acordao-tst-camara">
+          <div class="mc-form-group"><label>Data do Acórdão TST <span class="req">*</span></label><input type="date" id="d-acordao-tst-data"></div>
+          <div class="mc-form-group"><label>Turma <span class="req">*</span></label><select id="d-acordao-tst-camara">
               <option value="">—</option>
               <option>1ª Turma</option>
               <option>2ª Turma</option>
@@ -403,11 +407,12 @@ td.mono{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:no
             </select>
           </div>
         </div>
-        <div class="mc-form-group"><label>Ministro <span class="req">*</span></label><input required type="text" id="d-acordao-tst-ministro"></div>
-        <div class="mc-form-group"><label>Resumo do Acórdão TST <span class="req">*</span></label><textarea required id="d-acordao-tst-resumo" rows="3" placeholder="Resumo em poucas linhas do que foi decidido e dos principais fundamentos — entra direto no corpo do e-mail."></textarea></div>
+        <div class="mc-form-group"><label>Ministro <span class="req">*</span></label><input type="text" id="d-acordao-tst-ministro"></div>
+        <div class="mc-form-group"><label>Resumo do Acórdão TST <span class="req">*</span></label><textarea id="d-acordao-tst-resumo" rows="3" placeholder="Resumo em poucas linhas do que foi decidido e dos principais fundamentos — entra direto no corpo do e-mail."></textarea></div>
 
         <div class="sub-title">Acórdão TST — Embargos de Declaração</div>
-        <div class="mc-form-group"><label>É caso de Embargos de Declaração? <span class="req">*</span></label><select required id="d-tst-embargos"><option value="">—</option><option>Sim</option><option>Não</option></select>
+        <div class="mc-form-group"><label>É caso de Embargos de Declaração? <span class="req">*</span></label><select id="d-tst-embargos"><option value="">—</option><option>Sim</option><option>Não</option></select>
+        </div>
         </div>
         </div>
 
@@ -2626,6 +2631,24 @@ function atualizarGruposDecisao(){
   });
   document.getElementById('d-grupo-vazio-hint').style.display = algumMarcado ? 'none' : '';
 }
+
+/* Recurso de Revista/Acórdão TST só existe MUITO depois do Acórdão TRT (RO) —
+   antes, ambos eram sempre obrigatórios juntos dentro de "Acórdão", travando
+   quem só tinha o RO pra reportar. Agora só ficam obrigatórios quando o
+   advogado confirma que essa fase já existe. */
+function sincronizarRequiredContainer(id){
+  const container = document.getElementById(id);
+  const mostrar = container.style.display !== 'none';
+  container.querySelectorAll('input, select, textarea').forEach(el => {
+    if(el.type === 'checkbox' || el.type === 'radio' || el.readOnly) return;
+    el.required = mostrar;
+  });
+}
+function atualizarSubAcordaoTST(){
+  const marcado = document.getElementById('d-tem-acordao-tst').checked;
+  document.getElementById('d-acordao-tst-campos').style.display = marcado ? '' : 'none';
+  sincronizarRequiredContainer('d-acordao-tst-campos');
+}
 document.getElementById('form-decisao').addEventListener('submit', async function(ev){
   ev.preventDefault();
   const g = id => document.getElementById(id).value.trim() || null;
@@ -2729,6 +2752,7 @@ document.getElementById('form-decisao').addEventListener('submit', async functio
     if(tiposEmail.length) enviarEmailsDecisao(registro, tiposEmail);
     this.reset();
     atualizarGruposDecisao();
+    atualizarSubAcordaoTST();
     carregarHistoricoDecisao();
   }catch(err){
     console.error(err);
@@ -3081,6 +3105,7 @@ function iniciarRealtime(){
 }
 
 atualizarGruposDecisao();
+atualizarSubAcordaoTST();
 carregarHistoricoDecisao();
 iniciarRealtime();
 </script>
