@@ -1726,13 +1726,13 @@ document.getElementById('form-calculos').addEventListener('submit', async functi
     const { error } = await sb.from('embraer_solicitacoes_calculos').insert(registro);
     if(error) throw error;
     toast('Solicitação registrada. Abrindo e-mail…');
+    abrirEmail(CALCULOS_TO, CALCULOS_CC, assunto, corpo);
+    this.reset();
     carregarHistoricoCalculos();
   }catch(err){
     console.error(err);
-    toast('E-mail aberto, mas NÃO foi possível salvar no histórico: ' + (err.message||err), true);
+    toast('Não foi possível salvar no histórico — e-mail NÃO foi aberto. Tente novamente: ' + (err.message||err), true);
   }
-  abrirEmail(CALCULOS_TO, CALCULOS_CC, assunto, corpo);
-  this.reset();
 });
 
 let HIST_CALCULOS = [];
@@ -1842,13 +1842,13 @@ async function enviarDeterminacaoReintegracao(ev){
     const { error } = await sb.from('embraer_determinacao_reintegracao').insert(registro);
     if(error) throw error;
     toast('Determinação registrada. Abrindo e-mail…');
+    abrirEmail(DECISAO_TO_BASE, DECISAO_CC, assunto, corpo);
+    document.querySelectorAll('#view-reintegracao input, #view-reintegracao select, #view-reintegracao textarea').forEach(el => el.value = '');
     carregarHistoricoReintegracao();
   }catch(err){
     console.error(err);
-    toast('E-mail aberto, mas NÃO foi possível salvar no histórico: ' + (err.message||err), true);
+    toast('Não foi possível salvar no histórico — e-mail NÃO foi aberto. Tente novamente: ' + (err.message||err), true);
   }
-  abrirEmail(DECISAO_TO_BASE, DECISAO_CC, assunto, corpo);
-  document.querySelectorAll('#view-reintegracao input, #view-reintegracao select, #view-reintegracao textarea').forEach(el => el.value = '');
 }
 
 let HIST_REINTEGRACAO = [];
@@ -1932,14 +1932,14 @@ document.getElementById('form-elaw').addEventListener('submit', async function(e
     const { error } = await sb.from('embraer_ajuste_fase_prognostico').insert(registro);
     if(error) throw error;
     toast('Comunicado registrado. Abrindo e-mail…');
+    if(emailAssistente) abrirEmail(emailAssistente, '', assunto, corpo);
+    else toast('Assistente sem e-mail cadastrado — abra o e-mail manualmente.', true);
+    this.reset();
     carregarHistoricoElaw();
   }catch(err){
     console.error(err);
-    toast('E-mail aberto, mas NÃO foi possível salvar no histórico: ' + (err.message||err), true);
+    toast('Não foi possível salvar no histórico — e-mail NÃO foi aberto. Tente novamente: ' + (err.message||err), true);
   }
-  if(emailAssistente) abrirEmail(emailAssistente, '', assunto, corpo);
-  else toast('Assistente sem e-mail cadastrado — abra o e-mail manualmente.', true);
-  this.reset();
 });
 
 let HIST_ELAW = [];
@@ -2025,13 +2025,13 @@ async function enviarAgendamentoPericia(ev){
     const { error } = await sb.from('embraer_agendamento_pericia').insert(registro);
     if(error) throw error;
     toast('Agendamento registrado. Abrindo e-mail…');
+    abrirEmail(CALCULOS_TO, CALCULOS_CC, assunto, corpo);
+    document.querySelectorAll('#view-pericia input, #view-pericia select, #view-pericia textarea').forEach(el => el.value = '');
     carregarHistoricoPericia();
   }catch(err){
     console.error(err);
-    toast('E-mail aberto, mas NÃO foi possível salvar no histórico: ' + (err.message||err), true);
+    toast('Não foi possível salvar no histórico — e-mail NÃO foi aberto. Tente novamente: ' + (err.message||err), true);
   }
-  abrirEmail(CALCULOS_TO, CALCULOS_CC, assunto, corpo);
-  document.querySelectorAll('#view-pericia input, #view-pericia select, #view-pericia textarea').forEach(el => el.value = '');
 }
 
 let HIST_PERICIA = [];
@@ -2115,13 +2115,13 @@ async function enviarQuesitosErgonomicos(ev){
     const { error } = await sb.from('embraer_quesitos_ergonomicos').insert(registro);
     if(error) throw error;
     toast('Solicitação registrada. Abrindo e-mail…');
+    abrirEmail(QUESITOS_TO, QUESITOS_CC, assunto, corpo);
+    document.querySelectorAll('#view-quesitos input, #view-quesitos textarea').forEach(el => el.value = '');
     carregarHistoricoQuesitos();
   }catch(err){
     console.error(err);
-    toast('E-mail aberto, mas NÃO foi possível salvar no histórico: ' + (err.message||err), true);
+    toast('Não foi possível salvar no histórico — e-mail NÃO foi aberto. Tente novamente: ' + (err.message||err), true);
   }
-  abrirEmail(QUESITOS_TO, QUESITOS_CC, assunto, corpo);
-  document.querySelectorAll('#view-quesitos input, #view-quesitos textarea').forEach(el => el.value = '');
 }
 
 let HIST_QUESITOS = [];
@@ -2199,13 +2199,13 @@ async function enviarSubsidioMedico(ev){
     const { error } = await sb.from('embraer_subsidio_quesitos_medicos').insert(registro);
     if(error) throw error;
     toast('Solicitação registrada. Abrindo e-mail…');
+    abrirEmail(SUBSIDIOMEDICO_TO, SUBSIDIOMEDICO_CC, assunto, corpo);
+    document.querySelectorAll('#view-subsidiomedico input, #view-subsidiomedico textarea').forEach(el => el.value = '');
     carregarHistoricoSubsidioMedico();
   }catch(err){
     console.error(err);
-    toast('E-mail aberto, mas NÃO foi possível salvar no histórico: ' + (err.message||err), true);
+    toast('Não foi possível salvar no histórico — e-mail NÃO foi aberto. Tente novamente: ' + (err.message||err), true);
   }
-  abrirEmail(SUBSIDIOMEDICO_TO, SUBSIDIOMEDICO_CC, assunto, corpo);
-  document.querySelectorAll('#view-subsidiomedico input, #view-subsidiomedico textarea').forEach(el => el.value = '');
 }
 
 let HIST_SUBSIDIOMEDICO = [];
@@ -2287,14 +2287,14 @@ async function enviarInscricaoSO(ev){
     const { error } = await sb.from('embraer_inscricao_so').insert(registro);
     if(error) throw error;
     toast('Inscrição registrada. Abrindo e-mail…');
+    if(emailAssistente) abrirEmail(emailAssistente, DECISAO_CC, assunto, corpo);
+    else toast('Assistente sem e-mail cadastrado — abra o e-mail manualmente.', true);
+    document.querySelectorAll('#view-so input, #view-so select, #view-so textarea').forEach(el => el.value = '');
     carregarHistoricoSO();
   }catch(err){
     console.error(err);
-    toast('E-mail aberto, mas NÃO foi possível salvar no histórico: ' + (err.message||err), true);
+    toast('Não foi possível salvar no histórico — e-mail NÃO foi aberto. Tente novamente: ' + (err.message||err), true);
   }
-  if(emailAssistente) abrirEmail(emailAssistente, DECISAO_CC, assunto, corpo);
-  else toast('Assistente sem e-mail cadastrado — abra o e-mail manualmente.', true);
-  document.querySelectorAll('#view-so input, #view-so select, #view-so textarea').forEach(el => el.value = '');
 }
 
 let HIST_SO = [];
@@ -2570,13 +2570,13 @@ async function enviarLevantamentoGarantia(ev){
     const { error } = await sb.from('embraer_levantamento_garantia').insert(registro);
     if(error) throw error;
     toast('Levantamento registrado. Abrindo e-mail — não esqueça de anexar os PDFs…');
+    abrirEmail(LEVGARANTIA_TO, LEVGARANTIA_CC, assunto, corpo);
+    document.querySelectorAll('#view-levgarantia input').forEach(el => el.value = '');
     carregarHistoricoLevGarantia();
   }catch(err){
     console.error(err);
-    toast('E-mail aberto, mas NÃO foi possível salvar no histórico: ' + (err.message||err), true);
+    toast('Não foi possível salvar no histórico — e-mail NÃO foi aberto. Tente novamente: ' + (err.message||err), true);
   }
-  abrirEmail(LEVGARANTIA_TO, LEVGARANTIA_CC, assunto, corpo);
-  document.querySelectorAll('#view-levgarantia input').forEach(el => el.value = '');
 }
 
 let HIST_LEVGARANTIA = [];
