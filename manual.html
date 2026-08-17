@@ -205,7 +205,7 @@ h4.sub{font-size:14px;font-weight:700;color:#fff;margin:22px 0 10px;}
 <div class="hero">
   <div class="hero-tag">Manual do usuário</div>
   <h1>Controle de Decisões <span>— Embraer</span></h1>
-  <p>Guia de uso do módulo que centraliza o contencioso trabalhista da Embraer: reporte de decisões, os registros vivos de Reintegrados/Estratégicos/Minutos Residuais/Insalubridade e Periculosidade/Doenças, e os e-mails automáticos de solicitação de cálculos, determinação de reintegração, ajuste de fase/prognóstico no Elaw, agendamento de perícia, quesitos ergonômicos, subsídio de quesitos médicos, inscrição de sustentação oral, encerramento de processo e levantamento de garantia.</p>
+  <p>Guia de uso do módulo que centraliza o contencioso trabalhista da Embraer: reporte de decisões, os registros vivos de Reintegrados/Estratégicos/Minutos Residuais/Insalubridade e Periculosidade/Doenças, e os e-mails automáticos de solicitação de cálculos, determinação de reintegração, ajuste de fase/prognóstico no Elaw, agendamento de perícia, quesitos ergonômicos, subsídio de quesitos médicos, inscrição de sustentação oral, solicitação de testemunha, encerramento de processo e levantamento de garantia.</p>
 </div>
 
 <div class="toc">
@@ -221,11 +221,12 @@ h4.sub{font-size:14px;font-weight:700;color:#fff;margin:22px 0 10px;}
     <a class="toc-item" href="#quesitos"><span class="toc-num">08</span> Quesitos Ergonômicos</a>
     <a class="toc-item" href="#subsidiomedico"><span class="toc-num">09</span> Subsídio de Quesitos Médicos</a>
     <a class="toc-item" href="#so"><span class="toc-num">10</span> Inscrição S.O.</a>
-    <a class="toc-item" href="#encerramentos"><span class="toc-num">11</span> Encerramentos</a>
-    <a class="toc-item" href="#levgarantia"><span class="toc-num">12</span> Levantamento de Garantia</a>
-    <a class="toc-item" href="#emails"><span class="toc-num">13</span> E-mails automáticos</a>
-    <a class="toc-item" href="#boas-praticas"><span class="toc-num">14</span> Boas práticas</a>
-    <a class="toc-item" href="#faq"><span class="toc-num">15</span> Perguntas frequentes</a>
+    <a class="toc-item" href="#testemunha"><span class="toc-num">11</span> Solicitação de Testemunha</a>
+    <a class="toc-item" href="#encerramentos"><span class="toc-num">12</span> Encerramentos</a>
+    <a class="toc-item" href="#levgarantia"><span class="toc-num">13</span> Levantamento de Garantia</a>
+    <a class="toc-item" href="#emails"><span class="toc-num">14</span> E-mails automáticos</a>
+    <a class="toc-item" href="#boas-praticas"><span class="toc-num">15</span> Boas práticas</a>
+    <a class="toc-item" href="#faq"><span class="toc-num">16</span> Perguntas frequentes</a>
   </div>
 </div>
 
@@ -235,7 +236,7 @@ h4.sub{font-size:14px;font-weight:700;color:#fff;margin:22px 0 10px;}
     <span class="sec-anchor" id="visao-geral"></span>
     <div class="sec-header"><div class="sec-num">01</div><div class="sec-title">Visão Geral</div><div class="sec-line"></div></div>
     <p>O módulo fica publicado em <strong>peixotoecury.github.io/decisoesembraer</strong> e não precisa de instalação — é só abrir no navegador. Todos os dados ficam salvos num banco compartilhado (Supabase), então qualquer pessoa que abrir o link, em qualquer computador, vê as mesmas informações atualizadas em tempo real.</p>
-    <p>O sistema é dividido em <strong>15 abas</strong>, sempre visíveis no topo:</p>
+    <p>O sistema é dividido em <strong>16 abas</strong>, sempre visíveis no topo:</p>
     <div class="card-grid">
       <div class="mini-card"><span class="tag cyan">📑 Reporte de Decisão</span><p>Registro de Laudo/Sentença/Acórdão/Execução, com envio de e-mail por seção.</p></div>
       <div class="mini-card"><span class="tag green">🔁 Reintegrados</span><p>Registro vivo — 1 linha por processo, editável, espelhando a planilha mensal.</p></div>
@@ -250,6 +251,7 @@ h4.sub{font-size:14px;font-weight:700;color:#fff;margin:22px 0 10px;}
       <div class="mini-card"><span class="tag amber">📐 Quesitos Ergonômicos</span><p>Solicita quesitos ergonômicos ao cliente para uma perícia.</p></div>
       <div class="mini-card"><span class="tag amber">🩺 Subsídio de Quesitos Médicos</span><p>Solicita subsídio para responder esclarecimentos médicos periciais.</p></div>
       <div class="mini-card"><span class="tag purple">🎙️ Inscrição S.O.</span><p>Pede pro(a) assistente inscrever um advogado numa pauta de sustentação oral.</p></div>
+      <div class="mini-card"><span class="tag purple">🗣️ Solicitação de Testemunha</span><p>Questionário de 8 itens pra decidir e comunicar se o escritório indica testemunha numa audiência de instrução.</p></div>
       <div class="mini-card"><span class="tag red">🏁 Encerramentos</span><p>Registro interno (sem e-mail) do encerramento de um processo, com depósitos/pagamentos.</p></div>
       <div class="mini-card"><span class="tag amber">🔓 Levantamento de Garantia</span><p>E-mail de levantamento de garantia/devolução de valor, com anexos manuais.</p></div>
     </div>
@@ -333,8 +335,29 @@ h4.sub{font-size:14px;font-weight:700;color:#fff;margin:22px 0 10px;}
   </div>
 
   <div class="section">
+    <span class="sec-anchor" id="testemunha"></span>
+    <div class="sec-header"><div class="sec-num">11</div><div class="sec-title">Solicitação de Testemunha</div><div class="sec-line"></div></div>
+    <p>Monta e envia o questionário padrão de indicação de testemunha para uma audiência de instrução, direto para <strong>juridico.trabalhista@embraer.com.br</strong>, com cópia pro grupo interno. Preencha Processo, Reclamante, data/horário/tipo/modalidade/vara da audiência e a matéria que precisa de prova (item 2).</p>
+    <p>Os itens 3 e 4 são os que decidem a recomendação:</p>
+    <div class="manual-table">
+      <table style="width:100%;border-collapse:collapse;">
+        <tbody>
+          <tr><td style="padding:8px 14px;color:#fff;font-weight:600;white-space:nowrap;">Item 3 = "Não"</td><td style="padding:8px 14px;color:var(--muted);">sugere <strong style="color:var(--text)">NÃO</strong> indicar testemunha (critério objetivo).</td></tr>
+          <tr><td style="padding:8px 14px;color:#fff;font-weight:600;white-space:nowrap;">Item 4 = "Sim. Desfavorável."</td><td style="padding:8px 14px;color:var(--muted);">sugere <strong style="color:var(--text)">SIM</strong> indicar testemunha.</td></tr>
+          <tr><td style="padding:8px 14px;color:#fff;font-weight:600;white-space:nowrap;">Item 4 = "Sim. Favorável."</td><td style="padding:8px 14px;color:var(--muted);">sugere <strong style="color:var(--text)">NÃO</strong> indicar testemunha.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert info">
+      <div class="alert-icon">✏️</div>
+      <div class="alert-body">O item 8 (recomendação) é só uma <strong>sugestão automática</strong> — sempre pode ser trocado manualmente antes de enviar, pra casos que fogem da regra padrão. O campo "Perguntas/observações específicas deste processo" existe justamente pra adaptar o questionário quando a vara ou o caso pedir algo diferente do modelo fixo.</div>
+    </div>
+    <p>Os itens 5, 6 e 7 podem ficar como "N/A" quando não se aplicam — é o padrão já usado no modelo de e-mail real.</p>
+  </div>
+
+  <div class="section">
     <span class="sec-anchor" id="encerramentos"></span>
-    <div class="sec-header"><div class="sec-num">11</div><div class="sec-title">Encerramentos</div><div class="sec-line"></div></div>
+    <div class="sec-header"><div class="sec-num">12</div><div class="sec-title">Encerramentos</div><div class="sec-line"></div></div>
     <p>Registro de encerramento de processo — Processo, Reclamante, responsável (sigla) e o <strong>Motivo do Encerramento</strong> (Acordo, Sentença Transitada em Julgado — procedente/improcedente/parcial —, Extinção sem Resolução do Mérito, Pagamento e Quitação Integral, Prescrição ou Outro).</p>
     <p>Clique em <strong>"➕ Adicionar Depósito/Pagamento"</strong> uma vez para cada valor do processo (Depósito de Garantia, Depósito Judicial, Execução, Pagamento etc.) — o campo <strong>Total Pago</strong> soma automaticamente todas as linhas preenchidas.</p>
     <div class="alert info">
@@ -345,7 +368,7 @@ h4.sub{font-size:14px;font-weight:700;color:#fff;margin:22px 0 10px;}
 
   <div class="section">
     <span class="sec-anchor" id="levgarantia"></span>
-    <div class="sec-header"><div class="sec-num">12</div><div class="sec-title">Levantamento de Garantia / Devolução de Valor</div><div class="sec-line"></div></div>
+    <div class="sec-header"><div class="sec-num">13</div><div class="sec-title">Levantamento de Garantia / Devolução de Valor</div><div class="sec-line"></div></div>
     <p>Comunica o levantamento de uma garantia ou devolução de valor: Processo, Reclamante, valor original do depósito judicial, valor residual a levantar, data de pagamento do depósito, prazo e responsável. O e-mail vai sempre pro time Embraer + Grupo Embraer + advogados internos responsáveis.</p>
     <div class="alert warn">
       <div class="alert-icon">📎</div>
@@ -355,7 +378,7 @@ h4.sub{font-size:14px;font-weight:700;color:#fff;margin:22px 0 10px;}
 
   <div class="section">
     <span class="sec-anchor" id="emails"></span>
-    <div class="sec-header"><div class="sec-num">13</div><div class="sec-title">E-mails Automáticos</div><div class="sec-line"></div></div>
+    <div class="sec-header"><div class="sec-num">14</div><div class="sec-title">E-mails Automáticos</div><div class="sec-line"></div></div>
     <div class="alert info">
       <div class="alert-icon">✉️</div>
       <div class="alert-body">O sistema <strong>não envia e-mail sozinho</strong>. Ele abre um rascunho pronto (assunto, destinatário e corpo já preenchidos) no seu programa de e-mail padrão — Outlook ou Gmail — e a pessoa só precisa clicar em "Enviar". Isso acontece ao salvar um Reporte de Decisão com algum modelo marcado, e sempre que se envia uma Solicitação de Cálculos, Determinação de Reintegração, Ajuste de Fase/Prognóstico, Agendamento de Perícia, Quesitos Ergonômicos, Subsídio de Quesitos Médicos, Inscrição S.O. ou Levantamento de Garantia. (Encerramentos é a única aba que não envia e-mail.)</div>
@@ -368,7 +391,7 @@ h4.sub{font-size:14px;font-weight:700;color:#fff;margin:22px 0 10px;}
 
   <div class="section">
     <span class="sec-anchor" id="boas-praticas"></span>
-    <div class="sec-header"><div class="sec-num">14</div><div class="sec-title">Boas Práticas — A Importância de Preencher Tudo Certo</div><div class="sec-line"></div></div>
+    <div class="sec-header"><div class="sec-num">15</div><div class="sec-title">Boas Práticas — A Importância de Preencher Tudo Certo</div><div class="sec-line"></div></div>
     <p>Este sistema substituiu as planilhas mensais manuais — ou seja, <strong>o que é digitado aqui vira, direto, o número oficial</strong> reportado ao cliente e usado internamente para acompanhar risco, provisão e prazos. Um campo em branco, errado ou vago não é só um detalhe estético: ele se propaga para o relatório do cliente, para a exportação em Excel e para qualquer decisão tomada em cima desses dados.</p>
     <div class="steps">
       <div class="step"><div class="step-num">✓</div><div class="step-body"><h4>Espere a confirmação antes de sair da tela</h4><p>Só considere um registro "feito" quando aparecer o toast de sucesso (ex.: "Solicitação registrada. Abrindo e-mail…"). Se aparecer um erro em vermelho, o registro <strong>não</strong> foi salvo — corrija o problema (geralmente conexão) e clique em enviar de novo; seus dados continuam no formulário.</p></div></div>
@@ -384,7 +407,7 @@ h4.sub{font-size:14px;font-weight:700;color:#fff;margin:22px 0 10px;}
 
   <div class="section">
     <span class="sec-anchor" id="faq"></span>
-    <div class="sec-header"><div class="sec-num">15</div><div class="sec-title">Perguntas Frequentes</div><div class="sec-line"></div></div>
+    <div class="sec-header"><div class="sec-num">16</div><div class="sec-title">Perguntas Frequentes</div><div class="sec-line"></div></div>
     <div class="faq">
       <div class="faq-item"><div class="faq-q">A tela não atualizou depois de uma mudança que fizemos no sistema</div><p class="faq-a">É cache do navegador. Aperte <strong>Ctrl+Shift+R</strong> pra recarregar ignorando o cache, ou feche e abra a aba de novo.</p></div>
       <div class="faq-item"><div class="faq-q">Qual a diferença entre o Reporte de Decisão e os registros de Reintegrados/Estratégicos/Minutos Residuais/Insalubridade/Doenças?</div><p class="faq-a">O Reporte de Decisão é um <strong>histórico de eventos</strong> (cada envio vira uma linha nova). Os outros 5 são <strong>registros vivos</strong> — 1 linha por processo, que você edita conforme o caso avança.</p></div>

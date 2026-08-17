@@ -184,6 +184,7 @@ table.sol-table tbody td.mono{max-width:215px;}
   <button class="tab-btn" id="tab-btn-quesitos" onclick="mudarAba('quesitos')">📐 Quesitos Ergonômicos</button>
   <button class="tab-btn" id="tab-btn-subsidiomedico" onclick="mudarAba('subsidiomedico')">🩺 Subsídio de Quesitos Médicos</button>
   <button class="tab-btn" id="tab-btn-so" onclick="mudarAba('so')">🎙️ Inscrição S.O.</button>
+  <button class="tab-btn" id="tab-btn-testemunha" onclick="mudarAba('testemunha')">🗣️ Solicitação de Testemunha</button>
   <button class="tab-btn" id="tab-btn-encerramentos" onclick="mudarAba('encerramentos')">🏁 Encerramentos</button>
   <button class="tab-btn" id="tab-btn-levgarantia" onclick="mudarAba('levgarantia')">🔓 Levantamento de Garantia</button>
 </div>
@@ -802,6 +803,94 @@ table.sol-table tbody td.mono{max-width:215px;}
     </div>
   </div>
 
+  <div class="view" id="view-testemunha">
+    <div class="dash-card">
+      <div class="dash-card-head">🗣️ Nova Solicitação de Testemunha</div>
+      <div class="dash-card-body">
+        <div class="info-box">ℹ️ Vai sempre para <b>juridico.trabalhista@embraer.com.br,</b> com cópia para o grupo interno.</div>
+        <div class="mc-form-grid">
+          <div class="mc-form-group"><label>Número do Processo <span class="req">*</span></label><input type="text" id="tm-processo" required placeholder="0000000-00.0000.0.00.0000"></div>
+          <div class="mc-form-group"><label>Nome do Reclamante <span class="req">*</span></label><input type="text" id="tm-reclamante" required></div>
+        </div>
+        <div class="mc-form-grid cols-3">
+          <div class="mc-form-group"><label>Data da Audiência <span class="req">*</span></label><input type="date" id="tm-data" required></div>
+          <div class="mc-form-group"><label>Horário <span class="req">*</span></label><input type="time" id="tm-horario" required></div>
+          <div class="mc-form-group"><label>Responsável pela solicitação (sigla) <span class="req">*</span></label><input type="text" id="tm-responsavel" required placeholder="Ex: BCF"></div>
+        </div>
+        <div class="mc-form-grid cols-3">
+          <div class="mc-form-group"><label>Tipo de Audiência <span class="req">*</span></label>
+            <select id="tm-tipo" required>
+              <option value="Instrução">Instrução</option>
+              <option value="Conciliação">Conciliação</option>
+              <option value="Una">Una</option>
+              <option value="Julgamento">Julgamento</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </div>
+          <div class="mc-form-group"><label>Modalidade <span class="req">*</span></label>
+            <select id="tm-modalidade" required>
+              <option value="Presencial">Presencial</option>
+              <option value="Virtual">Virtual</option>
+            </select>
+          </div>
+          <div class="mc-form-group"><label>Vara / Local <span class="req">*</span></label><input type="text" id="tm-vara" required placeholder="Ex: VT084 - Nome do Juiz(a) - Comarca"></div>
+        </div>
+        <div class="mc-form-group"><label>2. Matéria que precisa fazer prova/contraprova e o período <span class="req">*</span></label><textarea required id="tm-materia" rows="2" placeholder="Ex: doença; Ex: Atividades e uso de EPI"></textarea></div>
+        <div class="mc-form-grid">
+          <div class="mc-form-group"><label>3. A vara faz oitiva de testemunha (insalubridade/periculosidade)? <span class="req">*</span></label>
+            <select id="tm-item3" required onchange="tmAtualizarRecomendacao()">
+              <option value="N/A">N/A</option>
+              <option value="Sim">Sim</option>
+              <option value="Não">Não</option>
+            </select>
+          </div>
+          <div class="mc-form-group"><label>4. Já ocorreu a vistoria na fábrica? Resultado do laudo <span class="req">*</span></label>
+            <select id="tm-item4" required onchange="tmAtualizarRecomendacao()">
+              <option value="N/A">N/A</option>
+              <option value="Não">Não</option>
+              <option value="Sim. Favorável.">Sim. Favorável.</option>
+              <option value="Sim. Desfavorável.">Sim. Desfavorável.</option>
+            </select>
+          </div>
+        </div>
+        <div class="mc-form-grid">
+          <div class="mc-form-group"><label>5. Gestor imediato que acompanhou a perícia</label><input type="text" id="tm-item5" placeholder="N/A"></div>
+          <div class="mc-form-group"><label>6. Indicação de testemunha em outros processos do mesmo reclamante? Nome</label><input type="text" id="tm-item6" placeholder="N/A"></div>
+        </div>
+        <div class="mc-form-grid">
+          <div class="mc-form-group"><label>7. Quem foi informado como testemunha no questionário de defesa</label><input type="text" id="tm-item7" placeholder="N/A"></div>
+          <div class="mc-form-group"><label>Link do questionário anexo</label><input type="text" id="tm-item7-link" placeholder="N/A"></div>
+        </div>
+        <div class="mc-form-group"><label>8. O escritório recomenda a indicação de testemunha? <span class="req">*</span></label>
+          <select id="tm-item8" required>
+            <option value="SIM">SIM</option>
+            <option value="NÃO">NÃO</option>
+          </select>
+        </div>
+        <div class="info-box">💡 O item 8 é sugerido automaticamente pelas respostas dos itens 3 e 4 (Item 3 = "Não" → sugere NÃO; Item 4 = "Sim. Desfavorável." → sugere SIM; Item 4 = "Sim. Favorável." → sugere NÃO) — pode ser trocado manualmente antes de enviar.</div>
+        <div class="mc-form-group"><label>Perguntas/observações específicas deste processo</label><textarea id="tm-observacoes" rows="2" placeholder="Opcional — use pra adaptar o questionário quando o processo tiver uma pergunta diferente do padrão"></textarea></div>
+        <button type="button" class="btn-cyan" onclick="enviarSolicitacaoTestemunha(event)">✉️ Gerar e-mail e registrar</button>
+      </div>
+    </div>
+    <div class="dash-card">
+      <div class="dash-card-head">📜 Histórico de Solicitações de Testemunha <button class="export-btn" onclick="exportarExcelGenerico(HIST_TESTEMUNHA_FILTRADO, 'Solicitacao_Testemunha_Embraer', TESTEMUNHA_COLUNAS_EXCEL)">⬇ Exportar Excel</button></div>
+      <div class="filters">
+        <input class="filter-input" id="tm-busca" placeholder="Buscar por processo ou reclamante…" oninput="renderHistoricoTestemunha()">
+        <select class="filter-select" id="tm-flt-status" onchange="renderHistoricoTestemunha()">
+          <option value="">Status: todos</option>
+          <option value="Pendente">Pendente</option>
+          <option value="Concluído">Concluído</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table class="sol-table">
+          <thead><tr><th>Processo</th><th>Reclamante</th><th>Audiência</th><th>Recomendação</th><th>Status</th><th>Enviado em</th><th>Ações</th></tr></thead>
+          <tbody id="tm-tbody"><tr><td colspan="7" class="empty-state">Carregando…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
   <div class="view" id="view-encerramentos">
     <div class="dash-card">
       <div class="dash-card-head" id="enc-form-titulo">🏁 Novo Encerramento</div>
@@ -1361,7 +1450,7 @@ function crudExportar(cfg){
   XLSX.writeFile(wb, `${cfg.titulo.replace(/\s+/g,'_')}_Embraer_${hojeISOlocal()}.xlsx`);
 }
 
-const ABAS = ['decisao','reintegrados','estrategicos','minutos_residuais','insalubridade','doencas','calculos','reintegracao','elaw','pericia','quesitos','subsidiomedico','so','encerramentos','levgarantia'];
+const ABAS = ['decisao','reintegrados','estrategicos','minutos_residuais','insalubridade','doencas','calculos','reintegracao','elaw','pericia','quesitos','subsidiomedico','so','testemunha','encerramentos','levgarantia'];
 const ABA_CARREGADORES = {};
 function mudarAba(aba){
   ABAS.forEach(a => {
@@ -2348,6 +2437,126 @@ function verDetalhesSO(id){
   abrirVerDetalhes(`Inscrição S.O. — ${r.processo||''}`, textoParaHtmlDetalhes(texto));
 }
 ABA_CARREGADORES['so'] = { carregado: false, fn: carregarHistoricoSO };
+
+/* ===================== ABA: SOLICITAÇÃO DE TESTEMUNHA =====================
+   Questionário fixo (itens 1-8) pra decidir e comunicar se o escritório
+   indica testemunha pra uma audiência de instrução. Item 8 é sugerido
+   pela regra combinada com o cliente a partir dos itens 3 e 4, mas fica
+   sempre editável antes de enviar. */
+const TESTEMUNHA_TO = 'juridico.trabalhista@embraer.com.br';
+const TESTEMUNHA_CC = 'embraer.pec@peixotoecury.com.br';
+function tmAtualizarRecomendacao(){
+  const item3 = document.getElementById('tm-item3').value;
+  const item4 = document.getElementById('tm-item4').value;
+  const sel = document.getElementById('tm-item8');
+  if(item3 === 'Não'){ sel.value = 'NÃO'; return; }
+  if(item4 === 'Sim. Desfavorável.'){ sel.value = 'SIM'; return; }
+  if(item4 === 'Sim. Favorável.'){ sel.value = 'NÃO'; return; }
+}
+const TESTEMUNHA_COLUNAS_EXCEL = [
+  {label:'Processo', col:'processo'}, {label:'Reclamante', col:'reclamante'},
+  {label:'Data Audiência', col:'data_audiencia'}, {label:'Horário', col:'horario'},
+  {label:'Tipo', col:'tipo_audiencia'}, {label:'Modalidade', col:'modalidade'}, {label:'Vara/Local', col:'vara'},
+  {label:'Matéria/Período', col:'materia_periodo'},
+  {label:'Item 3', col:'item3_oitiva'}, {label:'Item 4', col:'item4_vistoria'},
+  {label:'Item 5', col:'item5_gestor'}, {label:'Item 6', col:'item6_outros_processos'},
+  {label:'Item 7', col:'item7_testemunha_informada'}, {label:'Link questionário', col:'item7_link'},
+  {label:'Recomendação', col:'recomendacao'}, {label:'Observações', col:'observacoes'},
+  {label:'Responsável', col:'responsavel_sigla'}, {label:'Status', col:'status'},
+  {label:'Criado em', col:'criado_em'}, {label:'Concluído em', col:'concluido_em'},
+];
+async function enviarSolicitacaoTestemunha(ev){
+  ev.preventDefault();
+  const g = id => document.getElementById(id).value.trim() || null;
+  const obrigatorios = [['tm-processo','Número do Processo'],['tm-reclamante','Nome do Reclamante'],['tm-data','Data da Audiência'],['tm-horario','Horário'],['tm-responsavel','Responsável'],['tm-vara','Vara / Local'],['tm-materia','Matéria que precisa fazer prova/contraprova']];
+  for(const [id, label] of obrigatorios){ if(!document.getElementById(id).value.trim()){ toast(`Preencha o campo "${label}".`, true); return; } }
+  const registro = {
+    processo: g('tm-processo'), reclamante: g('tm-reclamante'),
+    data_audiencia: g('tm-data'), horario: g('tm-horario'),
+    tipo_audiencia: g('tm-tipo'), modalidade: g('tm-modalidade'), vara: g('tm-vara'),
+    materia_periodo: g('tm-materia'),
+    item3_oitiva: g('tm-item3'), item4_vistoria: g('tm-item4'),
+    item5_gestor: g('tm-item5') || 'N/A', item6_outros_processos: g('tm-item6') || 'N/A',
+    item7_testemunha_informada: g('tm-item7') || 'N/A', item7_link: g('tm-item7-link') || 'N/A',
+    recomendacao: g('tm-item8'), observacoes: g('tm-observacoes'),
+    responsavel_sigla: g('tm-responsavel'), status: 'Pendente', criado_em: new Date().toISOString(),
+  };
+  const dataFmt = dataBR(registro.data_audiencia);
+  const localAudiencia = `Dia ${dataFmt} às ${registro.horario} - ${registro.tipo_audiencia} - ${registro.vara}`;
+  const assunto = `SOLICITAÇÃO DE TESTEMUNHA PARA AUDIÊNCIA - DATA DE AUDIÊNCIA: ${localAudiencia} - NOME DO RECLAMANTE:${registro.reclamante} - ${registro.processo}`;
+  const corpo = `Prezados,\n\n`
+    + `Trata-se de audiência ${registro.tipo_audiencia.toUpperCase()} na modalidade ${registro.modalidade.toUpperCase()} designada para o ${localAudiencia}.\n\n`
+    + `Por gentileza, indicar testemunha para audiência ${registro.tipo_audiencia.toUpperCase()}, informando o telefone de contato e e-mail.\n\n`
+    + `1.  Data, horário e local da audiência; ${localAudiencia}\n`
+    + `2.  A matéria que precisa fazer prova/contraprova e o período: ${registro.materia_periodo}\n`
+    + `3.  Para casos de laudo pericial técnico, se o objeto está atrelado a: insalubridade e periculosidade, a vara faz oitiva de testemunha? ; ${registro.item3_oitiva}\n`
+    + `4.  Já ocorreu a vistoria na fábrica? Se sim, qual foi o resultado do laudo pericial; ${registro.item4_vistoria}\n`
+    + `5.  Caso a anterior seja sim, indicar o gestor imediato que acompanhou a perícia; ${registro.item5_gestor}\n`
+    + `6.  Consta a indicação de testemunha em outros processos do mesmo reclamante? Se sim, indicar o nome; ${registro.item6_outros_processos}\n`
+    + `7.  Indicar quem foi informado como testemunha no questionário para elaboração da defesa e encaminhar o questionário anexo; ${registro.item7_testemunha_informada}${registro.item7_link && registro.item7_link !== 'N/A' ? ' - ' + registro.item7_link : ''}\n`
+    + `8.  Se o escritório recomenda a indicação de testemunha, com base nos itens elencados acima. ${registro.recomendacao}\n`
+    + (registro.observacoes ? `\n${registro.observacoes}\n` : '')
+    + `\nObservações:\n`
+    + `•  Se a resposta do Item 3 for "NÃO" entendemos que o critério é objetivo, não é recomendada a indicação da testemunha;\n`
+    + `•  Se a resposta do Item 4 for "LAUDO DESFAVORÁVEL À EMPRESA", indicaremos testemunha; "LAUDO FAVORÁVEL À EMPRESA", NÃO indicaremos testemunha.\n\n`
+    + `Atenciosamente,`;
+  try{
+    const { error } = await sb.from('embraer_solicitacao_testemunha').insert(registro);
+    if(error) throw error;
+    toast('Solicitação registrada. Abrindo e-mail…');
+    abrirEmail(TESTEMUNHA_TO, TESTEMUNHA_CC, assunto, corpo);
+    document.querySelectorAll('#view-testemunha input, #view-testemunha select, #view-testemunha textarea').forEach(el => { if(el.tagName === 'SELECT') el.selectedIndex = 0; else el.value = ''; });
+    carregarHistoricoTestemunha();
+  }catch(err){
+    console.error(err);
+    toast('Não foi possível salvar no histórico — e-mail NÃO foi aberto. Tente novamente: ' + (err.message||err), true);
+  }
+}
+
+let HIST_TESTEMUNHA = [];
+let HIST_TESTEMUNHA_FILTRADO = [];
+async function carregarHistoricoTestemunha(){
+  try{
+    const { data, error } = await sb.from('embraer_solicitacao_testemunha').select('*').order('criado_em', {ascending:false}).limit(200);
+    if(error) throw error;
+    HIST_TESTEMUNHA = data || [];
+    document.getElementById('erro-conexao').innerHTML = '';
+    renderHistoricoTestemunha();
+  }catch(err){
+    console.error(err);
+    document.getElementById('tm-tbody').innerHTML = `<tr><td colspan="7" class="empty-state">Erro ao carregar histórico — a tabela embraer_solicitacao_testemunha provavelmente ainda não existe.</td></tr>`;
+  }
+}
+function renderHistoricoTestemunha(){
+  const termo = document.getElementById('tm-busca').value.toLowerCase();
+  const status = document.getElementById('tm-flt-status').value;
+  const rows = HIST_TESTEMUNHA.filter(r =>
+    (!termo || (r.processo||'').toLowerCase().includes(termo) || (r.reclamante||'').toLowerCase().includes(termo)) &&
+    (!status || (r.status||'Pendente') === status)
+  );
+  HIST_TESTEMUNHA_FILTRADO = rows;
+  const tbody = document.getElementById('tm-tbody');
+  if(!rows.length){ tbody.innerHTML = `<tr><td colspan="7" class="empty-state">Nenhuma solicitação encontrada.</td></tr>`; return; }
+  tbody.innerHTML = rows.map(r => `<tr>
+    <td class="mono">${esc(r.processo)}</td>
+    <td>${esc(r.reclamante)}</td>
+    <td class="mono">${fmtDataHora(r.data_audiencia)} ${esc(r.horario||'')}</td>
+    <td><span class="badge ${r.recomendacao==='SIM'?'badge-green':'badge-orange'}">${esc(r.recomendacao||'')}</span></td>
+    <td><span class="badge ${r.status==='Concluído'?'badge-green':'badge-orange'}">${esc(r.status||'Pendente')}</span></td>
+    <td class="mono">${fmtDataHora(r.criado_em)}</td>
+    <td>
+      ${r.status !== 'Concluído' ? `<button class="row-btn" onclick="concluirTestemunha(${r.id})">✅ Concluir</button>` : ''}
+      <button class="row-btn" onclick="excluirRegistroGenerico('embraer_solicitacao_testemunha', ${r.id}, carregarHistoricoTestemunha)">🗑️ Excluir</button>
+    </td>
+  </tr>`).join('');
+}
+async function concluirTestemunha(id){
+  const { error } = await sb.from('embraer_solicitacao_testemunha').update({ status: 'Concluído', concluido_em: new Date().toISOString() }).eq('id', id);
+  if(error){ toast('Erro ao concluir: ' + error.message, true); return; }
+  toast('Solicitação marcada como concluída.');
+  carregarHistoricoTestemunha();
+}
+ABA_CARREGADORES['testemunha'] = { carregado: false, fn: carregarHistoricoTestemunha };
 
 /* ===================== ABA: ENCERRAMENTOS =====================
    1 linha por processo encerrado, com uma lista livre de depósitos/pagamentos
