@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Manual — Controle de Decisões Embraer | Peixoto &amp; Cury</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:   #051520;
+  --navy2:  #0a2235;
+  --cyan:   #00A9E0;
+  --white:  #FFFFFF;
+  --text:   #e8edf3;
+  --muted:  #7a9bb5;
+  --border: rgba(0,169,224,.18);
+  --card:   rgba(255,255,255,.04);
+  --card-h: rgba(255,255,255,.07);
+  --green:  #27AE60;
+  --amber:  #E67E22;
+  --red:    #e74c3c;
+  --red2:   #c0392b;
+  --purple: #A78BFA;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Sora',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;overflow-x:hidden;font-size:13px;}
+
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 70% 50% at 10% 0%, rgba(0,169,224,.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 90% 100%, rgba(0,59,92,.15) 0%, transparent 55%);
+  pointer-events:none;
+}
+
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(0,169,224,.25);border-radius:4px;}
+
+.header{
+  position:relative;z-index:10;position:sticky;top:0;
+  padding:20px 48px;
+  border-bottom:1px solid var(--border);
+  background:rgba(5,21,32,.85);
+  backdrop-filter:blur(12px);
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+}
+.lw-mark{display:flex;flex-direction:column;line-height:1;}
+.lw-wordmark{display:flex;align-items:flex-end;}
+.lw-law{font-size:26px;font-weight:800;color:#fff;letter-spacing:-1px;font-family:'Sora',sans-serif;}
+.lw-col{display:flex;flex-direction:column;align-items:flex-start;}
+.lw-mod{font-size:9px;font-weight:400;color:rgba(255,255,255,.75);letter-spacing:.8px;align-self:flex-end;}
+.lw-gico{font-size:26px;font-weight:300;color:#fff;letter-spacing:-1px;line-height:1;}
+.lw-tag{font-size:8px;color:rgba(255,255,255,.6);letter-spacing:3px;font-weight:400;margin-top:2px;}
+.header-right{text-align:right;}
+.firm-name{font-size:12px;font-weight:600;color:var(--white);opacity:.85;}
+.firm-sub{font-size:10px;color:var(--muted);margin-top:2px;}
+.manual-badge{
+  display:inline-block;margin-top:8px;
+  background:rgba(0,169,224,.15);border:1px solid var(--border);
+  color:var(--cyan);font-size:10px;font-weight:700;
+  padding:3px 12px;border-radius:20px;letter-spacing:.5px;
+}
+.open-app-btn{
+  display:inline-flex;align-items:center;gap:6px;margin-top:10px;
+  background:var(--cyan);color:var(--navy);font-size:11px;font-weight:700;
+  padding:7px 16px;border-radius:8px;text-decoration:none;
+}
+
+.hero{position:relative;z-index:5;padding:56px 48px 40px;border-bottom:1px solid var(--border);}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(0,169,224,.10);border:1px solid rgba(0,169,224,.25);
+  color:var(--cyan);font-size:10px;font-weight:700;
+  padding:5px 16px;border-radius:20px;letter-spacing:1px;
+  text-transform:uppercase;margin-bottom:20px;
+}
+.hero-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+.hero h1{font-size:36px;font-weight:800;color:#fff;line-height:1.15;letter-spacing:-.5px;margin-bottom:12px;}
+.hero h1 span{color:var(--cyan);}
+.hero p{font-size:14.5px;color:var(--muted);line-height:1.7;max-width:700px;}
+
+.toc{position:relative;z-index:5;padding:28px 48px;border-bottom:1px solid var(--border);background:var(--card);}
+.toc-title{font-size:10px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;}
+.toc-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;border-radius:10px;
+  background:rgba(255,255,255,.03);border:1px solid var(--border);
+  text-decoration:none;color:var(--muted);font-size:12px;font-weight:500;
+  transition:all .2s;
+}
+.toc-item:hover{background:rgba(0,169,224,.10);border-color:var(--cyan);color:var(--cyan);}
+.toc-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--cyan);font-weight:600;width:18px;flex-shrink:0;}
+
+.content{position:relative;z-index:5;max-width:920px;margin:0 auto;padding:0 48px 80px;}
+.section{margin-top:56px;}
+.sec-anchor{display:block;position:relative;top:-90px;visibility:hidden;}
+.sec-header{display:flex;align-items:center;gap:16px;margin-bottom:26px;}
+.sec-num{
+  width:36px;height:36px;border-radius:10px;flex-shrink:0;
+  background:rgba(0,169,224,.15);border:1px solid rgba(0,169,224,.3);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan);
+}
+.sec-title{font-size:21px;font-weight:700;color:#fff;letter-spacing:-.3px;}
+.sec-line{flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
+
+p{font-size:13.5px;color:var(--muted);line-height:1.8;margin-bottom:14px;}
+p strong{color:var(--text);}
+h4.sub{font-size:14px;font-weight:700;color:#fff;margin:22px 0 10px;}
+
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:16px;}
+.info-card.cyan-l{border-left:3px solid var(--cyan);}
+.info-card.green-l{border-left:3px solid var(--green);}
+.info-card.amber-l{border-left:3px solid var(--amber);}
+.info-card.red-l{border-left:3px solid var(--red);}
+.info-card.purple-l{border-left:3px solid var(--purple);}
+.info-card h3{font-size:13.5px;font-weight:700;color:#fff;margin-bottom:8px;}
+.info-card p{margin-bottom:0;font-size:12.5px;}
+
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:24px;}
+.mini-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
+.mini-card .tag{display:inline-block;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:700;margin-bottom:10px;letter-spacing:.3px;}
+.mini-card .tag.cyan{background:rgba(0,169,224,.15);color:var(--cyan);border:1px solid rgba(0,169,224,.3);}
+.mini-card .tag.amber{background:rgba(230,126,34,.15);color:var(--amber);border:1px solid rgba(230,126,34,.3);}
+.mini-card .tag.red{background:rgba(231,76,60,.15);color:var(--red);border:1px solid rgba(231,76,60,.3);}
+.mini-card .tag.green{background:rgba(39,174,96,.15);color:var(--green);border:1px solid rgba(39,174,96,.3);}
+.mini-card .tag.purple{background:rgba(167,139,250,.15);color:var(--purple);border:1px solid rgba(167,139,250,.3);}
+.mini-card p{font-size:12px;margin:0;line-height:1.6;}
+
+.manual-table{width:100%;border-collapse:collapse;margin:14px 0 24px;border-radius:12px;overflow:hidden;border:1px solid var(--border);}
+.manual-table th{text-align:left;padding:10px 14px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,.05);border-bottom:1px solid var(--border);}
+.manual-table td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px;color:var(--muted);line-height:1.6;}
+.manual-table td:first-child{color:#fff;font-weight:600;white-space:nowrap;}
+.manual-table tr:last-child td{border-bottom:none;}
+.manual-table tr:hover td{background:rgba(0,169,224,.04);}
+
+.steps{display:flex;flex-direction:column;gap:12px;margin-bottom:24px;}
+.step{display:flex;align-items:flex-start;gap:14px;}
+.step-num{width:28px;height:28px;border-radius:8px;flex-shrink:0;background:rgba(0,169,224,.15);border:1px solid rgba(0,169,224,.3);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:var(--cyan);}
+.step-body h4{font-size:13px;font-weight:700;color:#fff;margin-bottom:4px;}
+.step-body p{font-size:12px;color:var(--muted);margin:0;line-height:1.6;}
+
+.alert{display:flex;align-items:flex-start;gap:14px;padding:16px 20px;border-radius:12px;margin-bottom:20px;}
+.alert.info{background:rgba(0,169,224,.08);border:1px solid rgba(0,169,224,.25);}
+.alert.warn{background:rgba(230,126,34,.08);border:1px solid rgba(230,126,34,.25);}
+.alert.danger{background:rgba(231,76,60,.08);border:1px solid rgba(231,76,60,.25);}
+.alert.good{background:rgba(39,174,96,.08);border:1px solid rgba(39,174,96,.25);}
+.alert-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+.alert-body{font-size:12.5px;color:var(--muted);line-height:1.7;}
+.alert-body strong{color:var(--text);}
+.alert.info .alert-body strong{color:var(--cyan);}
+.alert.warn .alert-body strong{color:var(--amber);}
+.alert.danger .alert-body strong{color:var(--red);}
+.alert.good .alert-body strong{color:var(--green);}
+
+.faq{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+.faq-item{padding:16px 20px;border-radius:12px;background:var(--card);border:1px solid var(--border);}
+.faq-q{font-size:13px;font-weight:700;color:#fff;margin-bottom:6px;display:flex;gap:8px;}
+.faq-q::before{content:'?';color:var(--cyan);font-weight:800;}
+.faq-a{font-size:12.5px;color:var(--muted);line-height:1.7;margin:0;}
+
+.glossary{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+.gterm{display:flex;gap:16px;align-items:flex-start;padding:14px 18px;border-radius:12px;background:var(--card);border:1px solid var(--border);}
+.gword{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--cyan);min-width:150px;flex-shrink:0;padding-top:2px;}
+.gdef{font-size:12px;color:var(--muted);line-height:1.6;}
+
+.footer{position:relative;z-index:5;margin:0 48px 40px;padding:20px 28px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--muted);flex-wrap:wrap;gap:10px;}
+.footer strong{color:var(--cyan);}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:rgba(0,169,224,.12);border:1px solid rgba(0,169,224,.3);color:var(--cyan);font-size:11px;font-weight:700;padding:6px 16px;border-radius:8px;text-decoration:none;transition:all .2s;}
+.back-btn:hover{background:rgba(0,169,224,.22);}
+
+@media(max-width:768px){
+  .header,.hero,.toc,.content,.footer{padding-left:20px;padding-right:20px;}
+  .hero h1{font-size:26px;}
+  .toc-grid{grid-template-columns:1fr 1fr;}
+  .footer{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="lw-mark">
+    <div class="lw-wordmark">
+      <span class="lw-law">LAW</span>
+      <div class="lw-col">
+        <span class="lw-mod">decisões</span>
+        <span class="lw-gico">gico</span>
+      </div>
+    </div>
+    <div class="lw-tag">lawyers at work</div>
+  </div>
+  <div class="header-right">
+    <div class="firm-name">Peixoto &amp; Cury Advogados</div>
+    <div class="firm-sub">Controladoria — Time B</div>
+    <div class="manual-badge">Manual do Usuário</div><br>
+    <a class="open-app-btn" href="https://peixotoecury.github.io/decisoesembraer/" target="_blank">▶ Abrir o sistema</a>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-tag">Manual do usuário</div>
+  <h1>Controle de Decisões <span>— Embraer</span></h1>
+  <p>Guia de uso do módulo que centraliza o contencioso trabalhista da Embraer: reporte de decisões, os registros vivos de Reintegrados/Estratégicos/Minutos Residuais/Insalubridade e Periculosidade/Doenças, e os e-mails automáticos de solicitação de cálculos, determinação de reintegração, ajuste de fase/prognóstico no Elaw, agendamento de perícia, quesitos ergonômicos, subsídio de quesitos médicos, inscrição de sustentação oral, encerramento de processo e levantamento de garantia.</p>
+</div>
+
+<div class="toc">
+  <div class="toc-title">Neste manual</div>
+  <div class="toc-grid">
+    <a class="toc-item" href="#visao-geral"><span class="toc-num">01</span> Visão geral</a>
+    <a class="toc-item" href="#reporte-decisao"><span class="toc-num">02</span> Reporte de Decisão</a>
+    <a class="toc-item" href="#registros-vivos"><span class="toc-num">03</span> Registros de casos</a>
+    <a class="toc-item" href="#calculos"><span class="toc-num">04</span> Solicitação de Cálculos</a>
+    <a class="toc-item" href="#reintegracao"><span class="toc-num">05</span> Determinação de Reintegração</a>
+    <a class="toc-item" href="#elaw"><span class="toc-num">06</span> Ajuste de Fase/Prognóstico</a>
+    <a class="toc-item" href="#pericia"><span class="toc-num">07</span> Agendamento de Perícia</a>
+    <a class="toc-item" href="#quesitos"><span class="toc-num">08</span> Quesitos Ergonômicos</a>
+    <a class="toc-item" href="#subsidiomedico"><span class="toc-num">09</span> Subsídio de Quesitos Médicos</a>
+    <a class="toc-item" href="#so"><span class="toc-num">10</span> Inscrição S.O.</a>
+    <a class="toc-item" href="#encerramentos"><span class="toc-num">11</span> Encerramentos</a>
+    <a class="toc-item" href="#levgarantia"><span class="toc-num">12</span> Levantamento de Garantia</a>
+    <a class="toc-item" href="#emails"><span class="toc-num">13</span> E-mails automáticos</a>
+    <a class="toc-item" href="#boas-praticas"><span class="toc-num">14</span> Boas práticas</a>
+    <a class="toc-item" href="#faq"><span class="toc-num">15</span> Perguntas frequentes</a>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="section">
+    <span class="sec-anchor" id="visao-geral"></span>
+    <div class="sec-header"><div class="sec-num">01</div><div class="sec-title">Visão Geral</div><div class="sec-line"></div></div>
+    <p>O módulo fica publicado em <strong>peixotoecury.github.io/decisoesembraer</strong> e não precisa de instalação — é só abrir no navegador. Todos os dados ficam salvos num banco compartilhado (Supabase), então qualquer pessoa que abrir o link, em qualquer computador, vê as mesmas informações atualizadas em tempo real.</p>
+    <p>O sistema é dividido em <strong>15 abas</strong>, sempre visíveis no topo:</p>
+    <div class="card-grid">
+      <div class="mini-card"><span class="tag cyan">📑 Reporte de Decisão</span><p>Registro de Laudo/Sentença/Acórdão/Execução, com envio de e-mail por seção.</p></div>
+      <div class="mini-card"><span class="tag green">🔁 Reintegrados</span><p>Registro vivo — 1 linha por processo, editável, espelhando a planilha mensal.</p></div>
+      <div class="mini-card"><span class="tag green">♟️ Estratégicos</span><p>Registro vivo dos processos de relevância estratégica.</p></div>
+      <div class="mini-card"><span class="tag green">⏱️ Minutos Residuais</span><p>Registro vivo — espelha a planilha de minutos residuais (intervalo/tolerância).</p></div>
+      <div class="mini-card"><span class="tag green">🧪 Insalubridade e Periculosidade</span><p>Registro vivo de laudos e agentes periciados.</p></div>
+      <div class="mini-card"><span class="tag green">🩺 Doenças</span><p>Registro vivo de CID, laudo médico/ergonômico e conclusões.</p></div>
+      <div class="mini-card"><span class="tag amber">🧮 Solicitação de Cálculos</span><p>E-mail padronizado pro cliente pedindo qualquer tipo de subsídio de cálculo.</p></div>
+      <div class="mini-card"><span class="tag amber">⚖️ Determinação de Reintegração</span><p>Notifica os contatos do cliente sobre uma ordem de reintegração.</p></div>
+      <div class="mini-card"><span class="tag purple">🗂️ Ajuste de Fase/Prognóstico</span><p>Pede pro(a) assistente responsável ajustar o Elaw.</p></div>
+      <div class="mini-card"><span class="tag amber">🩹 Agendamento de Perícia</span><p>Avisa o cliente da data/horário de uma perícia designada.</p></div>
+      <div class="mini-card"><span class="tag amber">📐 Quesitos Ergonômicos</span><p>Solicita quesitos ergonômicos ao cliente para uma perícia.</p></div>
+      <div class="mini-card"><span class="tag amber">🩺 Subsídio de Quesitos Médicos</span><p>Solicita subsídio para responder esclarecimentos médicos periciais.</p></div>
+      <div class="mini-card"><span class="tag purple">🎙️ Inscrição S.O.</span><p>Pede pro(a) assistente inscrever um advogado numa pauta de sustentação oral.</p></div>
+      <div class="mini-card"><span class="tag red">🏁 Encerramentos</span><p>Registro interno (sem e-mail) do encerramento de um processo, com depósitos/pagamentos.</p></div>
+      <div class="mini-card"><span class="tag amber">🔓 Levantamento de Garantia</span><p>E-mail de levantamento de garantia/devolução de valor, com anexos manuais.</p></div>
+    </div>
+    <div class="alert info">
+      <div class="alert-icon">💡</div>
+      <div class="alert-body"><strong>Sem login.</strong> O sistema não tem usuário/senha — qualquer um com o link pode preencher.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <span class="sec-anchor" id="reporte-decisao"></span>
+    <div class="sec-header"><div class="sec-num">02</div><div class="sec-title">Reporte de Decisão</div><div class="sec-line"></div></div>
+    <p>É a tela inicial. Marque em <strong>"Tipo de Reporte"</strong> um ou mais blocos (Laudo, Sentença, Acórdão, Execução) — só os campos e o bloco de envio de e-mail correspondentes aparecem, pra não obrigar a rolar o formulário todo.</p>
+    <h4 class="sub">Envio de e-mails</h4>
+    <p>Cada bloco (Laudo/Sentença/Acórdão/Execução) tem um checkbox <strong>"Enviar também para o cliente (externo)"</strong>. Marcado, o e-mail vai pros contatos do cliente Embraer com cópia pro grupo interno; desmarcado, vai só pro grupo interno. Toda decisão deve ser reportada por e-mail — o sistema sempre abre um rascunho pronto no clique de "Salvar", <strong>mas só depois de confirmar que o reporte foi salvo</strong> (ver seção 13).</p>
+    <div class="alert warn">
+      <div class="alert-icon">📧</div>
+      <div class="alert-body">Se marcar mais de um modelo de e-mail no mesmo reporte, só o <strong>1º abre sozinho</strong> — os demais aparecem como botões no canto da tela (o navegador bloqueia abrir vários mailto: seguidos).</div>
+    </div>
+    <p>A tabela <strong>"Reportes Salvos"</strong> mostra o histórico, com botões pra reenviar um modelo de e-mail específico, ver todos os campos salvos, marcar como concluído e excluir.</p>
+  </div>
+
+  <div class="section">
+    <span class="sec-anchor" id="registros-vivos"></span>
+    <div class="sec-header"><div class="sec-num">03</div><div class="sec-title">Registros de Casos (Reintegrados / Estratégicos / Minutos Residuais / Insalubridade / Doenças)</div><div class="sec-line"></div></div>
+    <p>Essas 5 abas funcionam todas do mesmo jeito — são <strong>registros vivos</strong>: cada processo é 1 linha só, que você vai atualizando ao longo do tempo (diferente do Reporte de Decisão, que é um histórico de eventos). Substituem o preenchimento manual das planilhas mensais correspondentes (a aba Minutos Residuais espelha a planilha "P&amp;C - Minutos Residuais.xlsx").</p>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Adicionar um caso</h4><p>Preencha o formulário no topo e clique em <strong>"💾 Adicionar Caso"</strong>. Só Processo e Reclamante/Nome são obrigatórios — o resto pode ficar em branco e ser preenchido depois.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Editar um caso existente</h4><p>Clique em <strong>"✏️ Editar"</strong> na linha da tabela — o formulário é preenchido com os dados daquele processo e o botão vira "💾 Salvar Alterações". Clique em "Cancelar edição" pra voltar a adicionar um caso novo sem salvar.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Excluir</h4><p>Apaga o registro em definitivo (pede confirmação antes).</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Exportar Excel</h4><p>Baixa exatamente os casos filtrados na tela, com as colunas no mesmo nome/formato da planilha mensal original.</p></div></div>
+    </div>
+    <p>A busca no topo da tabela filtra por Processo ou Reclamante/Nome. Use o filtro de Status quando disponível pra ver só os casos Ativos ou Encerrados.</p>
+  </div>
+
+  <div class="section">
+    <span class="sec-anchor" id="calculos"></span>
+    <div class="sec-header"><div class="sec-num">04</div><div class="sec-title">Solicitação de Cálculos</div><div class="sec-line"></div></div>
+    <p>Aba genérica pra pedir qualquer tipo de subsídio de cálculo pro cliente — cobre desde um Cálculo Inicial até Liquidação de Sentença, Cálculo para Fins de Acordo, Levantamento de Garantia, cálculos pro eSocial, impugnações etc. Escolha o <strong>"Tipo de Subsídio"</strong> certo no dropdown; o resto do e-mail é gerado automaticamente.</p>
+    <p>Vai sempre pra <strong>embraer@bernhoeft.com.br</strong>, com cópia pro grupo interno. O histórico guarda status Pendente/Concluído — use o botão "✅ Concluir" quando o cliente responder.</p>
+  </div>
+
+  <div class="section">
+    <span class="sec-anchor" id="reintegracao"></span>
+    <div class="sec-header"><div class="sec-num">05</div><div class="sec-title">Determinação para Reintegração</div><div class="sec-line"></div></div>
+    <p>Use quando o escritório for intimado a reintegrar um reclamante. Preenche os dados do "Aviso de Reintegração" (setor, telefone, valor do risco, prognóstico, prazo, interesse em acordo, resultado do laudo, valor da multa, fundamentos) e o e-mail sai pros 4 contatos do cliente, com cópia pro grupo interno.</p>
+    <div class="alert warn">
+      <div class="alert-icon">⚠️</div>
+      <div class="alert-body">O e-mail sai em <strong>texto puro</strong> (label: valor, linha por linha) — o <code>mailto:</code> não reproduz a tabela colorida que aparece quando o e-mail é composto direto no Outlook.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <span class="sec-anchor" id="elaw"></span>
+    <div class="sec-header"><div class="sec-num">06</div><div class="sec-title">Ajuste de Fase e Prognóstico no Elaw</div><div class="sec-line"></div></div>
+    <p>Notificação interna: o advogado solicitante pede pro(a) assistente responsável (selecionado num dropdown) ajustar o prognóstico e/ou a fase do processo no Elaw. O e-mail vai direto pro endereço cadastrado do(a) assistente selecionado(a) — sem cópia.</p>
+  </div>
+
+  <div class="section">
+    <span class="sec-anchor" id="pericia"></span>
+    <div class="sec-header"><div class="sec-num">07</div><div class="sec-title">Agendamento de Perícia</div><div class="sec-line"></div></div>
+    <p>Avisa o cliente da data e horário de uma perícia (médica, ergonômica ou técnica) já designada, pedindo confirmação de recebimento. Mesmo destinatário da aba Solicitação de Cálculos (embraer@bernhoeft.com.br + cópia interna).</p>
+  </div>
+
+  <div class="section">
+    <span class="sec-anchor" id="quesitos"></span>
+    <div class="sec-header"><div class="sec-num">08</div><div class="sec-title">Quesitos Ergonômicos</div><div class="sec-line"></div></div>
+    <p>Pra solicitar ao cliente os quesitos ergonômicos de uma perícia. Preencha Processo, Reclamante, prazo para envio e o(a) responsável (sigla) — o e-mail vai sempre para <strong>embraer@fabioproto.com.br</strong>, com cópia pro grupo interno. O histórico controla status Pendente/Concluído.</p>
+  </div>
+
+  <div class="section">
+    <span class="sec-anchor" id="subsidiomedico"></span>
+    <div class="sec-header"><div class="sec-num">09</div><div class="sec-title">Subsídio de Quesitos Médicos</div><div class="sec-line"></div></div>
+    <p>Pra pedir ao cliente subsídio para responder esclarecimentos médicos periciais. Além de Processo/Reclamante/prazo/responsável, exige o <strong>ID dos Esclarecimentos</strong> e um <strong>link para a cópia integral</strong> do processo — o e-mail vai para <strong>rose@grupoproto.com.br</strong> e <strong>embraer@fabioproto.com.br</strong>, com cópia pro grupo interno.</p>
+  </div>
+
+  <div class="section">
+    <span class="sec-anchor" id="so"></span>
+    <div class="sec-header"><div class="sec-num">10</div><div class="sec-title">Inscrição S.O. (Sustentação Oral)</div><div class="sec-line"></div></div>
+    <p>Pra pedir que um advogado seja inscrito numa pauta de julgamento com sustentação oral. Escolha o <strong>advogado a inscrever</strong> e o(a) <strong>assistente responsável</strong> (que vai receber o e-mail e fazer a inscrição), preencha opcionalmente a <strong>Turma do TRT</strong> e o <strong>ID do Substabelecimento</strong> (quando o advogado a inscrever for substabelecido), cole o texto completo da pauta no campo grande e envie — o e-mail vai direto pro(a) assistente, com cópia pro grupo interno.</p>
+  </div>
+
+  <div class="section">
+    <span class="sec-anchor" id="encerramentos"></span>
+    <div class="sec-header"><div class="sec-num">11</div><div class="sec-title">Encerramentos</div><div class="sec-line"></div></div>
+    <p>Registro de encerramento de processo — Processo, Reclamante, responsável (sigla) e o <strong>Motivo do Encerramento</strong> (Acordo, Sentença Transitada em Julgado — procedente/improcedente/parcial —, Extinção sem Resolução do Mérito, Pagamento e Quitação Integral, Prescrição ou Outro).</p>
+    <p>Clique em <strong>"➕ Adicionar Depósito/Pagamento"</strong> uma vez para cada valor do processo (Depósito de Garantia, Depósito Judicial, Execução, Pagamento etc.) — o campo <strong>Total Pago</strong> soma automaticamente todas as linhas preenchidas.</p>
+    <div class="alert info">
+      <div class="alert-icon">ℹ️</div>
+      <div class="alert-body">Diferente das outras abas, <strong>Encerramentos não dispara e-mail</strong> — é só um registro de controle interno. Também dá para editar um encerramento já salvo (botão "✏️ Editar" na tabela) e excluir com confirmação.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <span class="sec-anchor" id="levgarantia"></span>
+    <div class="sec-header"><div class="sec-num">12</div><div class="sec-title">Levantamento de Garantia / Devolução de Valor</div><div class="sec-line"></div></div>
+    <p>Comunica o levantamento de uma garantia ou devolução de valor: Processo, Reclamante, valor original do depósito judicial, valor residual a levantar, data de pagamento do depósito, prazo e responsável. O e-mail vai sempre pro time Embraer + Grupo Embraer + advogados internos responsáveis.</p>
+    <div class="alert warn">
+      <div class="alert-icon">📎</div>
+      <div class="alert-body">O link de e-mail <strong>não anexa arquivo sozinho</strong> — depois de gerar o rascunho, anexe manualmente o Despacho, o Alvará, a Guia de depósito e o comprovante de pagamento antes de enviar.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <span class="sec-anchor" id="emails"></span>
+    <div class="sec-header"><div class="sec-num">13</div><div class="sec-title">E-mails Automáticos</div><div class="sec-line"></div></div>
+    <div class="alert info">
+      <div class="alert-icon">✉️</div>
+      <div class="alert-body">O sistema <strong>não envia e-mail sozinho</strong>. Ele abre um rascunho pronto (assunto, destinatário e corpo já preenchidos) no seu programa de e-mail padrão — Outlook ou Gmail — e a pessoa só precisa clicar em "Enviar". Isso acontece ao salvar um Reporte de Decisão com algum modelo marcado, e sempre que se envia uma Solicitação de Cálculos, Determinação de Reintegração, Ajuste de Fase/Prognóstico, Agendamento de Perícia, Quesitos Ergonômicos, Subsídio de Quesitos Médicos, Inscrição S.O. ou Levantamento de Garantia. (Encerramentos é a única aba que não envia e-mail.)</div>
+    </div>
+    <div class="alert good">
+      <div class="alert-icon">🔒</div>
+      <div class="alert-body"><strong>Salvar e enviar por e-mail agora andam sempre juntos.</strong> O e-mail só abre (e o formulário só é limpo) depois que o registro é confirmado no histórico. Se o salvamento falhar por qualquer motivo — internet instável, banco fora do ar etc. — <strong>nenhum e-mail abre</strong> e o formulário continua preenchido com o que você digitou, exatamente pra você poder clicar em enviar de novo sem perder nada.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <span class="sec-anchor" id="boas-praticas"></span>
+    <div class="sec-header"><div class="sec-num">14</div><div class="sec-title">Boas Práticas — A Importância de Preencher Tudo Certo</div><div class="sec-line"></div></div>
+    <p>Este sistema substituiu as planilhas mensais manuais — ou seja, <strong>o que é digitado aqui vira, direto, o número oficial</strong> reportado ao cliente e usado internamente para acompanhar risco, provisão e prazos. Um campo em branco, errado ou vago não é só um detalhe estético: ele se propaga para o relatório do cliente, para a exportação em Excel e para qualquer decisão tomada em cima desses dados.</p>
+    <div class="steps">
+      <div class="step"><div class="step-num">✓</div><div class="step-body"><h4>Espere a confirmação antes de sair da tela</h4><p>Só considere um registro "feito" quando aparecer o toast de sucesso (ex.: "Solicitação registrada. Abrindo e-mail…"). Se aparecer um erro em vermelho, o registro <strong>não</strong> foi salvo — corrija o problema (geralmente conexão) e clique em enviar de novo; seus dados continuam no formulário.</p></div></div>
+      <div class="step"><div class="step-num">✓</div><div class="step-body"><h4>Confira o número do processo antes de enviar</h4><p>É o campo que conecta o registro a tudo (busca, histórico, planilha exportada). Um número de processo digitado errado faz o caso "desaparecer" das buscas futuras, mesmo estando salvo.</p></div></div>
+      <div class="step"><div class="step-num">✓</div><div class="step-body"><h4>Use as observações para dar contexto real, não genérico</h4><p>Textos como "conforme combinado" ou "ver processo" não ajudam quem lê o e-mail do outro lado nem quem consulta o histórico depois. Descreva o que de fato importa para quem vai agir naquele pedido.</p></div></div>
+      <div class="step"><div class="step-num">✓</div><div class="step-body"><h4>Sigla do responsável sempre correta</h4><p>Vários relatórios e filtros agrupam por essa sigla — errar ou abreviar diferente do padrão do escritório faz o registro cair fora das contagens por pessoa/equipe.</p></div></div>
+    </div>
+    <div class="alert danger">
+      <div class="alert-icon">🚫</div>
+      <div class="alert-body">Não existe "desfazer" automático nas abas de registro vivo e no Reporte de Decisão — só a exclusão pede confirmação, porque é definitiva. Preencher com atenção da primeira vez evita ter que caçar e corrigir dado errado depois.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <span class="sec-anchor" id="faq"></span>
+    <div class="sec-header"><div class="sec-num">15</div><div class="sec-title">Perguntas Frequentes</div><div class="sec-line"></div></div>
+    <div class="faq">
+      <div class="faq-item"><div class="faq-q">A tela não atualizou depois de uma mudança que fizemos no sistema</div><p class="faq-a">É cache do navegador. Aperte <strong>Ctrl+Shift+R</strong> pra recarregar ignorando o cache, ou feche e abra a aba de novo.</p></div>
+      <div class="faq-item"><div class="faq-q">Qual a diferença entre o Reporte de Decisão e os registros de Reintegrados/Estratégicos/Minutos Residuais/Insalubridade/Doenças?</div><p class="faq-a">O Reporte de Decisão é um <strong>histórico de eventos</strong> (cada envio vira uma linha nova). Os outros 5 são <strong>registros vivos</strong> — 1 linha por processo, que você edita conforme o caso avança.</p></div>
+      <div class="faq-item"><div class="faq-q">Cliquei em salvar e não abriu e-mail nenhum — e agora?</div><p class="faq-a">Olhe o toast: se ele disser que houve erro ao salvar, o registro não foi gravado e por isso o e-mail também não abriu — seus dados continuam no formulário, é só corrigir o problema (geralmente conexão) e enviar de novo. Se o toast confirmou sucesso mas mesmo assim não abriu nenhum programa de e-mail, seu navegador pode não ter um cliente de e-mail padrão configurado — abra manualmente o Outlook/Gmail com os dados que aparecem na tela.</p></div>
+      <div class="faq-item"><div class="faq-q">Editei um caso errado, dá pra desfazer?</div><p class="faq-a">Não tem "desfazer" automático — edite o campo de novo com o valor certo e salve. Só a exclusão pede confirmação, porque é definitiva.</p></div>
+      <div class="faq-item"><div class="faq-q">Duas pessoas podem usar o sistema ao mesmo tempo?</div><p class="faq-a">Sim. É tudo em tempo real — o que uma pessoa cadastra aparece na tela da outra sem precisar recarregar.</p></div>
+      <div class="faq-item"><div class="faq-q">O e-mail abriu com o destinatário em branco</div><p class="faq-a">Verifique se o(a) assistente selecionado(a) tem e-mail cadastrado no sistema (aparece um aviso na tela quando isso acontece).</p></div>
+      <div class="faq-item"><div class="faq-q">Por que a aba Encerramentos não abre e-mail?</div><p class="faq-a">Porque ela existe só para registrar internamente que um processo foi encerrado (e com o quê foi pago) — não há um destinatário externo ou interno padrão para esse aviso.</p></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div>Peixoto &amp; Cury Advogados · <strong>LAWgico</strong> · Controle de Decisões — Embraer</div>
+  <a class="back-btn" href="index.html">← Voltar ao Sistema</a>
+</div>
+
+</body>
+</html>
